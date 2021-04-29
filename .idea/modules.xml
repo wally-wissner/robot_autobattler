@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Robot RPG Python.iml" filepath="$PROJECT_DIR$/.idea/Robot RPG Python.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/robot_rpg.iml" filepath="$PROJECT_DIR$/.idea/robot_rpg.iml" />
     </modules>
   </component>
 </project>
