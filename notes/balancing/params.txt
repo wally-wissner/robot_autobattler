@@ -1,0 +1,89 @@
+   Offense  Defense  Target    Actual
+0  Railgun    Armor     0.7  0.741055
+1  Railgun  Shields     1.3  1.270381
+2  Railgun  Evasion     1.0  0.988074
+3  Missile    Armor     1.3  1.237298
+4  Missile  Shields     1.0  0.974841
+5  Missile  Evasion     0.7  0.774138
+6    Laser    Armor     1.0  1.029244
+7    Laser  Shields     0.7  0.661657
+8    Laser  Evasion     1.3  1.323313
+{'AP': 15, 'base_accuracy': 0.75, 'power_R': 4, 'cost_R': 2, 'accuracy_R': 0.03, 'power_M': 13, 'cost_M': 5, 'accuracy_M': 0.24, 'power_L': 9, 'cost_L': 7, 'accuracy_L': -80000, 'armor': 2, 'shields': 1, 'evasion': 0.24}
+R^2: 0.9710462613039335
+
+
+
+   Offense  Defense  Target    Actual
+0  Railgun    Armor     0.8  0.855032
+1  Railgun  Shields     1.2  1.140042
+2  Railgun  Evasion     1.0  1.003237
+3  Missile    Armor     1.2  1.103308
+4  Missile  Shields     1.0  1.018438
+5  Missile  Evasion     0.8  0.871499
+6    Laser    Armor     1.0  0.950035
+7    Laser  Shields     0.8  0.823364
+8    Laser  Evasion     1.2  1.235046
+{'AP': 18, 'base_accuracy': 0.9100000000000001, 'power_R': 8, 'cost_R': 3, 'accuracy_R': 0.01, 'power_M': 16, 'cost_M': 4, 'accuracy_M': 0.24, 'power_L': 13, 'cost_L': 5, 'accuracy_L': -80000, 'armor': 3, 'shields': 1, 'evasion': 0.24}
+R^2: 0.8928919331570626
+
+
+   Offense  Defense  Target    Actual
+0  Railgun    Armor     0.8  0.809309
+1  Railgun  Shields     1.2  1.198976
+2  Railgun  Evasion     1.0  0.970513
+3  Missile    Armor     1.2  1.187279
+4  Missile  Shields     1.0  1.017668
+5  Missile  Evasion     0.8  0.818813
+6    Laser    Armor     1.0  0.986962
+7    Laser  Shields     0.8  0.804192
+8    Laser  Evasion     1.2  1.206287
+{'AP': 18, 'base_accuracy': 0.82, 'power_R': 5, 'cost_R': 2, 'accuracy_R': 0.0, 'power_M': 16, 'cost_M': 4, 'accuracy_M': 0.24, 'power_L': 11, 'cost_L': 5, 'accuracy_L': -80000, 'armor': 2, 'shields': 1, 'evasion': 0.23}
+R^2: 0.9916159117215154
+
+
+
+   Offense  Defense Target    Actual
+0  Railgun    Armor      1  1.017024
+1  Railgun  Shields      1  1.017024
+2  Railgun  Evasion      1  1.017024
+3  Missile    Armor      1  1.014382
+4  Missile  Shields      1  1.014382
+5  Missile  Evasion      1  1.014382
+6    Laser    Armor      1  0.968594
+7    Laser  Shields      1  0.968594
+8    Laser  Evasion      1  0.968594
+0  Railgun    Armor    0.8  0.788961
+1  Railgun  Shields    1.2  1.168831
+2  Railgun  Evasion      1  0.973393
+3  Missile    Armor    1.2  1.147580
+4  Missile  Shields      1  0.983640
+5  Missile  Evasion    0.8  0.825772
+6    Laser    Armor      1  1.024625
+7    Laser  Shields    0.8  0.834879
+8    Laser  Evasion    1.2  1.252319
+{'AP': 18, 'base_accuracy': 0.78, 'power_R': 5, 'cost_R': 2, 'accuracy_R': 0.01, 'power_M': 16, 'cost_M': 4, 'accuracy_M': 0.24, 'power_L': 11, 'cost_L': 6, 'accuracy_L': -80000, 'armor': 2, 'shields': 1, 'evasion': 0.2}
+R^2: 0.9396242204471945
+
+
+   Offense  Defense Target    Actual
+0  Railgun    Armor      1  1.029578
+1  Railgun  Shields      1  1.029578
+2  Railgun  Evasion      1  1.029578
+3  Missile    Armor      1  1.003683
+4  Missile  Shields      1  1.003683
+5  Missile  Evasion      1  1.003683
+6    Laser    Armor      1  0.966740
+7    Laser  Shields      1  0.966740
+8    Laser  Evasion      1  0.966740
+0  Railgun    Armor    0.7  0.649500
+1  Railgun  Shields    1.3  1.262917
+2  Railgun  Evasion      1  1.003219
+3  Missile    Armor    1.3  1.166356
+4  Missile  Shields      1  0.984923
+5  Missile  Evasion    0.7  0.782145
+6    Laser    Armor      1  1.016432
+7    Laser  Shields    0.7  0.711503
+8    Laser  Evasion    1.3  1.423005
+{'AP': 13, 'base_accuracy': 0.75, 'power_R': 7, 'cost_R': 2, 'accuracy_R': 0.04, 'power_M': 19, 'cost_M': 4, 'accuracy_M': 0.24, 'power_L': 14, 'cost_L': 5, 'accuracy_L': -80000, 'armor': 4, 'shields': 1, 'evasion': 0.24}
+R^2: 0.9068739371366754
+
