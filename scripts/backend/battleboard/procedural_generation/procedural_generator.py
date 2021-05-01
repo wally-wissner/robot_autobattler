@@ -5,18 +5,18 @@ import numpy as np
 from scripts.backend.battleboard.topology.discrete_topology import Tiling
 
 
-class ProceduralGenerator(object):
-    def __init__(self, tiling:Tiling, polygon_vertices, polygon_orientation, *args, **kwargs):
+class ProceduralGenerator(dict):
+    def __init__(self, tiling: Tiling, polygon_vertices, polygon_orientation, *args, **kwargs):
         self.tiling = tiling
         self.polygon_vertices = polygon_vertices
         self.polygon_orientation = polygon_orientation
 
-        self.mapping = {tile: 0 for tile in self.tiling}
+        super().__init__({tile: 0 for tile in self.tiling})
 
     def generate(self, seed):
         np.random.seed(seed)
-        for tile in self.mapping:
-            self.mapping[tile] = np.random.choice([0, 1])
+        for tile in self:
+            self[tile] = np.random.choice([0, 1])
 
         return
 
@@ -26,7 +26,7 @@ class ProceduralGenerator(object):
         ax = fig.add_subplot(111, aspect='equal')
         patches = []
         for tile in self.tiling:
-            color = .75 * self.mapping[tile]
+            color = .75 * self[tile]
             polygon = RegularPolygon(
                 xy=self.tiling.to_cartesian(tile),
                 numVertices=self.polygon_vertices,

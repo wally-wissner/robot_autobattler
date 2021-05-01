@@ -9,13 +9,12 @@ from scripts.backend.battleboard.topology.hex_tile import Hex
 
 
 class TwistedTorusHexTiling(Tiling):
-    def __init__(self, tile_size: Union[float, int], flat_top: bool=True):
+    def __init__(self, board_radius: int, tile_size: Union[float, int], flat_top: bool=True):
         super().__init__(tile_size=tile_size)
 
+        self.board_radius = board_radius
         self.flat_top = flat_top
 
-    def generate(self, board_radius: int):
-        self.board_radius = board_radius
         self.tiles = Hex.zero().disk(radius=self.board_radius)
         self._mirror_centers = Hex((2 * self.board_radius + 1, -self.board_radius, -self.board_radius - 1)).rotations()
 
