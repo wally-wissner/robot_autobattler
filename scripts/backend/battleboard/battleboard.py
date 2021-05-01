@@ -29,7 +29,7 @@ class BattleBoard(object):
         self.place_units()
 
 
-    def __getitem__(self, tiles: Union(Tile, Iterable[Tile])) -> Union[BattleTile, Iterable[BattleTile]]:
+    def __getitem__(self, tiles: Union[Tile, Iterable[Tile]]) -> Union[BattleTile, Iterable[BattleTile]]:
         if isinstance(tiles, Tile):
             return self.battle_tiles[tiles]
         if hasattr(tiles, "__iter__"):

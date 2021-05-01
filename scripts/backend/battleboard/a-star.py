@@ -24,25 +24,25 @@ def heuristic(a, b):
     return abs(a - b)
 
 
-def a_star_search(graph, start, goal):
+def a_star_search(graph, start, end):
     frontier = PriorityQueue()
     frontier.put(start, 0)
-    came_from = {}
-    cost_so_far = {}
+    came_from = dict()
+    cost_so_far = dict()
     came_from[start] = None
     cost_so_far[start] = 0
 
     while not frontier.empty():
         current = frontier.get()
 
-        if current == goal:
+        if current == end:
             break
 
         for next in graph.neighbors(current):
             new_cost = cost_so_far[current] + graph.cost(current, next)
             if next not in cost_so_far or new_cost < cost_so_far[next]:
                 cost_so_far[next] = new_cost
-                priority = new_cost + heuristic(goal, next)
+                priority = new_cost + heuristic(end, next)
                 frontier.put(next, priority)
                 came_from[next] = current
 

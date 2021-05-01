@@ -36,6 +36,10 @@ class BattleTile(object):
     def __repr__(self):
         return f"BattleTile(position={self.position}, terrain={self.terrain})"
 
-
     def debug_color(self):
         return debug_colors[self.terrain]
+
+
+if __name__ == "__main__":
+    bt = BattleTile(position=Tile([0, 1]), terrain=ETerrain.Ground)
+    print(bt)

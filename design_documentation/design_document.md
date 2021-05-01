@@ -45,6 +45,21 @@ The tree main weapon categories are Railgun, Missile, and Laser. The Railgun is 
 
 Combined, these offensive and defensive abilities create the Offense-Defense Table.
 
+|         | Armor   | Shields | Evasion |
+|---------|---------|---------|---------|
+| Railgun | weak    | strong  | neutral |
+| Missile | strong  | neutral | weak    |
+| Laser   | neutral | weak    | strong  |
+
+Note that while each of these weapons and defensive techniques have strengths and weaknesses, no direct bonus or penalty is calculated between the pair. The matchups are emergent to how the techniques work and are left to players to discover.
+
+# Upgrade System
+
+## Encouraging Strategic Diversity
+
+As a roguelike, a key goal for the enjoyability of the game is replayability. To make replays enjoyable, it is necessary to make the player have multiple and diverse play styles they aspire to try out. Two separate challenges arise from this goal. The first is to make there be diverse play styles worth trying out, and the second is making the player aware of those possibilities. 
+
+
 # UI
 
 ## Enemy Unit Stat UI
