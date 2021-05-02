@@ -6,8 +6,6 @@ from scripts.backend.battleboard.topology.discrete_topology import Tiling, Tile
 from scripts.backend.battleboard.topology.hex_tile import Hex
 
 
-
-
 class TwistedTorusHexTiling(Tiling):
     def __init__(self, board_radius: int, tile_size: Union[float, int], flat_top: bool=True):
         super().__init__(tile_size=tile_size)

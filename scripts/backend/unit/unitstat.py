@@ -104,6 +104,8 @@ class ConsumableStat(Stat):
         assert level_start_state in ["empty", "full", None]
         self.level_start_state = level_start_state
 
+        self.current_value = None
+
         super().__init__(estat, unit_upgrades, base_value=base_value, min_value=min_value, max_value=max_value)
 
     def __add__(self, other: int) -> bool:
@@ -130,13 +132,13 @@ class ConsumableStat(Stat):
 
 
 class StatModifier(object):
-    def __init__(self, stat, quantity, type):
-        if type not in ["+", "*"]:
+    def __init__(self, stat, quantity, operation):
+        if operation not in ["+", "*"]:
             raise ValueError("Modifier type must be \"+\" or \"*\".")
 
         self.stat = stat
         self.quantity = quantity
-        self.type = type
+        self.type = operation
 
     def __repr__(self):
         return f"StatModifier({self.stat} {self.type} {self.quantity})"
@@ -145,7 +147,7 @@ class StatModifier(object):
 class UnitUpgrade(object):
     def __init__(self, name, rarity, description, stat_modifiers):
         self.name = name
-        self.rarity = rarity,
+        self.rarity = rarity
         self.description = description
         self.stat_modifiers = stat_modifiers
 
@@ -169,7 +171,7 @@ if __name__ == "__main__":
     print(a > b)
     print(a == b)
 
-    g = StatModifier(EStat.Armor, 5, type="*")
+    g = StatModifier(EStat.Armor, 5, operation="*")
 
     print(g)
 
