@@ -1,4 +1,4 @@
-from typing import Iterable, Set, Union
+from typing import Iterable, List, Set, Union
 from pygame.math import Vector2
 
 
@@ -36,9 +36,17 @@ class Tiling(object):
     def from_cartesian(self, point) -> Tile:
         raise NotImplemented()
 
-    def to_cartesian(self, tile) -> Vector2:
+    def to_cartesian(self, tile: Tile) -> Vector2:
         raise NotImplemented()
 
-    def neighbors(self, tile) -> Set[Tile]:
+    def neighbors(self, tile: Tile) -> Set[Tile]:
         raise NotImplemented()
 
+    def disk(self, tile: Tile, radius: int) -> Set[Tile]:
+        raise NotImplemented()
+
+    def line(self, start: Tile, end: Tile) -> List[Tile]:
+        raise NotImplemented()
+
+    def line_covering(self, start: Tile, end: Tile) -> List[Tile]:
+        raise NotImplemented()

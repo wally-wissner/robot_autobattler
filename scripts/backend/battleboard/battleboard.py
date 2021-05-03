@@ -13,14 +13,16 @@ class BattleBoard(object):
         self.generator = generator
         self.battle_tiles = None
 
-    def field_of_view(self, tile: Tile, radius: int) -> Set[Tile]:
-        # return {tile for tile in }
-        # TODO
-        pass
-
     def place_units(self) -> None:
         # TODO
         pass
+
+    def visible_tiles(self, tile: Tile, radius: int):
+        return {
+            t
+            for t in self.tiling.disk(tile, radius)
+            if
+        }
 
     def generate(self, *args, **kwargs) -> None:
         self.generator.generate(*args, **kwargs)

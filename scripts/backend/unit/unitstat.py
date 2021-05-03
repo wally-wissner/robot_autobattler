@@ -48,6 +48,8 @@ class EStat(AutoNameEnum):
 
     Repair = auto()
 
+    SelfDestructRadius = auto()
+
 
 @total_ordering
 class Stat(object):

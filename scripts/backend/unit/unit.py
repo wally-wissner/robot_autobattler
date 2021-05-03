@@ -3,8 +3,8 @@ import numpy as np
 from scripts.backend.inventory import Inventory
 from scripts.backend.battleboard.battleboard import BattleBoard
 from scripts.backend.battleboard.topology.discrete_topology import Tile, Tiling
-from scripts.backend.unit.unitstat import EStat, Stat, ConsumableStat
-from scripts.backend.unit.weapon import Laser, Missile, Railgun, Weapon
+from scripts.backend.unit.unitstat import EStat, Stat, ConsumableStat, UnitUpgrade
+from scripts.backend.unit.weapon import Laser, Missile, Railgun, BaseWeapon
 
 
 class Unit(object):
@@ -27,6 +27,7 @@ class Unit(object):
 
 
         self._position = None
+
         # TODO: units that occupy more than one space
         # self.occupying = []
 
@@ -71,8 +72,7 @@ class Unit(object):
         # TODO
 
     def visible_tiles(self):
-        # TODO
-        return BattleBoard.field_of_view(tile=self.position, radius=self.stats[EStat.VisionDistance])
+        return BattleBoard.tiling.visible_tiles(self.position, self.stats[EStat.VisionRadius])
 
     @property
     def position(self) -> Tile:
@@ -86,6 +86,8 @@ class Unit(object):
         for stat in self.stats:
             self.stats[stat].
 
+    def attach_unit_upgrade(self, unit_upgrade: UnitUpgrade):
+        self.unit_upgrades.add(unit_upgrade, 1)
 
     def on_turn_start(self):
         for stat in self.stats:
