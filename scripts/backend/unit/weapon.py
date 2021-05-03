@@ -27,7 +27,7 @@ class Weapon(object):
         raise NotImplemented()
 
     def try_fire(self, tile:Tile) -> bool:
-        if self.unit.stats[EStat.AP]
+        return self.unit.stats[EStat.AP] >= self.costAP()
 
 
 class Laser(Weapon):
@@ -50,7 +50,7 @@ class Railgun(Weapon):
         super().__init__(name="Laser", unit=unit)
 
     def targetable_area(self):
-        return BattleBoard.disk(tile=self.unit.position, radius=self.unit.stats[EStat.VisionRadius])
+        return BattleBoard.tiling.disk(tile=self.unit.position, radius=self.unit.stats[EStat.VisionRadius])
 
     def area_of_effect(self, tile:Tile):
         return {tile}
@@ -68,7 +68,7 @@ class Missile(Weapon):
         return self.unit.position.circle(radius=self.unit.stats[EStat.VisionRadius])
 
     def area_of_effect(self, tile:Tile):
-        return BattleBoard.disk(tile=tile, radius=self.unit.stats[EStat.MissileRange])
+        return BattleBoard.tiling.disk(tile=tile, radius=self.unit.stats[EStat.MissileRange])
 
     def affected_units(self, tile:Tile):
 

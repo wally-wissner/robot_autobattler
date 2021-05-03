@@ -51,7 +51,7 @@ class EStat(AutoNameEnum):
 
 @total_ordering
 class Stat(object):
-    def __init__(self, estat:EStat, unit_upgrades, base_value=0, min_value=0, max_value=np.inf):
+    def __init__(self, estat: EStat, unit_upgrades, base_value=0, min_value=0, max_value=np.inf):
         self.estat = estat
         self.unit_upgrades = unit_upgrades
         self.base_value = base_value
@@ -153,9 +153,10 @@ class UnitUpgrade(object):
 
     def drop_rate(self):
         rates = {
-            "common": .05,
-            "uncommon": .01,
-            "rare": .005,
+            "common": .1,
+            "uncommon": .05,
+            "rare": .025,
+            "mythic": .0125,
         }
         return rates[self.rarity]
 
