@@ -14,10 +14,10 @@ class BaseWeapon(object):
     def targetable_area(self) -> Set[Tile]:
         raise NotImplemented()
 
-    def area_of_effect(self, tile:Tile) -> Iterable[Tile]:
+    def area_of_effect(self, target: Tile) -> Iterable[Tile]:
         raise NotImplemented()
 
-    def affected_units(self, tile:Tile) -> Iterable[Unit]:
+    def affected_units(self, target: Tile) -> Iterable[Unit]:
         raise NotImplemented()
 
     def damage(self) -> int:
@@ -26,10 +26,10 @@ class BaseWeapon(object):
     def costAP(self) -> int:
         raise NotImplemented()
 
-    def fire(self, tile:Tile) -> None:
+    def fire(self, target: Tile) -> None:
         raise NotImplemented()
 
-    def try_fire(self, tile:Tile) -> bool:
+    def try_fire(self, target: Tile) -> bool:
         return self.unit.stats[EStat.AP] >= self.costAP()
 
 
@@ -40,12 +40,18 @@ class Laser(BaseWeapon):
     def targetable_area(self):
         return self.unit.visible_tiles()
 
-    def area_of_effect(self, tile:Tile):
-        return {tile}
+    def area_of_effect(self, target:Tile):
+        return {target}
 
-    def affected_units(self, tile:Tile):
+    def affected_units(self, target:Tile):
+        ordered_units =
+        if self.unit.stats[EStat.LaserPenetration] > 0:
+            return ordered_units
+        else:
+            return ordered_units[0]
 
     def damage(self) -> int:
+        return self.unit.stats[EStat.BasePower] + self.unit.stats[EStat.LaserPower]
 
 
 class Railgun(BaseWeapon):
@@ -55,12 +61,14 @@ class Railgun(BaseWeapon):
     def targetable_area(self):
         return self.unit.visible_tiles()
 
-    def area_of_effect(self, tile:Tile):
-        return {tile}
+    def area_of_effect(self, target:Tile):
+        return {target}
 
-    def affected_units(self, tile:Tile):
+    def affected_units(self, target: Tile):
+        return {target}
 
     def damage(self) -> int:
+        return self.unit.stats[EStat.BasePower] + self.unit.stats[EStat.RailgunPower]
 
 
 class Missile(BaseWeapon):
@@ -70,12 +78,14 @@ class Missile(BaseWeapon):
     def targetable_area(self):
         return self.unit.visible_tiles()
 
-    def area_of_effect(self, tile:Tile):
-        return BattleBoard.tiling.disk(tile=tile, radius=self.unit.stats[EStat.MissileRange])
+    def area_of_effect(self, target: Tile):
+        return BattleBoard.instance().tiling.disk(tile=target, radius=self.unit.stats[EStat.MissileRange])
 
-    def affected_units(self, tile:Tile):
+    def affected_units(self, target: Tile):
+        return BattleBoard.instance().tiling.disk(tile=target, radius=self.unit.stats[EStat.MissileAOERadius])
 
     def damage(self) -> int:
+        return self.unit.stats[EStat.BasePower] + self.unit.stats[EStat.MissilePower]
 
 
 
@@ -86,9 +96,11 @@ class SelfDestruct(BaseWeapon):
     def targetable_area(self):
         return self.unit.position
 
-    def area_of_effect(self, tile: Tile):
-        return BattleBoard.tiling.disk(tile=self.unit.position, radius=self.unit.stats[EStat.SelfDestructRadius])
+    def area_of_effect(self, target: Tile):
+        return BattleBoard.instance().tiling.disk(tile=self.unit.position, radius=self.unit.stats[EStat.SelfDestructAEORadius])
 
-    def affected_units(self, tile: Tile):
+    def affected_units(self, target: Tile):
+        return BattleBoard.instance().tiling.disk(tile=target, radius=self.unit.stats[EStat.SelfDestructAEORadius])
 
     def damage(self) -> int:
+        return self.unit.stats[EStat.BasePower] + self.unit.stats[EStat.SelfDestructPower]

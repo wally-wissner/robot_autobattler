@@ -17,7 +17,7 @@ class Unit(object):
         self.unit_upgrades = Inventory()
         self.staus_effects = Inventory()
         self.stats = {
-            EStat.Attack: Stat(estat=EStat.Attack, unit_upgrades=self.unit_upgrades),
+            EStat.BasePower: Stat(estat=EStat.BasePower, unit_upgrades=self.unit_upgrades),
             EStat.Armor: Stat(estat=EStat.Armor, unit_upgrades=self.unit_upgrades),
             EStat.VisionDistance: Stat(estat=EStat.VisionRadius, unit_upgrades=self.unit_upgrades),
             EStat.AP: ConsumableStat(estat=EStat.AP, unit_upgrades=self.unit_upgrades, turn_start_state="full"),
@@ -37,16 +37,16 @@ class Unit(object):
 
 
     def defend(self, attacker, weapon):
-        if self.stats[EStat.Shields] > 0:
+        if self.stats[EStat.Shields].current_value > 0:
             self.stats[EStat.Shields] -= 1
         else:
-            # Attacks deal at least 1 damage.
+            # Attacks which land deal at least 1 damage.
             damage = max(damage, 1)
             self.take_damage(damage)
 
     def take_damage(self, damage):
         self.stats[EStat.HP] -= damage
-        if self.stats[EStat.HP] == 0:
+        if self.stats[EStat.HP].current_value <= 0:
             self.die()
 
     def die(self):
@@ -72,7 +72,7 @@ class Unit(object):
         # TODO
 
     def visible_tiles(self):
-        return BattleBoard.tiling.visible_tiles(self.position, self.stats[EStat.VisionRadius])
+        return BattleBoard.instance().tiling.visible_tiles(self.position, self.stats[EStat.VisionRadius])
 
     @property
     def position(self) -> Tile:

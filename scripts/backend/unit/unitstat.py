@@ -9,7 +9,7 @@ class EStat(AutoNameEnum):
     AP = auto()
     HP = auto()
     BP = auto()
-    Attack = auto()
+    BasePower = auto()
     VisionRadius = auto()
 
     MoveCostAP = auto()
@@ -28,7 +28,7 @@ class EStat(AutoNameEnum):
     MissilePower = auto()
     MissileCostAP = auto()
     MissileRange = auto()
-    MissileRadius = auto()
+    MissileAOERadius = auto()
 
     RailgunAccuracy = auto()
     RailgunAccuracyDropoff = auto()
@@ -48,7 +48,8 @@ class EStat(AutoNameEnum):
 
     Repair = auto()
 
-    SelfDestructRadius = auto()
+    SelfDestructPower = auto()
+    SelfDestructAEORadius = auto()
 
 
 @total_ordering
@@ -168,8 +169,8 @@ class UnitUpgrade(object):
 
 
 if __name__ == "__main__":
-    a = Stat(estat=EStat.Attack, unit_upgrades={}, base_value=10)
-    b = Stat(estat=EStat.Attack, unit_upgrades={}, base_value=5)
+    a = Stat(estat=EStat.BasePower, unit_upgrades={}, base_value=10)
+    b = Stat(estat=EStat.BasePower, unit_upgrades={}, base_value=5)
     print(a < b)
     print(a > b)
     print(a == b)

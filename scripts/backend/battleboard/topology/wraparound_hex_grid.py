@@ -7,7 +7,7 @@ from scripts.backend.battleboard.topology.hex_tile import Hex
 
 
 class TwistedTorusHexTiling(Tiling):
-    def __init__(self, board_radius: int, tile_size: Union[float, int], flat_top: bool=True):
+    def __init__(self, board_radius: int, tile_size: Union[float, int], flat_top: bool = True):
         super().__init__(tile_size=tile_size)
 
         self.board_radius = board_radius
@@ -36,7 +36,7 @@ class TwistedTorusHexTiling(Tiling):
     def modulo(self, tile: Hex) -> Hex:
         return tile - self.nearest_center(tile)
 
-    def disk(self, tile, radius) -> Set[Hex]:
+    def disk(self, tile: Hex, radius: int) -> Set[Hex]:
         return {self.modulo(hex) for hex in tile.disk(radius)}
 
     def lerp(self, start, end, t, modulo=True) -> Hex:
@@ -81,7 +81,7 @@ class TwistedTorusHexTiling(Tiling):
     def __repr__(self):
         return f"{self.__class__.__name__}(board_radius={self.board_radius})"
 
-    def round(self, tile, modulo=True) -> Hex:
+    def round(self, tile: Hex, modulo=True) -> Hex:
         rq = round(tile.q)
         rr = round(tile.r)
         rs = round(tile.s)
@@ -114,7 +114,7 @@ class TwistedTorusHexTiling(Tiling):
 
         return hex
 
-    def to_cartesian(self, tile) -> Vector2:
+    def to_cartesian(self, tile: Hex) -> Vector2:
         if self.flat_top:
             transformation = np.array([[3/2, 0], [np.sqrt(3)/2, np.sqrt(3)]])
         else:
