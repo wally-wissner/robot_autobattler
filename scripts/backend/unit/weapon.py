@@ -91,7 +91,7 @@ class Missile(BaseWeapon):
 
 class SelfDestruct(BaseWeapon):
     def __init__(self, unit):
-        super().__init__(name="Self Destruct", unit=unit)
+        super().__init__(name="Self-Destruct", unit=unit)
 
     def targetable_area(self):
         return self.unit.position
