@@ -30,8 +30,9 @@ class BaseWeapon(object):
         raise NotImplemented()
 
     def try_fire(self, target: Tile) -> bool:
-        return self.unit.stats[EStat.AP] >= self.costAP()
-
+        can_fire = (self.unit.stats[EStat.AP] >= self.costAP()) and (target in self.targetable_area())
+        self.fire(target)
+        return can_fire
 
 class Laser(BaseWeapon):
     def __init__(self, unit):
