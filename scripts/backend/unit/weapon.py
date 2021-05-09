@@ -56,7 +56,7 @@ class Laser(BaseWeapon):
 
 class Railgun(BaseWeapon):
     def __init__(self, unit):
-        super().__init__(name="Laser", unit=unit)
+        super().__init__(name="Railgun", unit=unit)
 
     def targetable_area(self):
         return self.unit.visible_tiles()
@@ -73,7 +73,7 @@ class Railgun(BaseWeapon):
 
 class Missile(BaseWeapon):
     def __init__(self, unit):
-        super().__init__(name="Laser", unit=unit)
+        super().__init__(name="Missile", unit=unit)
 
     def targetable_area(self):
         return self.unit.visible_tiles()
