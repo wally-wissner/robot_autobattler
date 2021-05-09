@@ -7,9 +7,9 @@ from scripts.backend.unit.unitstat import EStat
 
 
 class BaseWeapon(object):
-    def __init__(self, name, unit):
+    def __init__(self, name: str, attacker: Unit):
         self.name = name
-        self.unit = unit
+        self.unit = attacker
 
     def targetable_area(self) -> Set[Tile]:
         raise NotImplemented()
@@ -34,9 +34,10 @@ class BaseWeapon(object):
         self.fire(target)
         return can_fire
 
+
 class Laser(BaseWeapon):
-    def __init__(self, unit):
-        super().__init__(name="Laser", unit=unit)
+    def __init__(self, attacker: Unit):
+        super().__init__(name="Laser", attacker=attacker)
 
     def targetable_area(self):
         return self.unit.visible_tiles()
@@ -56,8 +57,8 @@ class Laser(BaseWeapon):
 
 
 class Railgun(BaseWeapon):
-    def __init__(self, unit):
-        super().__init__(name="Railgun", unit=unit)
+    def __init__(self, attacker: Unit):
+        super().__init__(name="Railgun", attacker=attacker)
 
     def targetable_area(self):
         return self.unit.visible_tiles()
@@ -73,8 +74,8 @@ class Railgun(BaseWeapon):
 
 
 class Missile(BaseWeapon):
-    def __init__(self, unit):
-        super().__init__(name="Missile", unit=unit)
+    def __init__(self, attacker: Unit):
+        super().__init__(name="Missile", attacker=attacker)
 
     def targetable_area(self):
         return self.unit.visible_tiles()
@@ -89,10 +90,9 @@ class Missile(BaseWeapon):
         return self.unit.stats[EStat.BasePower] + self.unit.stats[EStat.MissilePower]
 
 
-
 class SelfDestruct(BaseWeapon):
-    def __init__(self, unit):
-        super().__init__(name="Self-Destruct", unit=unit)
+    def __init__(self, attacker: Unit):
+        super().__init__(name="Self-Destruct", attacker=attacker)
 
     def targetable_area(self):
         return self.unit.position
