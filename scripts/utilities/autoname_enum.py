@@ -15,3 +15,5 @@ if __name__ == "__main__":
     print(Test.b)
     print(Test.a == Test.a)
     print(Test.a == Test.b)
+    print(Test.__getattr__("a"))
+    print(Test.__getattr__(name="b"))
