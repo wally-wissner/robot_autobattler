@@ -3,8 +3,7 @@
 - [check if a point is in a polygon](https://gis.stackexchange.com/questions/208546/check-if-a-point-falls-within-a-multipolygon-with-python)
 - [point in polygon](https://stackoverflow.com/questions/36399381/whats-the-fastest-way-of-checking-if-a-point-is-inside-a-polygon-in-python)
 - [shapely - point in polygon](https://automating-gis-processes.github.io/CSC18/lessons/L4/point-in-polygon.html)
-
-http://www-cs-students.stanford.edu/~amitp/Articles/HexLOS.html
+- [hex line of sight](http://www-cs-students.stanford.edu/~amitp/Articles/HexLOS.html)
 
 # UI
 - [pygame button](https://stackoverflow.com/questions/63435298/how-to-create-a-button-class-in-pygame)

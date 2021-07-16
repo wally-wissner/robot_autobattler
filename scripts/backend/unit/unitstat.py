@@ -71,11 +71,19 @@ class Stat(object):
                 if (stat_modifier.stat == self.estat) and (stat_modifier.type == "+"):
                     value += stat_modifier.value
 
-        # Multiple all multiplicative values.
+        # Multiply all multiplicative values.
         for unit_upgrade in self.unit_upgrades:
             for stat_modifier in unit_upgrade.stat_modifiers:
                 if (stat_modifier.stat == self.estat) and (stat_modifier.type == "*"):
                     value *= stat_modifier.value
+
+        # Set based on set values.
+        for unit_upgrade in self.unit_upgrades:
+            value = max(
+                stat_modifier.value
+                for stat_modifier in unit_upgrade.stat_modifiers
+                if (stat_modifier.stat == self.estat) and (stat_modifier.type == "=")
+            )
 
         # Bound value between min value and max value.
         return clamp(value, self.min_value, self.max_value)
@@ -136,8 +144,9 @@ class ConsumableStat(Stat):
 
 class StatModifier(object):
     def __init__(self, stat, quantity, operation):
-        if operation not in ["+", "*"]:
-            raise ValueError("Modifier type must be \"+\" or \"*\".")
+        operations = ["+", "*", "="]
+        if operation not in operations:
+            raise ValueError(f"Modifier type must be in {operations}.")
 
         self.stat = stat
         self.quantity = quantity
