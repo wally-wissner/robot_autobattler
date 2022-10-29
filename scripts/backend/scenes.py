@@ -2,7 +2,7 @@ from scripts.utilities.autoname_enum import AutoNameEnum, auto
 
 
 class EScene(AutoNameEnum):
-
+    raise NotImplemented()
 
 
 class _Scene(object):
@@ -19,7 +19,7 @@ class MainMenuScene(_Scene):
         pass
 
     def draw(self):
-
+        raise NotImplemented()
 
 class BattleMapScene(_Scene):
     def handle_event(self, input):
@@ -27,7 +27,7 @@ class BattleMapScene(_Scene):
         pass
 
     def draw(self):
-
+        raise NotImplemented()
 
 class AttackingScene(_Scene):
     def handle_event(self, input):

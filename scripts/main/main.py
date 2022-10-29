@@ -4,40 +4,44 @@ import numpy as np
 import pygame as pg
 import sys
 
-import scripts.backend.scenes as scenes
+# import scripts.backend.scenes as scenes
 from scripts.utilities.singleton import Singleton
 
+title = "Robot Autobattler"
+version = "0.0.1"
 
 @Singleton
 class Game(object):
-    def __init__(self, title, gui=True):
+    def __init__(self, gui=True):
         self.title = title
+        self.version = version
+
         self.gui = gui
 
         self.settings_file = "settings.json"
-        self.settings = self.read_settings()
+        self.settings = self.load_settings()
 
         self.delta_time = 0
 
         # test
-        self.circle_position = pg.Vector2(self.settings["width"] / 2, self.settings["height"] / 2)
+        self.circle_position = pg.Vector2(self.settings["display_resolution"]["current"][0] / 2, self.settings["display_resolution"]["current"][1] / 2)
 
         # self.load_data()
 
         if self.gui:
             # Pygame setup.
             pg.init()
-            self.display = pg.display.set_mode((self.settings["width"], self.settings["height"]))
-            self.fps = self.settings["fps"]
+            self.display = pg.display.set_mode((self.settings["display_resolution"]["current"][0], self.settings["display_resolution"]["current"][1]))
+            self.fps = self.settings["fps"]["current"]
             pg.display.set_caption(self.title)
             self.clock = pg.time.Clock()
             pg.key.set_repeat(500, 100)
 
         self.playing = True
 
-        self.active_scene = scenes.MainMenuScene()
+        # self.active_scene = scenes.MainMenuScene()
 
-    def read_settings(self):
+    def load_settings(self):
         with open(self.settings_file, 'r') as f:
             settings = json.load(f)
         return settings
@@ -47,11 +51,9 @@ class Game(object):
             json.dump(settings, f)
 
     def return_to_default_settings(self):
-        settings = {
-            "fps": 60,
-            "width": 800,
-            "height": 600,
-        }
+        settings = self.load_settings()
+        for setting in settings:
+            settings["current"] = settings["default"]
         self.save_settings(settings)
 
     def run(self):
@@ -66,7 +68,7 @@ class Game(object):
 
     def handle_events(self):
         for event in pg.event.get():
-            self.active_scene.handle_event(event)
+            # self.active_scene.handle_event(event)
 
             if event.type == pg.QUIT:
                 self.quit()
@@ -94,7 +96,8 @@ class Game(object):
     def draw(self):
 
         self.circle_position += np.random.randn(2)
-        pg.draw.circle(self.display, (0, 0, 255), self.circle_position, 25)
+        pg.draw.circle(self.display, (255, 255, 255), self.circle_position, 4)
+        pg.draw.circle(self.display, (0, 0, 255), self.circle_position, 3)
         # self.display.blit(bg, (0, 0))
         # pg.draw.rect()
 
@@ -104,8 +107,7 @@ class Game(object):
         return pg.Vector2()
 
     def pygame_to_relative(self, vec:pg.Vector2) -> pg.Vector2:
-        width = self.settings["width"]
-        height = self.settings["height"]
+        width, height = self.settings["display_resolution"]
         return pg.Vector2(vec.x / width - .5, .5 - vec.y / height)
 
     def quit(self):
@@ -122,5 +124,5 @@ class Game(object):
 
 
 if __name__ == "__main__":
-    g = Game(title="Robot RPG")
+    g = Game.instance()
     g.run()
