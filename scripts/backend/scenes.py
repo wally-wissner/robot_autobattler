@@ -1,11 +1,4 @@
-from scripts.utilities.autoname_enum import AutoNameEnum, auto
-
-
-class EScene(AutoNameEnum):
-    raise NotImplemented()
-
-
-class _Scene(object):
+class Scene(object):
     def handle_event(self, input):
         raise NotImplemented()
 
@@ -13,36 +6,41 @@ class _Scene(object):
         raise NotImplemented()
 
 
-class MainMenuScene(_Scene):
+class MainMenuScene(Scene):
     def handle_event(self, input):
         # todo
         pass
 
     def draw(self):
-        raise NotImplemented()
+        # todo
+        pass
 
-class BattleMapScene(_Scene):
+
+class SettingsMenuScene(Scene):
     def handle_event(self, input):
         # todo
         pass
 
     def draw(self):
-        raise NotImplemented()
-
-class AttackingScene(_Scene):
-    def handle_event(self, input):
         # todo
         pass
 
 
-
-class MovingScene(_Scene):
+class UpgradeScene(Scene):
     def handle_event(self, input):
-        #todo
+        # todo
+        pass
+
+    def draw(self):
+        # todo
         pass
 
 
-class DialogueScene(_Scene):
+class BattleScene(Scene):
     def handle_event(self, input):
-        #todo
+        # todo
+        pass
+
+    def draw(self):
+        # todo
         pass
