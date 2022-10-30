@@ -46,9 +46,9 @@ if __name__ == "__main__":
         def __init__(self):
             print('Foo created')
 
-    f = Foo()  # Error, this isn't how you get the instance of a singleton
-
     f = Foo.instance()  # Good. Being explicit is in line with the Python Zen
     g = Foo.instance()  # Returns already created instance
 
     print(f is g)  # True
+
+    f = Foo()  # Error, this isn't how you get the instance of a singleton

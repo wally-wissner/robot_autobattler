@@ -1,5 +1,6 @@
 matplotlib >= 3.0.2
 numpy >= 1.18.2
-pygame >= 2.0.0
+pygame >= 2.1.0
+pygame-gui >= 0.6.4
 scipy >= 1.5.4
 shapely >= 1.7.1
