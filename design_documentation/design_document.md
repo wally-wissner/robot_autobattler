@@ -1,23 +1,61 @@
 # Introduction
 
+## Name
+
+### Ideas
+- Invent XOR Die
+- INVENT xor DIE
+- evaluate(destroy);
+- robot.execute();
+- Third Law Safe (intellectual property issues?)
+- Cartridge delenda est
+- Fluid Metal
+- Soldiers of Fortran
+- Break These Bots
+- Some Disassembly Required
+- Punchcard Pandemonium
+- Punchcard Wars
+- Three Laws Safe
+- Invent or Die
+- Program or Perish
+- mutable
+- Fluid Steel
+- Shift Gears
+- Chain Reaction
+- Core Meltdown: Chain Reaction
+- RoboBattler
+- Journey to the Center of the Robosphere
+- Mother of Invention
+- Mechacophony
+- 3rd Law of Robodynamics
+- Laws of Robodynamics
+- Function ______
+- Execution _______
+- Execute _______
+- Compute _______
+- Evaluation Strategy
+- Custom Bots
+- Cyberbal of the Fittest
+- Iteration
+
 ## Description
 
-This game is a turn-based tactical RPG with the customizability of a trading card game. Survive, explore, and conquer a war-torn world, using parts from the robots you defeat to construct your own robot army. Whether you build a team of battlecruiser mechas or an exploding swarm of nanobots is up to you.
-
+GAMENAME is a non-traditional roguelike auto battler with the customizability of a collectable card game. Design a team of robots out of procedurally-generated modifications and battle commands. Whether you create a massive battlecruiser mecha or a swarm of exploding nanobots is up to you.
 
 ## Tags
 
-`rpg`, `strategy rpg`, `tactical rpg`, `procedurally generated`, `roguelike`
+`procedurally generated`, `roguelike`, `auto battler`, `deckbuilding`, `roguelike deckbuilder`, `rpg`, `strategy rpg`
 
 
 ## Player Experience
 
-The goal core player experience is of creative expression through designing the player's robots and accomplishment through protecting their creations via careful tactical battle. The game will achieve this by combining simple tactical low-variance gameplay mechanics with highly customizable robots which allow the player to change the rules of combat. Highly customizable robots give the player a sense of ownership over the game, while low-variance combat minimized the amount of "feel bad" moments where the player loses their creations.
-
+The goal core player experience is of creative expression through designing the player's robots and accomplishment through optimizing the robots' modifications under the chosen strategy to defeat enemies. The game will achieve this by eliminating tedious tactical decisions through automated battles which are driven by elements determined by the player's modifications to their robots.
 
 ## Gameplay
 
-Player and enemy units exist on a procedurally generated hexagonal grid. The player engages enemy units in combat and gets rewards from defeating enemy units in the form of in-game currency and dropped upgrades. The currency is used to level up the player's units in the form of an increased number of slots to apply the acquired upgrades.
+--Player and enemy units exist on a procedurally generated hexagonal grid. The player engages enemy units in combat and gets rewards from defeating enemy units in the form of in-game currency and dropped upgrades. The currency is used to level up the player's units in the form of an increased number of slots to apply the acquired upgrades.--
+
+
 
 
 ## Game Loop
@@ -74,8 +112,27 @@ With nine offense-defense matchups, it isn’t trivial to balance all these stat
 
 ## Scrap
 
-## Unit Upgrades
+## Gaining Scrap
 
+bonus scrap for meeting objectives
+
+objectives may as well be constant since player can't change behavior
+
+- fast clear
+- all allies alive
+- high max damage
+- high total damage
+- lots of actions in a turn
+
+## Unit Modifications
+
+## Buying and Selling Modifications
+
+duplicate owned modification
+
+sell owned modification
+
+duplicate unit
 
 # Upgrade System
 
@@ -84,16 +141,30 @@ With nine offense-defense matchups, it isn’t trivial to balance all these stat
 
 As a roguelike, a key goal for the enjoyability of the game is replayability. To make replays enjoyable, it is necessary to make the player have multiple and diverse play styles they aspire to try out. Two separate challenges arise from this goal. The first is to make there be diverse play styles worth trying out, and the second is making the player aware of those possibilities. 
 
-It is not trivial to make wide teams as good as tall teams, as wide teams get more AP per turn.
+~~It is not trivial to make wide teams as good as tall teams, as wide teams get more AP per turn.~~
 
 
-- don’t punish experimentation
-- low punishment for failure
-- low cost to respec units
-- make threats diverse to require diverse strategies/builds
-- make diversity fun with unique animations/sounds/achievements/shareable content
+- Don’t punish experimentation.
+- Low punishment for failure.
+- Low/no cost to reconfigure units.
+- Make threats diverse to require diverse strategies.
+- Make diversity fun with unique animations/sounds/achievements/shareable content.
 
 # UI
+
+## Preparation Scene
+
+### Units
+
+### Modifications
+
+### Badges
+
+### Programs
+
+### Current Unit
+
+### Current Modification
 
 ## Enemy Unit Stat UI
 

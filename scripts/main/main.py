@@ -21,8 +21,6 @@ class Game(object):
         self.settings = Settings()
         self.settings.load()
 
-        self.delta_time = 0
-
         # self.load_data()
 
         # Pygame setup.
@@ -32,9 +30,10 @@ class Game(object):
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
 
-        self.playing = True
-
+        # Game setup.
         self.active_scene = scenes.TestScene(self)
+        self.delta_time = 0
+        self.playing = True
 
     def run(self):
         self.display.fill((0, 0, 0))
