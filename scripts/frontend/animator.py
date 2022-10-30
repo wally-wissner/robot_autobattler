@@ -1,7 +1,8 @@
-from singleton import Singleton
+from scripts import Singleton
 
 
-class Animator(Singleton):
+@Singleton
+class Animator:
     def __init__(self):
         self.animate = True
         self.items_to_move = set()

@@ -58,8 +58,8 @@ class TestScene(Scene):
         super().__init__(game)
 
         self.circle_position = pg.Vector2(
-            self.game.settings["display_resolution"]["current"][0] / 2,
-            self.game.settings["display_resolution"]["current"][1] / 2,
+            self.game.settings.resolution[0] / 2,
+            self.game.settings.resolution[1] / 2,
         )
 
     def handle_event(self, inputs):

@@ -31,11 +31,11 @@ class ScreenObject(object):
             raise ValueError("Must specify speed of motion or time to execute motion.")
 
         self.moving = True
-        while self.position
+        while self.position:
+            pass
 
     def move_dt(self, dt):
-
-
+        pass
 
     def at_destination(self, tolerance=1e-6):
         return abs(self.position - self.destination) < tolerance

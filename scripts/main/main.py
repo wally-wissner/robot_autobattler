@@ -1,14 +1,16 @@
 # import cx_Freeze
-import json
 import pygame as pg
 import pygame_gui as gui
 import sys
 
 import scripts.backend.scenes as scenes
+from scripts.backend.settings import Settings
 from scripts.utilities.singleton import Singleton
+
 
 title = "Robot Autobattler"
 version = "0.0.1"
+
 
 @Singleton
 class Game(object):
@@ -16,8 +18,8 @@ class Game(object):
         self.title = title
         self.version = version
 
-        self.settings_file = "settings.json"
-        self.settings = self.load_settings()
+        self.settings = Settings()
+        self.settings.load()
 
         self.delta_time = 0
 
@@ -25,8 +27,7 @@ class Game(object):
 
         # Pygame setup.
         pg.init()
-        self.display = pg.display.set_mode((self.settings["display_resolution"]["current"][0], self.settings["display_resolution"]["current"][1]))
-        self.fps = self.settings["fps"]["current"]
+        self.display = pg.display.set_mode(self.settings.resolution)
         pg.display.set_caption(self.title)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
@@ -35,28 +36,14 @@ class Game(object):
 
         self.active_scene = scenes.TestScene(self)
 
-    def load_settings(self):
-        with open(self.settings_file, 'r') as f:
-            settings = json.load(f)
-        return settings
-
-    def save_settings(self, settings):
-        with open(self.settings_file, 'w') as f:
-            json.dump(settings, f)
-
-    def return_to_default_settings(self):
-        settings = self.load_settings()
-        for setting in settings:
-            settings["current"] = settings["default"]
-        self.save_settings(settings)
-
     def run(self):
         self.display.fill((0, 0, 0))
         while self.playing:
-            self.delta_time = self.clock.tick(self.fps) / 1000
+            self.delta_time = self.clock.tick(self.settings.fps) / 1000
             self.handle_events()
             self.update()
             self.draw()
+        self.quit()
 
     def handle_events(self):
         for event in pg.event.get():
@@ -107,7 +94,7 @@ class Game(object):
         return pg.Vector2()
 
     def pygame_to_relative(self, vec: pg.Vector2) -> pg.Vector2:
-        width, height = self.settings["display_resolution"]
+        width, height = self.settings.resolution
         return pg.Vector2(vec.x / width - .5, .5 - vec.y / height)
 
     def quit(self):
@@ -124,5 +111,5 @@ class Game(object):
 
 
 if __name__ == "__main__":
-    g = Game.instance()
-    g.run()
+    game = Game.instance()
+    game.run()

@@ -3,19 +3,19 @@
     "default": 30,
     "current": 30
   },
-  "display_resolution": {
+  "resolution": {
     "default": [800, 600],
     "current": [800, 600]
   },
-  "overall_volume": {
+  "volume_overall": {
     "default": 100,
     "current": 100
   },
-  "music_volume": {
+  "volume_music": {
     "default": 100,
     "current": 100
   },
-  "sfx_volume": {
+  "volume_sfx": {
     "default": 100,
     "current": 100
   }
