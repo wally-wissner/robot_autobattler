@@ -77,12 +77,10 @@ class TestScene(Scene):
 
         button_layout_rect = pg.Rect((0, 0), (100, 30))
 
-        manager = gui.UIManager(self.game.settings.resolution)
         button = gui.elements.UIButton(
             relative_rect=button_layout_rect,
             text='Hello',
-            manager=manager,
+            manager=self.game.manager,
             # container=gui.elements.CON,
         )
-        manager.update(self.game.delta_time)
-        manager.draw_ui(self.game.display)
+

@@ -27,6 +27,7 @@ class Game(object):
         pg.init()
         self.display = pg.display.set_mode(self.settings.resolution)
         pg.display.set_caption(self.title)
+        self.manager = gui.UIManager(self.settings.resolution)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
 
@@ -70,9 +71,11 @@ class Game(object):
 
     def update(self):
         pg.display.update()
+        self.manager.update(self.delta_time)
 
     def draw(self):
         self.active_scene.draw()
+        self.manager.draw_ui(self.display)
 
     def relative_to_pygame(self, relative) -> pg.Vector2:
         width, height = self.settings.resolution
