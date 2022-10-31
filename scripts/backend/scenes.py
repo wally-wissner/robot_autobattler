@@ -7,7 +7,7 @@ class Scene(object):
     def __init__(self, game):
         self.game = game
 
-    def handle_event(self, inputs):
+    def handle_events(self, events):
         raise NotImplemented()
 
     def draw(self):
@@ -15,7 +15,7 @@ class Scene(object):
 
 
 class MainMenuScene(Scene):
-    def handle_event(self, inputs):
+    def handle_events(self, events):
         # todo
         pass
 
@@ -25,7 +25,7 @@ class MainMenuScene(Scene):
 
 
 class SettingsMenuScene(Scene):
-    def handle_event(self, inputs):
+    def handle_events(self, events):
         # todo
         pass
 
@@ -35,7 +35,7 @@ class SettingsMenuScene(Scene):
 
 
 class UpgradeScene(Scene):
-    def handle_event(self, inputs):
+    def handle_events(self, events):
         # todo
         pass
 
@@ -45,7 +45,7 @@ class UpgradeScene(Scene):
 
 
 class BattleScene(Scene):
-    def handle_event(self, inputs):
+    def handle_events(self, events):
         # todo
         pass
 
@@ -63,9 +63,28 @@ class TestScene(Scene):
             self.game.settings.resolution[1] / 2,
         )
 
-    def handle_event(self, inputs):
-        # todo
-        pass
+    def handle_events(self, events):
+        for event in events:
+            if event.type == pg.QUIT:
+                self.quit()
+
+            if event.type == pg.KEYDOWN:
+                key = event.key
+
+                if key == pg.K_LEFT:
+                    self.circle_position += [-1, 0]
+                if key == pg.K_RIGHT:
+                    self.circle_position += [1, 0]
+
+            if event.type == pg.MOUSEBUTTONDOWN:
+                pos = event.pos
+                print(pos)
+                # if sprite.get_rect().collidepoint(x, y):
+                #     print('clicked on image')
+
+            if event.type == pg.MOUSEBUTTONUP:
+                pos = event.pos
+
 
     def draw(self):
         self.circle_position += np.random.randn(2)

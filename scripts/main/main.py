@@ -40,34 +40,13 @@ class Game(object):
         self.display.fill((0, 0, 0))
         while self.playing:
             self.delta_time = self.clock.tick(self.settings.fps) / 1000
-            self.handle_events()
+            self.handle_events(pg.event.get())
             self.update()
             self.draw()
         self.quit()
 
-    def handle_events(self):
-        for event in pg.event.get():
-            # self.active_scene.handle_event(event)
-
-            if event.type == pg.QUIT:
-                self.quit()
-
-            if event.type == pg.KEYDOWN:
-                key = event.key
-
-                if key == pg.K_LEFT:
-                    self.circle_position += [-1, 0]
-                if key == pg.K_RIGHT:
-                    self.circle_position += [1, 0]
-
-            if event.type == pg.MOUSEBUTTONDOWN:
-                pos = event.pos
-                print(pos)
-                # if sprite.get_rect().collidepoint(x, y):
-                #     print('clicked on image')
-
-            if event.type == pg.MOUSEBUTTONUP:
-                pos = event.pos
+    def handle_events(self, events):
+        self.active_scene.handle_events(events)
 
     def update(self):
         pg.display.update()
