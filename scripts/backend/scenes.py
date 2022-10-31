@@ -1,5 +1,6 @@
 import numpy as np
 import pygame as pg
+import pygame_gui as gui
 
 
 class Scene(object):
@@ -70,3 +71,18 @@ class TestScene(Scene):
         self.circle_position += np.random.randn(2)
         pg.draw.circle(self.game.display, (255, 255, 255), self.circle_position, 4)
         pg.draw.circle(self.game.display, (0, 0, 255), self.circle_position, 3)
+
+        # self.display.blit(bg, (0, 0))
+        # pg.draw.rect()
+
+        button_layout_rect = pg.Rect((0, 0), (100, 30))
+
+        manager = gui.UIManager(self.game.settings.resolution)
+        button = gui.elements.UIButton(
+            relative_rect=button_layout_rect,
+            text='Hello',
+            manager=manager,
+            # container=gui.elements.CON,
+        )
+        manager.update(self.game.delta_time)
+        manager.draw_ui(self.game.display)

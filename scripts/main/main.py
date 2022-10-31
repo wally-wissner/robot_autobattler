@@ -74,27 +74,13 @@ class Game(object):
     def draw(self):
         self.active_scene.draw()
 
-        # self.display.blit(bg, (0, 0))
-        # pg.draw.rect()
-
-        button_layout_rect = pg.Rect(30, 20, 100, 20)
-
-        # manager = gui.UIManager((800, 600))
-        # gui.elements.UIButton(
-        #     relative_rect=button_layout_rect,
-        #     text='Hello',
-        #     manager=manager,
-        #     container=self,
-        # )
-
-        # self.state.draw()
-
-    def relative_to_pygame(self, vec: pg.Vector2) -> pg.Vector2:
-        return pg.Vector2()
-
-    def pygame_to_relative(self, vec: pg.Vector2) -> pg.Vector2:
+    def relative_to_pygame(self, relative) -> pg.Vector2:
         width, height = self.settings.resolution
-        return pg.Vector2(vec.x / width - .5, .5 - vec.y / height)
+        return pg.Vector2(relative[0] * width, (1 - relative[1]) * height)
+
+    def pygame_to_relative(self, pixel) -> pg.Vector2:
+        width, height = self.settings.resolution
+        return pg.Vector2(pixel.x / width, 1 - pixel.y / height)
 
     def quit(self):
         pg.quit()
