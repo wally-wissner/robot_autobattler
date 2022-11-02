@@ -62,23 +62,23 @@ class Game(object):
 
     def relative_to_vector2(self, relative: pg.Vector2) -> pg.Vector2:
         relative = pg.Vector2(relative)
-        width, height = self.settings.resolution
-        return pg.Vector2(relative.x * width, (1 - relative.y) * height)
+        resolution_width, resolution_height = self.settings.resolution
+        return pg.Vector2(relative.x * resolution_width, (1 - relative.y) * resolution_height)
 
     def relative_to_rect(self, top_left: pg.Vector2, bottom_right: pg.Vector2) -> pg.Rect:
         vector2_top_left = self.relative_to_vector2(top_left)
         vector2_bottom_right = self.relative_to_vector2(bottom_right)
-        width = vector2_bottom_right.x - vector2_top_left.x
-        height = vector2_top_left.y - vector2_bottom_right.y
+        rect_width = vector2_bottom_right.x - vector2_top_left.x
+        rect_height = vector2_top_left.y - vector2_bottom_right.y
         return pg.Rect(
             vector2_top_left,
-            (width, height)
+            (rect_width, rect_height)
         )
 
     def vector2_to_relative(self, pixel: pg.Vector2) -> pg.Vector2:
         pixel = pg.Vector2(pixel)
-        width, height = self.settings.resolution
-        return pg.Vector2(pixel.x / width, 1 - pixel.y / height)
+        resolution_width, resolution_height = self.settings.resolution
+        return pg.Vector2(pixel.x / resolution_width, 1 - pixel.y / resolution_height)
 
     def quit(self):
         pg.quit()
