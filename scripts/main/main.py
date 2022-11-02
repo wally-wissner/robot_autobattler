@@ -46,6 +46,10 @@ class Game(object):
         self.quit()
 
     def handle_events(self, events):
+        for event in events:
+            if event.type == pg.QUIT:
+                self.quit()
+
         self.active_scene.handle_events(events)
 
     def update(self):
@@ -56,11 +60,21 @@ class Game(object):
         self.active_scene.draw()
         self.manager.draw_ui(self.display)
 
-    def relative_to_pygame(self, relative) -> pg.Vector2:
+    def relative_to_vector2(self, relative) -> pg.Vector2:
         width, height = self.settings.resolution
         return pg.Vector2(relative[0] * width, (1 - relative[1]) * height)
 
-    def pygame_to_relative(self, pixel) -> pg.Vector2:
+    def relative_to_rect(self, top_left, bottom_right) -> pg.Rect:
+        vector2_top_left = self.relative_to_vector2(top_left)
+        vector2_bottom_right = self.relative_to_vector2(bottom_right)
+        width = vector2_bottom_right.x - vector2_top_left.x
+        height = vector2_top_left.y - vector2_bottom_right.y
+        return pg.Rect(
+            vector2_top_left,
+            (width, height)
+        )
+
+    def vector2_to_relative(self, pixel) -> pg.Vector2:
         width, height = self.settings.resolution
         return pg.Vector2(pixel.x / width, 1 - pixel.y / height)
 

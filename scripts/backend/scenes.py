@@ -20,8 +20,14 @@ class MainMenuScene(Scene):
         pass
 
     def draw(self):
-        # todo
-        pass
+        button_new_game = gui.elements.UIButton(
+            relative_rect=pg.Rect(
+                self.game.relative_to_vector2((.45, .5)),
+                self.game.relative_to_vector2((.55, .45)),
+            ),
+            text="New Game",
+            manager=self.game.manager,
+        )
 
 
 class SettingsMenuScene(Scene):
@@ -65,9 +71,6 @@ class TestScene(Scene):
 
     def handle_events(self, events):
         for event in events:
-            if event.type == pg.QUIT:
-                self.quit()
-
             if event.type == pg.KEYDOWN:
                 key = event.key
 
@@ -98,8 +101,13 @@ class TestScene(Scene):
 
         button = gui.elements.UIButton(
             relative_rect=button_layout_rect,
-            text='Hello',
+            text="Hello",
             manager=self.game.manager,
             # container=gui.elements.CON,
         )
 
+        button_new_game = gui.elements.UIButton(
+            relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
+            text="New Game",
+            manager=self.game.manager,
+        )
