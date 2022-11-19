@@ -1,7 +1,6 @@
-# import cx_Freeze
 import pygame as pg
-import pygame_gui as gui
 import sys
+from pygame_gui.ui_manager import UIManager
 
 import scripts.backend.scenes as scenes
 from scripts.backend.settings import Settings
@@ -27,12 +26,12 @@ class Game(object):
         pg.init()
         self.display = pg.display.set_mode(self.settings.resolution)
         pg.display.set_caption(self.title)
-        self.manager = gui.UIManager(self.settings.resolution)
+        self.manager = UIManager(self.settings.resolution)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
 
         # Game setup.
-        self.active_scene = scenes.TestScene(self)
+        self.active_scene = scenes.MainMenuScene(self)
         self.delta_time = 0
         self.playing = True
 
@@ -65,14 +64,13 @@ class Game(object):
         resolution_width, resolution_height = self.settings.resolution
         return pg.Vector2(relative.x * resolution_width, (1 - relative.y) * resolution_height)
 
-    def relative_to_rect(self, top_left: pg.Vector2, bottom_right: pg.Vector2) -> pg.Rect:
-        vector2_top_left = self.relative_to_vector2(top_left)
-        vector2_bottom_right = self.relative_to_vector2(bottom_right)
-        rect_width = vector2_bottom_right.x - vector2_top_left.x
-        rect_height = vector2_top_left.y - vector2_bottom_right.y
+    def relative_to_rect(self, bottom_left: pg.Vector2, top_right: pg.Vector2) -> pg.Rect:
+        vector2_bottom_left = self.relative_to_vector2(bottom_left)
+        vector2_top_right = self.relative_to_vector2(top_right)
+        difference = vector2_top_right - vector2_bottom_left
         return pg.Rect(
-            vector2_top_left,
-            (rect_width, rect_height)
+            (vector2_bottom_left.x, vector2_bottom_left.y + difference.y),
+            (difference.x, -difference.y)
         )
 
     def vector2_to_relative(self, pixel: pg.Vector2) -> pg.Vector2:

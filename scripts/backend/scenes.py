@@ -1,6 +1,7 @@
 import numpy as np
 import pygame as pg
-import pygame_gui as gui
+from pygame_gui.elements import UIButton, UIPanel
+from pygame_gui.elements.ui_window import UIWindow
 
 
 class Scene(object):
@@ -15,22 +16,44 @@ class Scene(object):
 
 
 class MainMenuScene(Scene):
+    def __init__(self, game):
+        super().__init__(game)
+
+        self.buttons_container = UIPanel(
+            relative_rect=self.game.relative_to_rect((.05, .05), (.95, .95)),
+            starting_layer_height=0,
+            manager=self.game.manager,
+        )
+
+        self.button_new_game = UIButton(
+            relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
+            text="New Game",
+            manager=self.game.manager,
+            container=self.buttons_container,
+        )
+
+        self.button_settings = UIButton(
+            relative_rect=self.game.relative_to_rect((.40, .35), (.60, .45)),
+            text="Settings",
+            manager=self.game.manager,
+            container=self.buttons_container,
+        )
+
     def handle_events(self, events):
+        # for event in events:
+        #     if event.ui_element == self.
         # todo
         pass
 
     def draw(self):
-        button_new_game = gui.elements.UIButton(
-            relative_rect=pg.Rect(
-                self.game.relative_to_vector2((.45, .5)),
-                self.game.relative_to_vector2((.55, .45)),
-            ),
-            text="New Game",
-            manager=self.game.manager,
-        )
+        # todo
+        pass
 
 
 class SettingsMenuScene(Scene):
+    def __init__(self, game):
+        super().__init__(game)
+
     def handle_events(self, events):
         # todo
         pass
@@ -51,6 +74,9 @@ class UpgradeScene(Scene):
 
 
 class BattleScene(Scene):
+    def __init__(self, game):
+        super().__init__(game)
+    
     def handle_events(self, events):
         # todo
         pass
@@ -67,6 +93,21 @@ class TestScene(Scene):
         self.circle_position = pg.Vector2(
             self.game.settings.resolution[0] / 2,
             self.game.settings.resolution[1] / 2,
+        )
+
+        self.button_layout_rect = pg.Rect((0, 0), (100, 30))
+
+        self.button = UIButton(
+            relative_rect=self.button_layout_rect,
+            text="Hello",
+            manager=self.game.manager,
+            # container=gui.elements.CON,
+        )
+
+        self.button_new_game = UIButton(
+            relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
+            text="New Game",
+            manager=self.game.manager,
         )
 
     def handle_events(self, events):
@@ -88,7 +129,6 @@ class TestScene(Scene):
             if event.type == pg.MOUSEBUTTONUP:
                 pos = event.pos
 
-
     def draw(self):
         self.circle_position += np.random.randn(2)
         pg.draw.circle(self.game.display, (255, 255, 255), self.circle_position, 4)
@@ -97,17 +137,3 @@ class TestScene(Scene):
         # self.display.blit(bg, (0, 0))
         # pg.draw.rect()
 
-        button_layout_rect = pg.Rect((0, 0), (100, 30))
-
-        button = gui.elements.UIButton(
-            relative_rect=button_layout_rect,
-            text="Hello",
-            manager=self.game.manager,
-            # container=gui.elements.CON,
-        )
-
-        button_new_game = gui.elements.UIButton(
-            relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
-            text="New Game",
-            manager=self.game.manager,
-        )
