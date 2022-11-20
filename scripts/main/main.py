@@ -4,6 +4,7 @@ from pygame_gui.ui_manager import UIManager
 
 import scripts.backend.scenes as scenes
 from scripts.backend.settings import Settings
+from scripts.frontend import colors
 from scripts.utilities.singleton import Singleton
 
 
@@ -36,7 +37,7 @@ class Game(object):
         self.playing = True
 
     def run(self):
-        self.display.fill((0, 0, 0))
+        self.display.fill(colors.blue)
         while self.playing:
             self.delta_time = self.clock.tick(self.settings.fps) / 1000
             self.handle_events(pg.event.get())

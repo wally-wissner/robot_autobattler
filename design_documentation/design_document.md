@@ -3,9 +3,9 @@
 ## Name
 
 ### Ideas
+- evaluate(destroy);
 - Invent XOR Die
 - INVENT xor DIE
-- evaluate(destroy);
 - robot.execute();
 - Third Law Safe (intellectual property issues?)
 - Cartridge delenda est

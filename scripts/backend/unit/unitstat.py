@@ -1,55 +1,8 @@
 import numpy as np
 from functools import total_ordering
 
-from scripts.utilities.autoname_enum import AutoNameEnum, auto
+from scripts.utilities.enums import EStat
 from scripts.utilities.game_math import clamp
-
-
-class EStat(AutoNameEnum):
-    AP = auto()
-    HP = auto()
-    BP = auto()
-    BasePower = auto()
-    VisionRadius = auto()
-
-    MoveCostAP = auto()
-
-    LaserAccuracy = auto()
-    LaserAccuracyDropoff = auto()
-    LaserPower = auto()
-    LaserCostAP = auto()
-    LaserCharges = auto()
-    LaserPenetration = auto()
-    LaserSubsequentCostAP = auto()
-    LaserActionDischargeAll = auto()
-
-    MissileAccuracy = auto()
-    MissileAccuracyDropoff = auto()
-    MissilePower = auto()
-    MissileCostAP = auto()
-    MissileRange = auto()
-    MissileAOERadius = auto()
-
-    RailgunAccuracy = auto()
-    RailgunAccuracyDropoff = auto()
-    RailgunPower = auto()
-    RailgunCostAP = auto()
-    RailgunRange = auto()
-    RailgunRicochet = auto()
-    RailgunFragmentation = auto()
-
-    Armor = auto()
-
-    Evasion = auto()
-    EvasionFriendlyFire = auto()
-
-    ShieldCharges = auto()
-    SmartShields = auto()
-
-    Repair = auto()
-
-    SelfDestructPower = auto()
-    SelfDestructAEORadius = auto()
 
 
 @total_ordering
@@ -175,17 +128,3 @@ class UnitUpgrade(object):
     def draw(self):
         # TODO
         raise NotImplemented()
-
-
-if __name__ == "__main__":
-    a = Stat(estat=EStat.BasePower, unit_upgrades={}, base_value=10)
-    b = Stat(estat=EStat.BasePower, unit_upgrades={}, base_value=5)
-    print(a < b)
-    print(a > b)
-    print(a == b)
-
-    g = StatModifier(EStat.Armor, 5, operation="*")
-
-    print(g)
-
-    print(list(EStat))
