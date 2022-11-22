@@ -1,6 +1,6 @@
 import numpy as np
 import pygame as pg
-from pygame_gui.elements import UIButton, UIPanel
+from pygame_gui.elements import UIButton, UIImage, UIPanel
 from pygame_gui.elements.ui_window import UIWindow
 
 
@@ -26,17 +26,25 @@ class MainMenuScene(Scene):
         )
 
         self.button_new_game = UIButton(
+            relative_rect=self.game.relative_to_rect((.40, .65), (.60, .75)),
+            text="Continue",
+            manager=self.game.manager,
+            # container=self.buttons_container,
+        )
+
+        self.button_new_game = UIButton(
             relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
             text="New Game",
             manager=self.game.manager,
-            container=self.buttons_container,
+            # container=self.buttons_container,
         )
 
-        self.button_settings = UIButton(
-            relative_rect=self.game.relative_to_rect((.40, .35), (.60, .45)),
-            text="Settings",
+        settings_icon = pg.image.load("../../assets/images/ui/settings-icon.png").convert_alpha()
+        self.button_settings = UIImage(
+            self.game.relative_to_rect((.95, .95), (.99, .99)),
+            settings_icon,
             manager=self.game.manager,
-            container=self.buttons_container,
+            # container=self.buttons_container,
         )
 
     def handle_events(self, events):
@@ -64,6 +72,9 @@ class SettingsMenuScene(Scene):
 
 
 class UpgradeScene(Scene):
+    def __init__(self, game):
+        super().__init__(game)
+
     def handle_events(self, events):
         # todo
         pass

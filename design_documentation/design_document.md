@@ -56,7 +56,12 @@ The goal core player experience is of creative expression through designing the 
 --Player and enemy units exist on a procedurally generated hexagonal grid. The player engages enemy units in combat and gets rewards from defeating enemy units in the form of in-game currency and dropped upgrades. The currency is used to level up the player's units in the form of an increased number of slots to apply the acquired upgrades.--
 
 
+Don't randomize the deck / the whole deck. Since the player isn't playing during combat, there's no need to make each experience feel so different.
+- counter spell
+- empty resource pool
+- shuffle
 
+Don't need to make players choose between items. Since the units have a cap on items they can equip, more items doesn't automatically make the units stronger.
 
 ## Game Loop
 
