@@ -3,7 +3,7 @@ from typing import Iterable, Union
 from scripts.backend.battleboard.procedural_generation.procedural_generator import ProceduralGenerator
 from scripts.backend.battleboard.battle_tile import BattleTile
 from scripts.backend.battleboard.topology.discrete_topology import Tile, Tiling
-from scripts.backend.unit.unit import Unit
+from scripts.backend.unit import Unit
 from scripts.utilities.singleton import Singleton
 
 

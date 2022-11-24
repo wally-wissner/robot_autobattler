@@ -1,9 +1,9 @@
-from typing import Iterable, List, Set
+from typing import Iterable, Set
 
 from scripts.backend.battleboard.battleboard import BattleBoard
 from scripts.backend.battleboard.topology.discrete_topology import Tile
-from scripts.backend.unit.unit import Unit
-from scripts.backend.unit.unitstat import EStat
+from scripts.backend.unit import Unit
+from scripts.backend.unitstat import EStat
 
 
 class BaseWeapon(object):

@@ -1,5 +1,5 @@
-from scripts.backend.unit.unit import Unit
-from scripts.backend.unit.unitstat import EStat
+from scripts.backend.unit import Unit
+from scripts.backend.unitstat import EStat
 from scripts.backend.battleboard.topology.discrete_topology import Tile
 
 
@@ -84,10 +84,12 @@ class CommandMove(CommandBattle):
 
 
 class CommandCreateUnit(CommandUpgrade):
-
+    # TODO
+    pass
 
 class CommandPromoteUnit(CommandUpgrade):
-
+    # TODO
+    pass
 
 
 class CommandEquip(CommandUpgrade):
@@ -99,6 +101,6 @@ class CommandEquip(CommandUpgrade):
         return self.cost() <= self.team.currency
 
 
-
-
 class CommandUnequip(CommandUpgrade):
+    # TODO
+    pass

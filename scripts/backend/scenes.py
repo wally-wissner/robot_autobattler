@@ -22,20 +22,20 @@ class MainMenuScene(Scene):
         self.buttons_container = UIPanel(
             relative_rect=self.game.relative_to_rect((.05, .05), (.95, .95)),
             starting_layer_height=0,
-            manager=self.game.manager,
+            manager=self.game.ui_manager,
         )
 
         self.button_new_game = UIButton(
             relative_rect=self.game.relative_to_rect((.40, .65), (.60, .75)),
             text="Continue",
-            manager=self.game.manager,
+            manager=self.game.ui_manager,
             # container=self.buttons_container,
         )
 
         self.button_new_game = UIButton(
             relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
             text="New Game",
-            manager=self.game.manager,
+            manager=self.game.ui_manager,
             # container=self.buttons_container,
         )
 
@@ -43,7 +43,7 @@ class MainMenuScene(Scene):
         self.button_settings = UIImage(
             self.game.relative_to_rect((.95, .95), (.99, .99)),
             settings_icon,
-            manager=self.game.manager,
+            manager=self.game.ui_manager,
             # container=self.buttons_container,
         )
 
@@ -111,19 +111,19 @@ class TestScene(Scene):
         self.button = UIButton(
             relative_rect=self.button_layout_rect,
             text="Hello",
-            manager=self.game.manager,
+            manager=self.game.ui_manager,
             # container=gui.elements.CON,
         )
 
         self.button_new_game = UIButton(
             relative_rect=self.game.relative_to_rect((.40, .5), (.60, .6)),
             text="New Game",
-            manager=self.game.manager,
+            manager=self.game.ui_manager,
         )
 
     def handle_events(self, events):
         for event in events:
-            if event.type == pg.KEYDOWN:
+            if event.operation == pg.KEYDOWN:
                 key = event.key
 
                 if key == pg.K_LEFT:
@@ -131,13 +131,13 @@ class TestScene(Scene):
                 if key == pg.K_RIGHT:
                     self.circle_position += [1, 0]
 
-            if event.type == pg.MOUSEBUTTONDOWN:
+            if event.operation == pg.MOUSEBUTTONDOWN:
                 pos = event.pos
                 print(pos)
                 # if sprite.get_rect().collidepoint(x, y):
                 #     print('clicked on image')
 
-            if event.type == pg.MOUSEBUTTONUP:
+            if event.operation == pg.MOUSEBUTTONUP:
                 pos = event.pos
 
     def draw(self):

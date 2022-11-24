@@ -1,19 +1,26 @@
 from enum import Enum, auto
 
 
-class ERarity(Enum):
+class AutoNameEnum(Enum):
+    def _generate_next_value_(self, start, count, last_values):
+        return self
+
+
+class ERarity(AutoNameEnum):
     COMMON = auto()
     UNCOMMON = auto()
     RARE = auto()
 
 
-class EStat(Enum):
+class EStat(AutoNameEnum):
     SIZE = auto()
     MASS = auto()
 
-    MAX_HP = auto()
+    HP = auto()
 
-    MAX_AP = auto()
+    BP = auto()
+
+    AP = auto()
     AP_SOT_ENDURANCE = auto()
     AP_ON_EOT = auto()
 
@@ -26,8 +33,9 @@ class EStat(Enum):
     KNOCKBACK = auto()
     KNOCKBACK_DAMAGE = auto()
 
-    ATTACK_ADDER = auto()
-    ATTACK_MULTIPLIER = auto()
+    POWER = auto()
+    POWER_ADDER = auto()
+    POWER_MULTIPLIER = auto()
 
     LASER_DISPERSION_ANGLE = auto()
     LASER_ACCURACY = auto()
@@ -86,19 +94,19 @@ class EStat(Enum):
     REACT_ATTACKS = auto()
 
 
-class EOperation(Enum):
-    PLUS = auto()
-    TIMES = auto()
-    ASSIGN = auto()
+class EOperation(AutoNameEnum):
+    PLUS = "+"
+    TIMES = "*"
+    ASSIGN = "="
 
 
-class EWeapon(Enum):
+class EWeapon(AutoNameEnum):
     LASER = auto()
     MISSILE_LAUNCHER = auto()
     RAILGUN = auto()
 
 
-class EUnitAction(Enum):
+class EUnitAction(AutoNameEnum):
     ATTACK = auto()
     CHARGE_LASERS = auto()
     CHARGE_SHIELDS = auto()
@@ -107,46 +115,50 @@ class EUnitAction(Enum):
     REPAIR = auto()
 
 
-class EResource(Enum):
+class EResource(AutoNameEnum):
     BATTERY = auto()
     MISSILE = auto()
     REPAIR_KIT = auto()
 
 
-class EDevice(Enum):
+class EDevice(AutoNameEnum):
     pass
 
 
-class ECardEffectAction(Enum):
+class ECardEffectAction(AutoNameEnum):
     DEALS_DAMAGE = auto()
     DRAW = auto()
 
 
-class EActorCategory(Enum):
+class EActorCategory(AutoNameEnum):
     ALLY = auto()
     ENEMY = auto()
     UNIT = auto()
 
 
-class ETargetCategory(Enum):
+class ETargetCategory(AutoNameEnum):
     ALLY = auto()
     ENEMY = auto()
     UNIT = auto()
 
 
-class ECardActorProperty(Enum):
+class ECardActorProperty(AutoNameEnum):
     pass
 
 
-class ECardActorQuantity(Enum):
+class ECardActorQuantity(AutoNameEnum):
     INTEGER = auto()
     EACH = auto()
 
 
-class ECardTargetProperty(Enum):
+class ECardTargetProperty(AutoNameEnum):
     pass
 
 
-class ECardTargetQuantity(Enum):
+class ECardTargetQuantity(AutoNameEnum):
     INTEGER = auto()
     EACH = auto()
+
+
+class EElement(AutoNameEnum):
+    pass

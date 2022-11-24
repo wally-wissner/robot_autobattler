@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Basic Boost",
+    "rarity": "COMMON",
+    "stat_modifiers": [
+      ["POWER", "PLUS", 5],
+      ["ARMOR", "PLUS", 5]
+    ]
+  }
+]

@@ -21,13 +21,13 @@ class Stat(object):
         # Add all additive modifiers.
         for unit_upgrade in self.unit_upgrades:
             for stat_modifier in unit_upgrade.stat_modifiers:
-                if (stat_modifier.stat == self.estat) and (stat_modifier.type == "+"):
+                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == "+"):
                     value += stat_modifier.value
 
         # Multiply all multiplicative values.
         for unit_upgrade in self.unit_upgrades:
             for stat_modifier in unit_upgrade.stat_modifiers:
-                if (stat_modifier.stat == self.estat) and (stat_modifier.type == "*"):
+                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == "*"):
                     value *= stat_modifier.value
 
         # Set based on set values.
@@ -35,7 +35,7 @@ class Stat(object):
             value = max(
                 stat_modifier.value
                 for stat_modifier in unit_upgrade.stat_modifiers
-                if (stat_modifier.stat == self.estat) and (stat_modifier.type == "=")
+                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == "=")
             )
 
         # Bound value between min value and max value.
@@ -96,35 +96,35 @@ class ConsumableStat(Stat):
 
 
 class StatModifier(object):
-    def __init__(self, stat, quantity, operation):
-        operations = ["+", "*", "="]
+    def __init__(self, stat, operation, value):
+        operations = {"+", "*", "="}
         if operation not in operations:
             raise ValueError(f"Modifier type must be in {operations}.")
 
         self.stat = stat
-        self.quantity = quantity
-        self.type = operation
+        self.operation = operation
+        self.value = value
 
     def __repr__(self):
-        return f"StatModifier({self.stat} {self.type} {self.quantity})"
+        return f"StatModifier({self.stat} {self.operation} {self.value})"
 
 
-class UnitUpgrade(object):
-    def __init__(self, name, rarity, description, stat_modifiers):
-        self.name = name
-        self.rarity = rarity
-        self.description = description
-        self.stat_modifiers = stat_modifiers
-
-    def drop_rate(self):
-        rates = {
-            "common": .1,
-            "uncommon": .05,
-            "rare": .025,
-            "mythic": .0125,
-        }
-        return rates[self.rarity]
-
-    def draw(self):
-        # TODO
-        raise NotImplemented()
+# class UnitUpgrade(object):
+#     def __init__(self, name, rarity, description, stat_modifiers):
+#         self.name = name
+#         self.rarity = rarity
+#         self.description = description
+#         self.stat_modifiers = stat_modifiers
+#
+#     def drop_rate(self):
+#         rates = {
+#             "common": .1,
+#             "uncommon": .05,
+#             "rare": .025,
+#             "mythic": .0125,
+#         }
+#         return rates[self.rarity]
+#
+#     def draw(self):
+#         # TODO
+#         raise NotImplemented()

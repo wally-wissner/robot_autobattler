@@ -3,6 +3,7 @@ import sys
 from pygame_gui.ui_manager import UIManager
 
 import scripts.backend.scenes as scenes
+from scripts.backend.combat import CombatManager
 from scripts.backend.settings import Settings
 from scripts.frontend import colors
 from scripts.utilities.singleton import Singleton
@@ -27,12 +28,13 @@ class Game(object):
         pg.init()
         self.display = pg.display.set_mode(self.settings.resolution)
         pg.display.set_caption(self.title)
-        self.manager = UIManager(self.settings.resolution)
+        self.ui_manager = UIManager(self.settings.resolution)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
 
         # Game setup.
         self.active_scene = scenes.MainMenuScene(self)
+        self.combat_manager = CombatManager.instance()
         self.delta_time = 0
         self.playing = True
 
@@ -47,18 +49,18 @@ class Game(object):
 
     def handle_events(self, events):
         for event in events:
-            if event.type == pg.QUIT:
+            if event.operation == pg.QUIT:
                 self.quit()
 
         self.active_scene.handle_events(events)
 
     def update(self):
         pg.display.update()
-        self.manager.update(self.delta_time)
+        self.ui_manager.update(self.delta_time)
 
     def draw(self):
         self.active_scene.draw()
-        self.manager.draw_ui(self.display)
+        self.ui_manager.draw_ui(self.display)
 
     def relative_to_vector2(self, relative: pg.Vector2) -> pg.Vector2:
         relative = pg.Vector2(relative)
