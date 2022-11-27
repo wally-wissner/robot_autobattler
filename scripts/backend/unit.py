@@ -12,18 +12,23 @@ class Unit(object):
     def __init__(self, team):
         self.team = team
 
-        # self.weapons =
-
         self.level = 3
         self.unit_upgrades = Inventory()
         self.status_effects = Inventory()
         self.stats = {
-            EStat.BASE_POWER: Stat(estat=EStat.BASE_POWER, unit_upgrades=self.unit_upgrades),
-            EStat.ARMOR: Stat(estat=EStat.ARMOR, unit_upgrades=self.unit_upgrades),
-            EStat.VISION_RADIUS: Stat(estat=EStat.VISION_RADIUS, unit_upgrades=self.unit_upgrades),
-            EStat.AP: ConsumableStat(estat=EStat.AP, unit_upgrades=self.unit_upgrades, turn_start_state="full"),
+            # Simple stats
+            stat: Stat(estat=stat, unit_upgrades=self.unit_upgrades)
+            for stat in [
+                EStat.SIZE,
+                EStat.MASS,
+                EStat.POWER,
+                EStat.ARMOR,
+            ]
+        } | {
+            # Consumable stats
             EStat.BP: ConsumableStat(estat=EStat.BP, unit_upgrades=self.unit_upgrades),
-            EStat.HP: ConsumableStat(estat=EStat.HP, unit_upgrades=self.unit_upgrades, level_start_state="full"),
+            EStat.HP: ConsumableStat(estat=EStat.HP, unit_upgrades=self.unit_upgrades, refill_on_level_start=True),
+            EStat.AP: ConsumableStat(estat=EStat.AP, unit_upgrades=self.unit_upgrades, refill_on_turn_start=True),
         }
 
         self._position = None
@@ -31,7 +36,7 @@ class Unit(object):
         # TODO: units that occupy more than one space
         # self.occupying = []
 
-    def attack(self, target:Tile):
+    def attack(self, target: Tile):
         # TODO
         pass
 
@@ -59,7 +64,6 @@ class Unit(object):
 
     def level_up_cost(self):
         return int(np.sqrt(self.level))
-
 
     def move_to_adjacent(self, tile: Tile):
         # TODO

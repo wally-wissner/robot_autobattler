@@ -87,6 +87,7 @@ class CommandCreateUnit(CommandUpgrade):
     # TODO
     pass
 
+
 class CommandPromoteUnit(CommandUpgrade):
     # TODO
     pass

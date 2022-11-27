@@ -24,10 +24,6 @@ class EStat(AutoNameEnum):
     AP_SOT_ENDURANCE = auto()
     AP_ON_EOT = auto()
 
-    BASE_POWER = auto()
-
-    VISION_RADIUS = auto()
-
     MOVE_COST_AP = auto()
 
     KNOCKBACK = auto()
@@ -39,7 +35,7 @@ class EStat(AutoNameEnum):
 
     LASER_DISPERSION_ANGLE = auto()
     LASER_ACCURACY = auto()
-    LASER_ACURACY_DROPOFF = auto()
+    LASER_ACCURACY_DROPOFF = auto()
     LASER_POWER = auto()
     LASER_COST_AP = auto()
     LASER_CHARGES = auto()
@@ -113,12 +109,18 @@ class EUnitAction(AutoNameEnum):
     DIE = auto()
     EXPLODE = auto()
     REPAIR = auto()
+    PRODUCE = auto()
 
 
 class EResource(AutoNameEnum):
-    BATTERY = auto()
+    ENERGY = auto()
+    PLASMA = auto()
+    CAPACITOR = auto()
     MISSILE = auto()
-    REPAIR_KIT = auto()
+    BOMB = auto()
+    PATCH = auto()
+    CYCLE = auto()
+    CREDIT = auto()
 
 
 class EDevice(AutoNameEnum):
@@ -131,15 +133,15 @@ class ECardEffectAction(AutoNameEnum):
 
 
 class EActorCategory(AutoNameEnum):
+    UNIT = auto()
     ALLY = auto()
     ENEMY = auto()
-    UNIT = auto()
 
 
 class ETargetCategory(AutoNameEnum):
+    UNIT = auto()
     ALLY = auto()
     ENEMY = auto()
-    UNIT = auto()
 
 
 class ECardActorProperty(AutoNameEnum):

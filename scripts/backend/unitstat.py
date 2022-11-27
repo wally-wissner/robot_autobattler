@@ -1,7 +1,8 @@
 import numpy as np
+from dataclasses import dataclass
 from functools import total_ordering
 
-from scripts.utilities.enums import EStat
+from scripts.utilities.enums import EOperation, EStat
 from scripts.utilities.game_math import clamp
 
 
@@ -21,13 +22,13 @@ class Stat(object):
         # Add all additive modifiers.
         for unit_upgrade in self.unit_upgrades:
             for stat_modifier in unit_upgrade.stat_modifiers:
-                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == "+"):
+                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == EOperation.PLUS):
                     value += stat_modifier.value
 
         # Multiply all multiplicative values.
         for unit_upgrade in self.unit_upgrades:
             for stat_modifier in unit_upgrade.stat_modifiers:
-                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == "*"):
+                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == EOperation.TIMES):
                     value *= stat_modifier.value
 
         # Set based on set values.
@@ -35,7 +36,7 @@ class Stat(object):
             value = max(
                 stat_modifier.value
                 for stat_modifier in unit_upgrade.stat_modifiers
-                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == "=")
+                if (stat_modifier.stat == self.estat) and (stat_modifier.operation == EOperation.ASSIGN)
             )
 
         # Bound value between min value and max value.
@@ -61,12 +62,9 @@ class Stat(object):
 
 
 class ConsumableStat(Stat):
-    def __init__(self, estat, unit_upgrades, turn_start_state=None, level_start_state=None, base_value=0, min_value=0, max_value=np.inf):
-        assert turn_start_state in ["empty", "full", None]
-        self.turn_start_state = turn_start_state
-
-        assert level_start_state in ["empty", "full", None]
-        self.level_start_state = level_start_state
+    def __init__(self, estat, unit_upgrades, refill_on_turn_start=False, refill_on_level_start=False, base_value=0, min_value=0, max_value=np.inf):
+        self.refill_on_turn_start = refill_on_turn_start
+        self.refill_on_level_start = refill_on_level_start
 
         self.current_value = None
 
@@ -83,48 +81,19 @@ class ConsumableStat(Stat):
         return needs_squeeze
 
     def on_turn_start(self):
-        if self.turn_start_state == "empty":
-            self.current_value = self.min_value
-        if self.turn_start_state == "full":
+        if self.refill_on_turn_start:
             self.current_value = self.max_value
 
     def on_level_start(self):
-        if self.level_start_state == "empty":
-            self.current_value = self.min_value
-        if self.level_start_state == "full":
+        if self.refill_on_level_start:
             self.current_value = self.max_value
 
 
+@dataclass
 class StatModifier(object):
-    def __init__(self, stat, operation, value):
-        operations = {"+", "*", "="}
-        if operation not in operations:
-            raise ValueError(f"Modifier type must be in {operations}.")
-
-        self.stat = stat
-        self.operation = operation
-        self.value = value
+    stat: EStat
+    operation: EOperation
+    value: int | float
 
     def __repr__(self):
         return f"StatModifier({self.stat} {self.operation} {self.value})"
-
-
-# class UnitUpgrade(object):
-#     def __init__(self, name, rarity, description, stat_modifiers):
-#         self.name = name
-#         self.rarity = rarity
-#         self.description = description
-#         self.stat_modifiers = stat_modifiers
-#
-#     def drop_rate(self):
-#         rates = {
-#             "common": .1,
-#             "uncommon": .05,
-#             "rare": .025,
-#             "mythic": .0125,
-#         }
-#         return rates[self.rarity]
-#
-#     def draw(self):
-#         # TODO
-#         raise NotImplemented()
