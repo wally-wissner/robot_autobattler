@@ -144,23 +144,35 @@ class ETargetCategory(AutoNameEnum):
     ENEMY = auto()
 
 
-class ECardActorProperty(AutoNameEnum):
+class EActorProperty(AutoNameEnum):
     pass
 
 
-class ECardActorQuantity(AutoNameEnum):
+class EActorQuantity(AutoNameEnum):
     INTEGER = auto()
     EACH = auto()
 
 
-class ECardTargetProperty(AutoNameEnum):
+class ETargetProperty(AutoNameEnum):
     pass
 
 
-class ECardTargetQuantity(AutoNameEnum):
+class ETargetQuantity(AutoNameEnum):
     INTEGER = auto()
     EACH = auto()
 
 
 class EElement(AutoNameEnum):
     pass
+
+
+class EComparison(AutoNameEnum):
+    EQ = "="
+    LT = "<"
+    LE = "<="
+    GT = ">"
+    GE = ">="
+
+
+class EVariable(AutoNameEnum):
+    TURN = auto()
