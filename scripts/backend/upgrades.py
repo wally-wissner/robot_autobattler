@@ -18,7 +18,7 @@ class CardAbilityCondition(object):
     variable: enums.EResource | enums.EVariable
     comparison: enums.EComparison
     threshold: enums.EVariable | bool | float | int
-    consume_variable: bool
+    consume_resource: bool
     actor: enums.EActorCategory | None = None
     target: enums.ETargetCategory | None = None
 
@@ -30,31 +30,26 @@ class CardAbilityEffect(object):
     action: enums.EUnitAction
     target_category: enums.ETargetCategory | None = None
     target_quantity: enums.ETargetQuantity | None = None
-    repetitions: int = 1
     magnitude: int | None = None
     dispersion: float | None = None
     element: enums.EElement | None = None
-
-
-@dataclass
-class CardConditionEffect(object):
-    condition: CardAbilityCondition | None
-    effect: CardAbilityEffect
+    repetitions: int = 1
 
 
 @dataclass
 class CardAbility(object):
-    name: str
-    conditions_effects: List[CardConditionEffect]
+    conditions: List[CardAbilityCondition]
+    effects: List[CardAbilityEffect]
 
     def get_text(self):
+        # TODO
         pass
 
 
 @dataclass
 class Card(object):
     rarity: enums.ERarity
-    effects: List[CardAbility]
+    abilities: List[CardAbility]
 
 
 @dataclass

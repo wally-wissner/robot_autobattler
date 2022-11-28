@@ -19,7 +19,7 @@ class CombatManager(object):
         pass
 
     def evaluate_card(self, actor, card):
-        for effect in card.effects:
+        for effect in card.abilities:
             self.evaluate_card_effect(actor, effect)
 
     def evaluate_card_effect(self, actor, effect):
