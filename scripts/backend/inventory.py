@@ -1,9 +1,9 @@
-from collections import Counter, defaultdict
+from collections import defaultdict
 from functools import total_ordering
 
 
 @total_ordering
-class Inventory(Counter, defaultdict):
+class Inventory(defaultdict):
     def __init__(self):
         super().__init__(int)
 
