@@ -30,23 +30,3 @@ class Inventory(defaultdict):
 
     def __repr__(self):
         return f"Inventory({dict(self)})"
-
-
-if __name__ == "__main__":
-    a = Inventory()
-    b = Inventory()
-
-    a.add("Sword")
-    a.add("Shield", 4)
-
-    b.add("Sword", 2)
-    b.add("Shield", 5)
-
-    print(a)
-    print(b)
-    print(b >= a)
-
-    a.remove("Sword")
-    print(a)
-
-    a.remove("Sword")
