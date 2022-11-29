@@ -3,7 +3,7 @@ from functools import total_ordering
 
 
 @total_ordering
-class Inventory(defaultdict):
+class Inventory(Counter, defaultdict):
     def __init__(self):
         super().__init__(int)
 
@@ -18,7 +18,7 @@ class Inventory(defaultdict):
             if self[item] == 0:
                 self.__delitem__(item)
 
-    def update(self, other):
+    def __or__(self, other):
         for i in other:
             self[i] += other[i]
 

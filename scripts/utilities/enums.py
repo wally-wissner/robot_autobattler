@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum, IntEnum, auto
 
 
 class AutoNameEnum(Enum):
@@ -6,10 +6,11 @@ class AutoNameEnum(Enum):
         return self
 
 
-class ERarity(AutoNameEnum):
-    COMMON = auto()
-    UNCOMMON = auto()
-    RARE = auto()
+class ERarity(IntEnum):
+    COMMON = 0
+    UNCOMMON = 1
+    RARE = 2
+    MYTHIC = 3
 
 
 class EStat(AutoNameEnum):

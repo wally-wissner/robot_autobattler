@@ -11,6 +11,7 @@ class Badge(object):
     description: str
     rarity: enums.ERarity
     stat_modifiers: Set[StatModifier]
+    bp: int
 
 
 @dataclass
@@ -50,10 +51,21 @@ class CardAbility(object):
 class Card(object):
     rarity: enums.ERarity
     abilities: List[CardAbility]
+    bp: int
 
 
 @dataclass
 class UnitUpgrade(object):
-    def __init__(self, badge, card):
-        self.badge = badge
-        self.card = card
+    badge: Badge
+    card: Card
+    removable: bool = True
+
+    @property
+    def rarity(self):
+        return max(self.badge.rarity, self.card.rarity)
+
+    @property
+    def bp(self):
+        min_negative_bp = min(bp for bp in [0, self.badge.bp, self.card.bp] if bp <= 0)
+        max_positive_bp = max(bp for bp in [0, self.badge.bp, self.card.bp] if bp >= 0)
+        return max_positive_bp + min_negative_bp

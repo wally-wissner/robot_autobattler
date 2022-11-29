@@ -44,7 +44,7 @@ GAMENAME is a non-traditional roguelike auto battler with the customizability of
 
 ## Tags
 
-`procedurally generated`, `roguelike`, `auto battler`, `deckbuilding`, `roguelike deckbuilder`, `rpg`, `strategy rpg`
+`procedurally generated`, `roguelike`, `auto battler`, `deckbuilding`, `roguelike deckbuilder`, `rpg`, `strategy rpg`, `broken build`, `busted build`
 
 
 ## Player Experience
