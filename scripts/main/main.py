@@ -2,7 +2,7 @@ import pygame as pg
 import sys
 from pygame_gui.ui_manager import UIManager
 
-import scripts.backend.scenes as scenes
+import scripts.frontend.scenes as scenes
 from scripts.backend.combat import CombatManager
 from scripts.backend.settings import Settings
 from scripts.frontend import colors

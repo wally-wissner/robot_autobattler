@@ -13,6 +13,10 @@ class ERarity(IntEnum):
     MYTHIC = 3
 
 
+class ECollectable(AutoNameEnum):
+    LEVEL = auto()
+
+
 class EStat(AutoNameEnum):
     SIZE = auto()
     MASS = auto()

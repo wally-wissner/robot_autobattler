@@ -1,7 +1,6 @@
 import numpy as np
 
 from scripts.backend.inventory import Inventory
-from scripts.backend.battleboard.battleboard import BattleBoard
 from scripts.backend.battleboard.topology.discrete_topology import Tile
 from scripts.backend.unitstat import Stat, ConsumableStat
 from scripts.backend.upgrades import UnitUpgrade
@@ -80,9 +79,6 @@ class Unit(object):
     def drop_loot(self):
         # TODO
         pass
-
-    def visible_tiles(self):
-        return BattleBoard.instance().tiling.visible_tiles(self.position, self.stats[EStat.VISION_RADIUS])
 
     @property
     def position(self) -> Tile:
