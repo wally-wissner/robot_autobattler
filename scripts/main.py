@@ -1,10 +1,12 @@
+import dill
 import pygame as pg
 import sys
 from pygame_gui.ui_manager import UIManager
 
 import scripts.frontend.scenes as scenes
 from scripts.backend.combat import CombatManager
-from scripts.backend.settings import Settings
+from scripts.backend.game_state import GameState
+from scripts.backend.settings import SettingsManager
 from scripts.frontend import colors
 from scripts.utilities.singleton import Singleton
 
@@ -19,10 +21,10 @@ class Game(object):
         self.title = title
         self.version = version
 
-        self.settings = Settings()
-        self.settings.load()
+        self.save_path = "../player_data/save.pickle"
 
-        # self.load_data()
+        self.settings = SettingsManager()
+        self.settings.load()
 
         # Pygame setup.
         pg.init()
@@ -33,10 +35,12 @@ class Game(object):
         pg.key.set_repeat(500, 100)
 
         # Game setup.
-        self.active_scene = scenes.MainMenuScene(self)
+        self.game_state: GameState | None = None
+        self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
         self.combat_manager = CombatManager.instance()
         self.delta_time = 0
         self.playing = True
+        self.load_assets()
 
     def run(self):
         self.display.fill(colors.blue)
@@ -47,9 +51,9 @@ class Game(object):
             self.draw()
         self.quit()
 
-    def handle_events(self, events):
+    def handle_events(self, events: pg.event):
         for event in events:
-            if event.operation == pg.QUIT:
+            if event.type == pg.QUIT:
                 self.quit()
 
         self.active_scene.handle_events(events)
@@ -85,13 +89,15 @@ class Game(object):
         pg.quit()
         sys.exit()
 
-    def load_data(self):
+    def load_assets(self):
         # TODO
-        raise NotImplemented()
+        pass
 
-    def save_data(self):
-        # TODO
-        raise NotImplemented()
+    def load_game(self):
+        self.game_state = dill.load(self.save_path)
+
+    def save_game(self):
+        dill.dump(self.game_state, self.save_path)
 
 
 if __name__ == "__main__":

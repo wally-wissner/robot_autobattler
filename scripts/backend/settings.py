@@ -1,10 +1,10 @@
 import json
 
 
-filename_settings = "../../data/settings.json"
+filename_settings = "../player_data/settings.json"
 
 
-class Settings:
+class SettingsManager:
     def __init__(self):
         self.dict = None
 

@@ -1,3 +1,4 @@
+dill >= 0.3.6
 matplotlib >= 3.0.2
 numpy >= 1.18.2
 pygame >= 2.1.0
