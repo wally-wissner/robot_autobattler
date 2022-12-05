@@ -14,21 +14,24 @@ class Unit(object):
         self.level = 3
         self.unit_upgrades = Inventory()
         self.status_effects = Inventory()
-        self.stats = {
-            # Simple stats
-            stat: Stat(estat=stat, unit_upgrades=self.unit_upgrades)
+
+        default_stats = {
+            EStat.SIZE: Stat(estat=EStat.MASS, base_value=10),
+            EStat.MASS: Stat(estat=EStat.MASS, base_value=10),
+        }
+        bonus_stats = {
+            stat: Stat(estat=stat, base_value=0)
             for stat in [
-                EStat.SIZE,
-                EStat.MASS,
                 EStat.POWER,
                 EStat.ARMOR,
             ]
-        } | {
-            # Consumable stats
-            EStat.BP: ConsumableStat(estat=EStat.BP, unit_upgrades=self.unit_upgrades),
-            EStat.HP: ConsumableStat(estat=EStat.HP, unit_upgrades=self.unit_upgrades, refill_on_level_start=True),
-            EStat.AP: ConsumableStat(estat=EStat.AP, unit_upgrades=self.unit_upgrades, refill_on_turn_start=True),
         }
+        consumable_stats = {
+            EStat.BP: ConsumableStat(estat=EStat.BP),
+            EStat.HP: ConsumableStat(estat=EStat.HP, refill_on_level_start=True),
+            EStat.AP: ConsumableStat(estat=EStat.AP, refill_on_turn_start=True),
+        }
+        self.stats = default_stats | bonus_stats | consumable_stats
 
         self._position = None
 
@@ -69,10 +72,6 @@ class Unit(object):
         pass
 
     def move_along_path(self, tile: Tile):
-        # TODO
-        pass
-
-    def draw(self):
         # TODO
         pass
 

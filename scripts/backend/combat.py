@@ -5,8 +5,12 @@ from scripts.utilities.singleton import Singleton
 @Singleton
 class CombatManager(object):
     def __init__(self):
-        self.round = 0
-        self.turn = 0
+        self.level = 1
+        self.round = 1
+        self.turn = 1
+
+    def start_level(self):
+        self.level += 1
 
     def start_round(self):
         self.round += 1
