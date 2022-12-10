@@ -1,13 +1,12 @@
 import numpy as np
 from pygame.math import Vector2
-from typing import Iterable, Set, Union
 
 from scripts.backend.battleboard.topology.discrete_topology import Tiling, Tile
 from scripts.backend.battleboard.topology.hex_tile import Hex
 
 
 class TwistedTorusHexTiling(Tiling):
-    def __init__(self, board_radius: int, tile_size: Union[float, int], flat_top: bool = True):
+    def __init__(self, board_radius: int, tile_size: float | int, flat_top: bool = True):
         super().__init__(tile_size=tile_size)
 
         self.board_radius = board_radius
@@ -16,10 +15,10 @@ class TwistedTorusHexTiling(Tiling):
         self.tiles = Hex.zero().disk(radius=self.board_radius)
         self._mirror_centers = Hex((2 * self.board_radius + 1, -self.board_radius, -self.board_radius - 1)).rotations()
 
-    def _mirrors(self, tile: Hex) -> Set[Hex]:
+    def _mirrors(self, tile: Hex) -> set[Hex]:
         return {tile + center for center in self._mirror_centers}
 
-    def neighbors(self, tile: Hex) -> Set[Hex]:
+    def neighbors(self, tile: Hex) -> set[Hex]:
         return {self.modulo(tile + direction) for direction in Hex.directions(include_zero=False)}
 
     def distance(self, start: Hex, end: Hex):
@@ -36,7 +35,7 @@ class TwistedTorusHexTiling(Tiling):
     def modulo(self, tile: Hex) -> Hex:
         return tile - self.nearest_center(tile)
 
-    def disk(self, tile: Hex, radius: int) -> Set[Hex]:
+    def disk(self, tile: Hex, radius: int) -> set[Hex]:
         return {self.modulo(hex) for hex in tile.disk(radius)}
 
     def lerp(self, start, end, t, modulo=True) -> Hex:

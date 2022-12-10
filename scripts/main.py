@@ -4,7 +4,6 @@ import sys
 from pygame_gui.ui_manager import UIManager
 
 import scripts.frontend.scenes as scenes
-from scripts.backend.combat import CombatManager
 from scripts.backend.game_state import GameState
 from scripts.backend.settings import SettingsManager
 from scripts.frontend import colors
@@ -37,7 +36,6 @@ class Game(object):
         # Game setup.
         self.game_state: GameState | None = None
         self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
-        self.combat_manager = CombatManager.instance()
         self.delta_time = 0
         self.playing = True
         self.load_assets()

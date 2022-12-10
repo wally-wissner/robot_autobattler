@@ -1,6 +1,5 @@
 import numpy as np
 from pygame.math import Vector2
-from typing import Iterable, Set, Union
 
 from scripts.backend.battleboard.topology.discrete_topology import Tile
 

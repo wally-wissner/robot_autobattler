@@ -38,6 +38,11 @@ class EStat(AutoNameEnum):
     POWER_ADDER = auto()
     POWER_MULTIPLIER = auto()
 
+    MIN_DAMAGE_DEALT_BY = auto()
+    MAX_DAMAGE_DEALT_BY = auto()
+    MIN_DAMAGE_DEALT_TO = auto()
+    MAX_DAMAGE_DEALT_TO = auto()
+
     LASER_DISPERSION_ANGLE = auto()
     LASER_ACCURACY = auto()
     LASER_ACCURACY_DROPOFF = auto()
@@ -181,3 +186,11 @@ class EComparison(AutoNameEnum):
 
 class EVariable(AutoNameEnum):
     TURN = auto()
+
+
+class EEventType(AutoNameEnum):
+    UPGRADE_ATTACHED = auto()
+    UNIT_ATTACKED = auto()
+    RESOURCE_PRODUCED = auto()
+
+

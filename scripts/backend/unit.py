@@ -5,8 +5,10 @@ from scripts.backend.battleboard.topology.discrete_topology import Tile
 from scripts.backend.unitstat import Stat, ConsumableStat
 from scripts.backend.upgrades import UnitUpgrade
 from scripts.utilities.enums import EStat
+from scripts.utilities.identifiers import universal
 
 
+@universal
 class Unit(object):
     def __init__(self, team):
         self.team = team
@@ -37,6 +39,14 @@ class Unit(object):
 
         # TODO: units that occupy more than one space
         # self.occupying = []
+
+    def stat_modifiers(self, stat: EStat):
+        stat_modifiers = []
+        for unit_upgrade in self.unit_upgrades:
+            for stat_modifier in unit_upgrade:
+                if stat_modifier.stat == stat:
+                    stat_modifiers.append(stat_modifier)
+        return stat_modifiers
 
     def attack(self, target: Tile):
         # TODO
@@ -103,4 +113,3 @@ class Unit(object):
     def on_level_start(self):
         for stat in self.stats:
             self.stats[stat].on_level_start()
-

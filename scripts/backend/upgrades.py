@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from typing import List, Set
 
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
+from scripts.utilities.identifiers import universal
 
 
 @dataclass
@@ -10,7 +10,7 @@ class Badge(object):
     name: str
     description: str
     rarity: enums.ERarity
-    stat_modifiers: Set[StatModifier]
+    stat_modifiers: set[StatModifier]
     bp: int
 
 
@@ -39,8 +39,8 @@ class CardAbilityEffect(object):
 
 @dataclass
 class CardAbility(object):
-    conditions: List[CardAbilityCondition]
-    effects: List[CardAbilityEffect]
+    conditions: list[CardAbilityCondition]
+    effects: list[CardAbilityEffect]
 
     def get_text(self):
         # TODO
@@ -50,11 +50,12 @@ class CardAbility(object):
 @dataclass
 class Card(object):
     rarity: enums.ERarity
-    abilities: List[CardAbility]
+    abilities: list[CardAbility]
     bp: int
 
 
 @dataclass
+@universal
 class UnitUpgrade(object):
     badge: Badge
     card: Card

@@ -1,4 +1,4 @@
-from typing import Iterable, Union
+from typing import Iterable
 
 from scripts.backend.battleboard.procedural_generation.procedural_generator import ProceduralGenerator
 from scripts.backend.battleboard.battle_tile import BattleTile
@@ -42,7 +42,7 @@ class BattleBoard(object):
         self.generator.generate(*args, **kwargs)
         self._battle_tiles = {tile: BattleTile(position=tile, terrain=self.generator[tile]) for tile in self.tiling}
 
-    def units(self, tiles: Union[Tile, Iterable[Tile]]) -> Union[Unit, Iterable[Unit]]:
+    def units(self, tiles: Tile | Iterable[Tile]) -> Unit | Iterable[Unit]:
         if isinstance(tiles, Tile):
             return self._units[tiles]
         elif hasattr(tiles, "__iter__"):
@@ -51,7 +51,7 @@ class BattleBoard(object):
         else:
             raise TypeError("Argument `tiles` must be of type Tile or be an iterable of type Tile.")
 
-    def battle_tiles(self, tiles: Union[Tile, Iterable[Tile]]) -> Union[BattleTile, Iterable[BattleTile]]:
+    def battle_tiles(self, tiles: Tile | Iterable[Tile]) -> BattleTile | Iterable[BattleTile]:
         if isinstance(tiles, Tile):
             return self._battle_tiles[tiles]
         elif hasattr(tiles, "__iter__"):
