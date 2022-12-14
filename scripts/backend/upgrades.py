@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
-from scripts.utilities.identifiers import universal
+from scripts.utilities.identifiers import uuid_identifier
 
 
 @dataclass
@@ -54,8 +54,8 @@ class Card(object):
     bp: int
 
 
+@uuid_identifier
 @dataclass
-@universal
 class UnitUpgrade(object):
     badge: Badge
     card: Card

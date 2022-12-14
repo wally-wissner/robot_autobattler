@@ -108,7 +108,7 @@ class EOperation(AutoNameEnum):
 
 class EWeapon(AutoNameEnum):
     LASER = auto()
-    MISSILE_LAUNCHER = auto()
+    MISSILE = auto()
     RAILGUN = auto()
 
 

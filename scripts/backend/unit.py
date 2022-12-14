@@ -5,10 +5,10 @@ from scripts.backend.battleboard.topology.discrete_topology import Tile
 from scripts.backend.unitstat import Stat, ConsumableStat
 from scripts.backend.upgrades import UnitUpgrade
 from scripts.utilities.enums import EStat
-from scripts.utilities.identifiers import universal
+from scripts.utilities.identifiers import uuid_identifier
 
 
-@universal
+@uuid_identifier
 class Unit(object):
     def __init__(self, team):
         self.team = team

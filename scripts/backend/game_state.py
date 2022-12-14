@@ -1,4 +1,4 @@
-from scripts.backend.event import Event
+from scripts.backend.event import Event, EventHistory
 from scripts.backend.team import Team
 from scripts.backend.unit import Unit
 from scripts.backend.upgrades import Card, CardAbility, CardAbilityCondition, CardAbilityEffect
@@ -16,13 +16,17 @@ class GameState(object):
         self.round: int = 1
         self.turn: int = 1
 
-        event_history: list[Event] = []
+        event_history = EventHistory()
 
     def units(self) -> set[Unit]:
         return {unit for team in self.teams for unit in team.units}
 
     def start_level(self):
         self.level += 1
+
+        for team in self.teams:
+            for unit in team.units:
+                unit.status_effects.clear()
 
     def start_round(self):
         self.round += 1
@@ -48,6 +52,27 @@ class GameState(object):
     # def evaluate_card_ability_effect(self, card_ability_effect: CardAbilityEffect):
     #     if card_ability_effect.actor_category == enums.EActorCategory.ALLY
 
+    def evaluate_attack(self, actor: Unit, target: Unit, weapon: enums.EWeapon):
+        weapon_power = 0
+        match weapon:
+            case enums.EWeapon.LASER:
+                weapon_power = actor.stats[enums.EStat.LASER_POWER]
+            case enums.EWeapon.RAILGUN:
+                weapon_power = actor.stats[enums.EStat.RAILGUN_POWER]
+            case enums.EWeapon.MISSILE:
+                weapon_power = actor.stats[enums.EStat.MISSILE_POWER]
+        damage_output = actor.stats[enums.EStat.POWER] + weapon_power
+        affected_units = [target]
+        for affected_unit in affected_units:
+            if affected_unit.stats[enums.EStat.SHIELD_CHARGES].current_value > 0:
+                affected_unit.stats[enums.EStat.SHIELD_CHARGES] -= 1
+            else:
+                damage = clamp(
+                    damage_output - affected_unit.stats[enums.EStat.ARMOR],
+                    min_value=affected_unit.stats[enums.EStat.MIN_DAMAGE_DEALT_TO],
+                    max_value=affected_unit.stats[enums.EStat.MAX_DAMAGE_DEALT_TO],
+                )
+                affected_unit.take_damage(damage)
 
     def unit_stat_value(self, unit: Unit, stat: enums.EStat) -> float:
         # Initialize value to base value.

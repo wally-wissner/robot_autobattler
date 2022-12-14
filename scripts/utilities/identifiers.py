@@ -2,7 +2,7 @@ from itertools import count
 from uuid import uuid4
 
 
-class sequential(object):
+class sequential_identifier(object):
     def __init__(self, cls):
         self.cls = cls
         self.cls.count = count()
@@ -13,7 +13,7 @@ class sequential(object):
         return obj
 
 
-class universal(object):
+class uuid_identifier(object):
     def __init__(self, cls):
         self.cls = cls
 

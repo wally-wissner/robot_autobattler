@@ -2,42 +2,6 @@
 
 ## Name
 
-### Ideas
-- evaluate(destroy);
-- Invent XOR Die
-- INVENT xor DIE
-- robot.execute();
-- Third Law Safe (intellectual property issues?)
-- Cartridge delenda est
-- Fluid Metal
-- Soldiers of Fortran
-- Break These Bots
-- Some Disassembly Required
-- Punchcard Pandemonium
-- Punchcard Wars
-- Three Laws Safe
-- Invent or Die
-- Program or Perish
-- mutable
-- Fluid Steel
-- Shift Gears
-- Chain Reaction
-- Core Meltdown: Chain Reaction
-- RoboBattler
-- Journey to the Center of the Robosphere
-- Mother of Invention
-- Mechacophony
-- 3rd Law of Robodynamics
-- Laws of Robodynamics
-- Function ______
-- Execution _______
-- Execute _______
-- Compute _______
-- Evaluation Strategy
-- Custom Bots
-- Cyberbal of the Fittest
-- Iteration
-
 ## Description
 
 GAMENAME is a non-traditional roguelike auto battler with the customizability of a collectable card game. Design a team of robots out of procedurally-generated modifications and battle commands. Whether you create a massive battlecruiser mecha or a swarm of exploding nanobots is up to you.
