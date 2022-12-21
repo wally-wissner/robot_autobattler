@@ -6,7 +6,7 @@ from scripts.utilities import enums
 from scripts.utilities.game_math import clamp
 
 
-class GameState(object):
+class Game(object):
     def __init__(self, version: str):
         self.version = version
 

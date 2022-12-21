@@ -43,9 +43,9 @@ class EStat(AutoNameEnum):
     MIN_DAMAGE_DEALT_TO = auto()
     MAX_DAMAGE_DEALT_TO = auto()
 
-    LASER_DISPERSION_ANGLE = auto()
+    ACCURACY = auto()
+
     LASER_ACCURACY = auto()
-    LASER_ACCURACY_DROPOFF = auto()
     LASER_POWER = auto()
     LASER_COST_AP = auto()
     LASER_CHARGES = auto()
@@ -54,17 +54,13 @@ class EStat(AutoNameEnum):
     LASER_ACTION_DISCHARGE_ALL = auto()
     LASER_AOE = auto()
 
-    MISSILE_DISPERSION_ANGLE = auto()
     MISSILE_ACCURACY = auto()
-    MISSILE_ACCURACY_DROPOFF = auto()
     MISSILE_POWER = auto()
     MISSILE_COST_AP = auto()
     MISSILE_RANGE = auto()
     MISSILE_AOE = auto()
 
-    RAILGUN_DISPERSION_ANGLE = auto()
     RAILGUN_ACCURACY = auto()
-    RAILGUN_ACCURACY_DROPOFF = auto()
     RAILGUN_POWER = auto()
     RAILGUN_COST_AP = auto()
     RAILGUN_RANGE = auto()

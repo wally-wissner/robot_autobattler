@@ -14,7 +14,7 @@ class Unit(object):
         self.team = team
 
         self.level = 3
-        self.unit_upgrades = Inventory()
+        self.unit_upgrades: list[UnitUpgrade] = []
         self.status_effects = Inventory()
 
         default_stats = {

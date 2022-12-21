@@ -4,7 +4,7 @@ import sys
 from pygame_gui.ui_manager import UIManager
 
 import scripts.frontend.scenes as scenes
-from scripts.backend.game_state import GameState
+from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
 from scripts.frontend import colors
 from scripts.utilities.singleton import Singleton
@@ -15,7 +15,7 @@ version = "0.0.1"
 
 
 @Singleton
-class Game(object):
+class Application(object):
     def __init__(self):
         self.title = title
         self.version = version
@@ -34,7 +34,7 @@ class Game(object):
         pg.key.set_repeat(500, 100)
 
         # Game setup.
-        self.game_state: GameState | None = None
+        self.game_state: Game | None = None
         self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
         self.delta_time = 0
         self.playing = True
@@ -99,5 +99,5 @@ class Game(object):
 
 
 if __name__ == "__main__":
-    game = Game.instance()
+    game = Application.instance()
     game.run()
