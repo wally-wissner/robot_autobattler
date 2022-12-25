@@ -20,7 +20,7 @@ class Application(object):
         self.title = title
         self.version = version
 
-        self.save_path = "../player_data/save.pickle"
+        self.game_save_path = "../player_data/save.pickle"
 
         self.settings = SettingsManager()
         self.settings.load()
@@ -34,7 +34,7 @@ class Application(object):
         pg.key.set_repeat(500, 100)
 
         # Game setup.
-        self.game_state: Game | None = None
+        self.game: Game | None = None
         self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
         self.delta_time = 0
         self.playing = True
@@ -92,10 +92,10 @@ class Application(object):
         pass
 
     def load_game(self):
-        self.game_state = dill.load(self.save_path)
+        self.game = dill.load(self.game_save_path)
 
     def save_game(self):
-        dill.dump(self.game_state, self.save_path)
+        dill.dump(self.game, self.game_save_path)
 
 
 if __name__ == "__main__":

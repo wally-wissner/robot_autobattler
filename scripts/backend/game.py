@@ -6,8 +6,21 @@ from scripts.utilities import enums
 from scripts.utilities.game_math import clamp
 
 
+mapping_weapon_power = {
+    enums.EWeapon.LASER: enums.EStat.LASER_POWER,
+    enums.EWeapon.MISSILE: enums.EStat.MISSILE_POWER,
+    enums.EWeapon.RAILGUN: enums.EStat.RAILGUN_POWER,
+}
+
+mapping_weapon_accuracy = {
+    enums.EWeapon.LASER: enums.EStat.LASER_ACCURACY,
+    enums.EWeapon.MISSILE: enums.EStat.MISSILE_ACCURACY,
+    enums.EWeapon.RAILGUN: enums.EStat.RAILGUN_ACCURACY,
+}
+
+
 class Game(object):
-    def __init__(self, version: str):
+    def __init__(self, version: str) -> None:
         self.version = version
 
         self.teams: list[Team] = []
@@ -21,28 +34,28 @@ class Game(object):
     def units(self) -> set[Unit]:
         return {unit for team in self.teams for unit in team.units}
 
-    def start_level(self):
+    def start_level(self) -> None:
         self.level += 1
 
         for team in self.teams:
             for unit in team.units:
                 unit.status_effects.clear()
 
-    def start_round(self):
+    def start_round(self) -> None:
         self.round += 1
 
-    def start_turn(self):
+    def start_turn(self) -> None:
         self.turn += 1
 
-    def evaluate_active_cards(self):
+    def evaluate_active_cards(self) -> None:
         # TODO
         pass
 
-    def evaluate_card(self, actor: Unit, card: Card):
-        for ability in card.abilities:
-            self.evaluate_card_ability(actor, ability)
+    def evaluate_card(self, actor: Unit, card: Card) -> None:
+        for card_ability in card.abilities:
+            self.evaluate_card_ability(actor, card_ability)
 
-    def evaluate_card_ability(self, card_ability: CardAbility):
+    def evaluate_card_ability(self, actor: Unit, card_ability: CardAbility) -> None:
         # TODO
         pass
 
@@ -52,15 +65,8 @@ class Game(object):
     # def evaluate_card_ability_effect(self, card_ability_effect: CardAbilityEffect):
     #     if card_ability_effect.actor_category == enums.EActorCategory.ALLY
 
-    def evaluate_attack(self, actor: Unit, target: Unit, weapon: enums.EWeapon):
-        weapon_power = 0
-        match weapon:
-            case enums.EWeapon.LASER:
-                weapon_power = actor.stats[enums.EStat.LASER_POWER]
-            case enums.EWeapon.RAILGUN:
-                weapon_power = actor.stats[enums.EStat.RAILGUN_POWER]
-            case enums.EWeapon.MISSILE:
-                weapon_power = actor.stats[enums.EStat.MISSILE_POWER]
+    def evaluate_attack(self, actor: Unit, target: Unit, weapon: enums.EWeapon) -> None:
+        weapon_power = actor.stats[mapping_weapon_power[weapon]]
         damage_output = actor.stats[enums.EStat.POWER] + weapon_power
         affected_units = [target]
         for affected_unit in affected_units:
