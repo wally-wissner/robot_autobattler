@@ -41,7 +41,7 @@ class ConsumableStat(Stat):
             self.current_value = self.max_value
 
 
-@dataclass
+@dataclass(eq=True, frozen=True)
 class StatModifier(object):
     stat: EStat
     operation: EOperation

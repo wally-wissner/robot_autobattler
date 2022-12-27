@@ -10,8 +10,8 @@ class Badge(object):
     name: str
     description: str
     rarity: enums.ERarity
-    stat_modifiers: set[StatModifier]
     bp: int
+    stat_modifiers: set[StatModifier]
 
 
 @dataclass

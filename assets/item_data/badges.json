@@ -1,10 +1,32 @@
 [
   {
-    "name": "Basic Boost",
+    "name": "Common Buff",
+    "description": "Power + 5 and Armor + 5.",
     "rarity": "COMMON",
+    "bp": 1,
     "stat_modifiers": [
       ["POWER", "PLUS", 5],
       ["ARMOR", "PLUS", 5]
+    ]
+  },
+  {
+    "name": "Uncommon Buff",
+    "description": "Power + 10 and Armor + 10.",
+    "rarity": "UNCOMMON",
+    "bp": 1,
+    "stat_modifiers": [
+      ["POWER", "PLUS", 10],
+      ["ARMOR", "PLUS", 10]
+    ]
+  },
+  {
+    "name": "Rare Buff",
+    "description": "Power * 2 and Armor * 2.",
+    "rarity": "RARE",
+    "bp": 1,
+    "stat_modifiers": [
+      ["POWER", "TIMES", 2],
+      ["ARMOR", "TIMES", 2]
     ]
   }
 ]

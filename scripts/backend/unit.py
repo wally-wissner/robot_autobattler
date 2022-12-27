@@ -10,12 +10,11 @@ from scripts.utilities.identifiers import uuid_identifier
 
 @uuid_identifier
 class Unit(object):
-    def __init__(self, team):
+    def __init__(self, team, level):
         self.team = team
-
+        self.level = level
         self.alive = True
 
-        self.level = 3
         self.unit_upgrades: list[UnitUpgrade] = []
         self.status_effects = Inventory()
 

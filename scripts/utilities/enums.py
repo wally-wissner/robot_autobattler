@@ -10,7 +10,6 @@ class ERarity(IntEnum):
     COMMON = 0
     UNCOMMON = 1
     RARE = 2
-    MYTHIC = 3
 
 
 class ECollectable(AutoNameEnum):
@@ -173,7 +172,7 @@ class EElement(AutoNameEnum):
 
 
 class EComparison(AutoNameEnum):
-    EQ = "="
+    EQ = "=="
     LT = "<"
     LE = "<="
     GT = ">"
