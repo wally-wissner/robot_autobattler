@@ -1,18 +1,29 @@
 [
   {
-    "name": "Energy Attack",
+    "name": "Charged Energy Attack",
     "rarity": "COMMON",
     "bp": 1,
     "abilities": [
       {
         "conditions": [
           {
-
+            "variable": "ENERGY",
+            "comparison": "GE",
+            "threshold": 3,
+            "consume_resource": 1
           }
         ],
         "effects": [
           {
-
+            "actor_category": "THIS",
+            "actor_quantity": 1,
+            "action": "ATTACK",
+            "values": [5],
+            "target_category": "ENEMY",
+            "target_quantity": 1,
+            "dispersion": 0.05,
+            "element": "LASER",
+            "repetitions": 1
           }
         ]
       }

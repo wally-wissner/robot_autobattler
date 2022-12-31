@@ -13,7 +13,7 @@ class ERarity(IntEnum):
 
 
 class ECollectable(AutoNameEnum):
-    LEVEL = auto()
+    pass
 
 
 class EStat(AutoNameEnum):
@@ -81,7 +81,7 @@ class EStat(AutoNameEnum):
     SELFDESTRUCT_POWER = auto()
     SELFDESTRUCT_AOE_RADIUS = auto()
 
-    USE_NEAREST_ALLY_TO_TILE = auto()
+    USE_NEAREST_ALLY_TO_TARGET = auto()
 
     ON_DEATH_EXPLODE = auto()
     ON_DEATH_GAME_OVER = auto()
@@ -132,38 +132,21 @@ class EDevice(AutoNameEnum):
     pass
 
 
-class ECardEffectAction(AutoNameEnum):
-    DEALS_DAMAGE = auto()
-    DRAW = auto()
-
-
-class EActorCategory(AutoNameEnum):
+class EUnitCategory(AutoNameEnum):
+    THIS = auto()
     UNIT = auto()
     ALLY = auto()
     ENEMY = auto()
 
 
-class ETargetCategory(AutoNameEnum):
-    UNIT = auto()
-    ALLY = auto()
-    ENEMY = auto()
+class EUnitProperty(AutoNameEnum):
+    DAMAGED = auto()
+    UNDAMAGED = auto()
+    WEAK = auto()
+    STRONG = auto()
 
 
-class EActorProperty(AutoNameEnum):
-    pass
-
-
-class EActorQuantity(AutoNameEnum):
-    INTEGER = auto()
-    EACH = auto()
-
-
-class ETargetProperty(AutoNameEnum):
-    pass
-
-
-class ETargetQuantity(AutoNameEnum):
-    INTEGER = auto()
+class EUnitQuantity(AutoNameEnum):
     EACH = auto()
 
 
@@ -187,5 +170,3 @@ class EEventType(AutoNameEnum):
     UPGRADE_ATTACHED = auto()
     UNIT_ATTACKED = auto()
     RESOURCE_PRODUCED = auto()
-
-

@@ -24,25 +24,31 @@ class CardAbilityCondition(object):
     consume_resource: bool
 
     def get_text(self) -> str:
-        # TODO
-        return ""
+        if self.consume_resource:
+            return f"CONSUME {self.threshold} {self.variable}"
+        else:
+            return f"IF {self.variable} {self.comparison.value} {self.threshold}"
 
 
 @dataclass
 class CardAbilityEffect(object):
-    actor_category: enums.EActorCategory
-    actor_quantity: enums.EActorQuantity
+    actor_category: enums.EUnitCategory
+    actor_quantity: enums.EUnitQuantity | int
     action: enums.EUnitAction
-    target_category: enums.ETargetCategory = None
-    target_quantity: enums.ETargetQuantity = None
-    value: int = None
+    values: list
+    target_category: enums.EUnitCategory = None
+    target_quantity: enums.EUnitQuantity | int = None
     dispersion: float = None
     element: enums.EElement = None
     repetitions: int = 1
 
     def get_text(self) -> str:
-        # TODO
-        return ""
+        if self.action == enums.EUnitAction.ATTACK:
+            # TODO
+            return ""
+        if self.action == enums.EUnitAction.PRODUCE:
+            # TODO
+            return ""
 
 
 @dataclass
