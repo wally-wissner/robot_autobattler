@@ -3,7 +3,7 @@ import dataclasses
 import pandas as pd
 from dataclasses import dataclass
 
-from scripts.backend.upgrades import Card
+from scripts.backend.cards import Card, SimpleCard
 from scripts.utilities.enums import EEventType
 from scripts.utilities.identifiers import uuid_identifier
 

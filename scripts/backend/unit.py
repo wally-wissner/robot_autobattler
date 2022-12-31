@@ -3,7 +3,7 @@ import numpy as np
 from pygame import Vector2
 from scripts.backend.inventory import Inventory
 from scripts.backend.unitstat import Stat, ConsumableStat
-from scripts.backend.upgrades import UnitUpgrade
+from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.utilities.enums import EStat
 from scripts.utilities.identifiers import uuid_identifier
 

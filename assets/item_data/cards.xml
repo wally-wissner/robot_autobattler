@@ -1,0 +1,20 @@
+<cards>
+    <card name="Energy Attack" rarity="COMMON" bp="1">
+        <action type="ATTACK" weapon="LASER" damage="5"/>
+        <action type="PRODUCE" resource="ENERGY" quantity="1"/>
+    </card>
+    <card name="Triple Shot" rarity="UNCOMMON" bp="1">
+        <action type="ATTACK" weapon="RAILGUN" damage="2" repetitions="3"/>
+    </card>
+    <card name="Have Three Get Three" rarity="UNCOMMON" bp="1">
+        <condition>
+            <comparison>
+                <operation type="GE"/>
+                <evaluation type="POSSESS" resource="ENERGY"/>
+                <resource type="ENERGY"/>
+                <constant value="3"/>
+            </comparison>
+            <action type="PRODUCE" resource="ENERGY" quantity="3"/>
+        </condition>
+    </card>
+</cards>

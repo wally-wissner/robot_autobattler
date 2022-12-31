@@ -1,7 +1,7 @@
+from scripts.backend.cards import Card, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.event import Event, EventHistory
 from scripts.backend.team import Team
 from scripts.backend.unit import Unit
-from scripts.backend.upgrades import Card, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.utilities import enums
 from scripts.utilities.game_math import clamp
 
@@ -51,7 +51,7 @@ class Game(object):
         # TODO
         pass
 
-    def evaluate_card(self, actor: Unit, card: Card) -> None:
+    def evaluate_card(self, actor: Unit, card: SimpleCard) -> None:
         for card_ability in card.abilities:
             self.evaluate_card_ability(actor, card_ability)
 

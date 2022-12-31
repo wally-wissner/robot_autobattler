@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Energy Attack",
+    "rarity": "COMMON",
+    "bp": 1,
+    "abilities": [
+      {
+        "conditions": [
+          {
+
+          }
+        ],
+        "effects": [
+          {
+
+          }
+        ]
+      }
+    ]
+  }
+]

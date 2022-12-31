@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 from scripts.backend.inventory import Inventory
 from scripts.backend.unit import Unit
-from scripts.backend.upgrades import UnitUpgrade
+from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.utilities.enums import ECollectable
 
 

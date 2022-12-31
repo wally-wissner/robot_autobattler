@@ -1,12 +1,12 @@
-import json
 import numpy as np
 
+from scripts.backend.asset_loaders import badges, cards, simple_cards
+from scripts.backend.badges import Badge
+from scripts.backend.cards import Card, SimpleCard
 from scripts.backend.team import Team
-from scripts.backend.upgrades import Badge, Card, UnitUpgrade
+from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.backend.unit import Unit
-from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
-from scripts.utilities.structure import absolute_path
 
 
 _rarity_distribution = {
@@ -16,37 +16,9 @@ _rarity_distribution = {
 }
 
 
-def _load_badges() -> list[Badge]:
-    with open(absolute_path("assets/item_data/badges.json")) as f:
-        json_badges = json.load(f)
-        badges = [
-            Badge(
-                name=json_badge["name"],
-                description=json_badge["description"],
-                rarity=enums.ERarity[json_badge["rarity"]],
-                bp=json_badge["bp"],
-                stat_modifiers=set(
-                    StatModifier(
-                        stat=enums.EStat[stat],
-                        operation=enums.EOperation[operation],
-                        value=value,
-                    )
-                    for stat, operation, value in json_badge["stat_modifiers"]
-                ),
-            )
-            for json_badge in json_badges
-        ]
-    return badges
-
-
-def _load_cards() -> list[Card]:
-    # json.load(absolute_path("assets/item_data/cards.json"))
-    pass
-
-
-_badges = _load_badges()
-# _cards = _load_cards()
-print(_badges)
+class GenerationError(Exception):
+    def __init__(self, *args):
+        super().__init__(*args)
 
 
 def generate_badge(rarity: enums.ERarity = None, bp: int = None) -> Badge:
@@ -54,14 +26,14 @@ def generate_badge(rarity: enums.ERarity = None, bp: int = None) -> Badge:
         (_rarity_distribution[option.rarity])
         * (option.rarity == rarity or rarity is None)
         * (option.bp == bp or bp is None)
-        for option in _badges
+        for option in badges
     ])
     p = p / p.sum()
-    badge = np.random.choice(_badges, p=p)
+    badge = np.random.choice(badges, p=p)
     return badge
 
 
-def generate_card(rarity: enums.ERarity = None, bp: int = None) -> Card:
+def generate_card(rarity: enums.ERarity = None, bp: int = None) -> SimpleCard:
     # card =
     # return card
     pass
