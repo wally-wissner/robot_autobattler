@@ -39,7 +39,7 @@ class CardAbilityEffect(object):
     target_category: enums.EUnitCategory = None
     target_quantity: enums.EUnitQuantity | int = None
     dispersion: float = None
-    element: enums.EElement = None
+    weapon: enums.EWeapon = None
     repetitions: int = 1
 
     def get_text(self) -> str:

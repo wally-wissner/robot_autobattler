@@ -33,7 +33,6 @@ class Unit(object):
             ]
         }
         consumable_stats = {
-            EStat.BP: ConsumableStat(estat=EStat.BP),
             EStat.HP: ConsumableStat(estat=EStat.HP, refill_on_level_start=True),
             EStat.AP: ConsumableStat(estat=EStat.AP, refill_on_turn_start=True),
         }

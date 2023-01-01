@@ -22,7 +22,7 @@
             "target_category": "ENEMY",
             "target_quantity": 1,
             "dispersion": 0.05,
-            "element": "LASER",
+            "weapon": "LASER",
             "repetitions": 1
           }
         ]

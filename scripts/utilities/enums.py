@@ -13,7 +13,7 @@ class ERarity(IntEnum):
 
 
 class ECollectable(AutoNameEnum):
-    pass
+    SCRAP = auto()
 
 
 class EStat(AutoNameEnum):
@@ -21,8 +21,6 @@ class EStat(AutoNameEnum):
     MASS = auto()
 
     HP = auto()
-
-    BP = auto()
 
     AP = auto()
     AP_SOT_ENDURANCE = auto()
@@ -108,13 +106,14 @@ class EWeapon(AutoNameEnum):
 
 
 class EUnitAction(AutoNameEnum):
+    MOVE = auto()
     ATTACK = auto()
+    PRODUCE = auto()
     CHARGE_LASERS = auto()
     CHARGE_SHIELDS = auto()
     DIE = auto()
     EXPLODE = auto()
     REPAIR = auto()
-    PRODUCE = auto()
 
 
 class EResource(AutoNameEnum):
@@ -126,10 +125,6 @@ class EResource(AutoNameEnum):
     PATCH = auto()
     CYCLE = auto()
     CREDIT = auto()
-
-
-class EDevice(AutoNameEnum):
-    pass
 
 
 class EUnitCategory(AutoNameEnum):
@@ -148,10 +143,6 @@ class EUnitProperty(AutoNameEnum):
 
 class EUnitQuantity(AutoNameEnum):
     EACH = auto()
-
-
-class EElement(AutoNameEnum):
-    pass
 
 
 class EComparison(AutoNameEnum):

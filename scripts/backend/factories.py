@@ -9,37 +9,49 @@ from scripts.backend.unit import Unit
 from scripts.utilities import enums
 
 
-_rarity_distribution = {
-    enums.ERarity.COMMON: 11/15,
-    enums.ERarity.UNCOMMON: 3/15,
-    enums.ERarity.RARE: 1/15,
-}
-
-
 class GenerationError(Exception):
     def __init__(self, *args):
         super().__init__(*args)
 
 
+def random_rarity():
+    options = {
+        enums.ERarity.COMMON: 11 / 15,
+        enums.ERarity.UNCOMMON: 3 / 15,
+        enums.ERarity.RARE: 1 / 15,
+    }
+    return np.random.choice(options.keys(), p=options.values())
+
+
 def generate_badge(rarity: enums.ERarity = None, bp: int = None) -> Badge:
-    p = np.array([
-        (_rarity_distribution[option.rarity])
-        * (option.rarity == rarity or rarity is None)
-        * (option.bp == bp or bp is None)
-        for option in badges
-    ])
-    p = p / p.sum()
-    badge = np.random.choice(badges, p=p)
+    rarity = rarity if rarity else random_rarity()
+    options = [
+        badge
+        for badge in badges
+        if badge.rarity == rarity
+        and badge.bp == bp or bp is None
+    ]
+    badge = np.random.choice(options)
     return badge
 
 
 def generate_card(rarity: enums.ERarity = None, bp: int = None) -> SimpleCard:
-    # card =
-    # return card
-    pass
+    rarity = rarity if rarity else random_rarity()
+    options = [
+        card
+        for card in simple_cards
+        if card.rarity == rarity
+        and card.bp == bp or bp is None
+    ]
+    card = np.random.choice(options)
+    return card
 
 
 def generate_unit_upgrade(rarity: enums.ERarity = None, bp: int = None) -> UnitUpgrade:
+    if rarity == enums.ERarity.COMMON:
+        rarities = [enums.ERarity.COMMON, enums.ERarity.COMMON]
+
+    rarities = np.random.shuffle(rarities)
     # badge =
     # card =
     # unit_upgrade = UnitUpgrade(badge, card)
@@ -47,7 +59,7 @@ def generate_unit_upgrade(rarity: enums.ERarity = None, bp: int = None) -> UnitU
     pass
 
 
-def generate_unit(team, level: int) -> Unit:
+def generate_unit(team, level: int, quality: int) -> Unit:
     unit = Unit(team=team, level=level)
     return unit
 
