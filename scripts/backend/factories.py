@@ -59,11 +59,14 @@ def generate_unit_upgrade(rarity: enums.ERarity = None, bp: int = None) -> UnitU
     pass
 
 
-def generate_unit(team, level: int, quality: int) -> Unit:
+def generate_unit(team: Team, level: int, quality: int) -> Unit:
     unit = Unit(team=team, level=level)
     return unit
 
 
-def generate_team(is_player: bool = False, units: int = None, total_level: int = None) -> Team:
+def generate_team(is_player: bool = False, n_units: int = None, total_level: int = None, quality: int = None) -> Team:
     team = Team(is_player=is_player)
+    for _ in range(n_units):
+        unit = generate_unit(team=team, level=total_level//n_units, quality=quality)
+        team.units.append(unit)
     return team

@@ -20,7 +20,7 @@ class Card(object):
 class CardAbilityCondition(object):
     variable: enums.EResource | enums.EVariable
     comparison: enums.EComparison
-    threshold: enums.EVariable | bool | float | int
+    threshold: enums.EVariable | float
     consume_resource: bool
 
     def get_text(self) -> str:
@@ -35,7 +35,7 @@ class CardAbilityEffect(object):
     actor_category: enums.EUnitCategory
     actor_quantity: enums.EUnitQuantity | int
     action: enums.EUnitAction
-    values: list
+    value: float
     target_category: enums.EUnitCategory = None
     target_quantity: enums.EUnitQuantity | int = None
     dispersion: float = None

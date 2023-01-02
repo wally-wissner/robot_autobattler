@@ -18,7 +18,7 @@
             "actor_category": "THIS",
             "actor_quantity": 1,
             "action": "ATTACK",
-            "values": [5],
+            "value": 5,
             "target_category": "ENEMY",
             "target_quantity": 1,
             "dispersion": 0.05,

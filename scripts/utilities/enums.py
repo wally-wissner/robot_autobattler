@@ -135,10 +135,13 @@ class EUnitCategory(AutoNameEnum):
 
 
 class EUnitProperty(AutoNameEnum):
-    DAMAGED = auto()
-    UNDAMAGED = auto()
+    MOST_DAMAGED = auto()
+    LEAST_DAMAGED = auto()
     WEAK = auto()
     STRONG = auto()
+    CLOSEST = auto()
+    FARTHEST = auto()
+    LAST_DAMAGED = auto()
 
 
 class EUnitQuantity(AutoNameEnum):
@@ -146,11 +149,11 @@ class EUnitQuantity(AutoNameEnum):
 
 
 class EComparison(AutoNameEnum):
-    EQ = "=="
-    LT = "<"
-    LE = "<="
-    GT = ">"
-    GE = ">="
+    EQ = auto()
+    LT = auto()
+    LE = auto()
+    GT = auto()
+    GE = auto()
 
 
 class EVariable(AutoNameEnum):
