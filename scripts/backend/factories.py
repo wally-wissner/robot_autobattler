@@ -20,7 +20,7 @@ def random_rarity():
         enums.ERarity.UNCOMMON: 3 / 15,
         enums.ERarity.RARE: 1 / 15,
     }
-    return np.random.choice(options.keys(), p=options.values())
+    return np.random.choice(list(options.keys()), p=list(options.values()))
 
 
 def generate_badge(rarity: enums.ERarity = None, bp: int = None) -> Badge:
@@ -28,8 +28,8 @@ def generate_badge(rarity: enums.ERarity = None, bp: int = None) -> Badge:
     options = [
         badge
         for badge in badges
-        if badge.rarity == rarity
-        and badge.bp == bp or bp is None
+        if (badge.rarity == rarity)
+        and (badge.bp == bp or bp is None)
     ]
     badge = np.random.choice(options)
     return badge
@@ -40,8 +40,8 @@ def generate_card(rarity: enums.ERarity = None, bp: int = None) -> SimpleCard:
     options = [
         card
         for card in simple_cards
-        if card.rarity == rarity
-        and card.bp == bp or bp is None
+        if (card.rarity == rarity)
+        and (card.bp == bp or bp is None)
     ]
     card = np.random.choice(options)
     return card
@@ -56,6 +56,7 @@ def generate_unit_upgrade(rarity: enums.ERarity = None, bp: int = None) -> UnitU
     # card =
     # unit_upgrade = UnitUpgrade(badge, card)
     # return unit_upgrade
+    # TODO
     pass
 
 

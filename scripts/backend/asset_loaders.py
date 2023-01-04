@@ -8,7 +8,7 @@ from scripts.utilities import enums
 from scripts.utilities.structure import absolute_path
 
 
-def convert(value, enum_options):
+def _convert(value, enum_options):
     if not isinstance(enum_options, list):
         enum_options = [enum_options]
     if value:
@@ -22,7 +22,7 @@ def convert(value, enum_options):
             return value
 
 
-def load_badges() -> list[Badge]:
+def _load_badges() -> list[Badge]:
     with open(absolute_path("assets/item_data/badges.json")) as f:
         json_badges = json.load(f)
         badges = [
@@ -45,7 +45,7 @@ def load_badges() -> list[Badge]:
     return badges
 
 
-def load_cards() -> list[Card]:
+def _load_cards() -> list[Card]:
     with open(absolute_path("assets/item_data/cards.xml")) as f:
         tree = fromstring(f.read())
         cards = [
@@ -60,7 +60,7 @@ def load_cards() -> list[Card]:
     return cards
 
 
-def load_simple_cards() -> list[SimpleCard]:
+def _load_simple_cards() -> list[SimpleCard]:
     with open(absolute_path("assets/item_data/simple_cards.json")) as f:
         json_cards = json.load(f)
         cards = []
@@ -69,24 +69,24 @@ def load_simple_cards() -> list[SimpleCard]:
             for json_ability in json_card["abilities"]:
                 conditions = [
                     CardAbilityCondition(
-                        variable=convert(condition["variable"], [enums.EResource, enums.EVariable]),
-                        comparison=convert(condition["comparison"], [enums.EComparison]),
-                        threshold=convert(condition["threshold"], [enums.EVariable, float]),
-                        consume_resource=convert(condition["consume_resource"], bool),
+                        variable=_convert(condition["variable"], [enums.EResource, enums.EVariable]),
+                        comparison=_convert(condition["comparison"], [enums.EComparison]),
+                        threshold=_convert(condition["threshold"], [enums.EVariable, float]),
+                        consume_resource=_convert(condition["consume_resource"], bool),
                     )
                     for condition in json_ability["conditions"]
                 ]
                 effects = [
                     CardAbilityEffect(
-                        actor_category=convert(effect["actor_category"], enums.EUnitCategory),
-                        actor_quantity=convert(effect["actor_quantity"], [enums.EUnitQuantity, int]),
-                        action=convert(effect["action"], enums.EUnitAction),
-                        value=convert(effect["value"], list),
-                        target_category=convert(effect["actor_category"], enums.EUnitCategory),
-                        target_quantity=convert(effect["target_quantity"], [enums.EUnitQuantity, int]),
-                        dispersion=convert(effect["dispersion"], float),
-                        weapon=convert(effect["weapon"], enums.EWeapon),
-                        repetitions=convert(effect["repetitions"], int),
+                        actor_category=_convert(effect["actor_category"], enums.EUnitCategory),
+                        actor_quantity=_convert(effect["actor_quantity"], [enums.EUnitQuantity, int]),
+                        action=_convert(effect["action"], enums.EUnitAction),
+                        value=_convert(effect["value"], list),
+                        target_category=_convert(effect["actor_category"], enums.EUnitCategory),
+                        target_quantity=_convert(effect["target_quantity"], [enums.EUnitQuantity, int]),
+                        dispersion=_convert(effect["dispersion"], float),
+                        weapon=_convert(effect["weapon"], enums.EWeapon),
+                        repetitions=_convert(effect["repetitions"], int),
                     )
                     for effect in json_ability["effects"]
                 ]
@@ -105,12 +105,6 @@ def load_simple_cards() -> list[SimpleCard]:
     return cards
 
 
-badges = load_badges()
-cards = load_cards()
-simple_cards = load_simple_cards()
-
-
-if __name__ == "__main__":
-    print(badges)
-    print(cards)
-    print(simple_cards)
+badges = _load_badges()
+cards = _load_cards()
+simple_cards = _load_simple_cards()

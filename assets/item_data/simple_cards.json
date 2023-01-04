@@ -1,7 +1,31 @@
 [
   {
-    "name": "Charged Energy Attack",
+    "name": "Laser Attack",
     "rarity": "COMMON",
+    "bp": 1,
+    "abilities": [
+      {
+        "conditions": [
+        ],
+        "effects": [
+          {
+            "actor_category": "THIS",
+            "actor_quantity": 1,
+            "action": "ATTACK",
+            "value": 5,
+            "target_category": "ENEMY",
+            "target_quantity": 1,
+            "dispersion": 0.05,
+            "weapon": "LASER",
+            "repetitions": 1
+          }
+        ]
+      }
+    ]
+  },
+    {
+    "name": "Charged Laser Attack",
+    "rarity": "UNCOMMON",
     "bp": 1,
     "abilities": [
       {
@@ -18,7 +42,37 @@
             "actor_category": "THIS",
             "actor_quantity": 1,
             "action": "ATTACK",
-            "value": 5,
+            "value": 10,
+            "target_category": "ENEMY",
+            "target_quantity": 1,
+            "dispersion": 0.05,
+            "weapon": "LASER",
+            "repetitions": 1
+          }
+        ]
+      }
+    ]
+  },
+    {
+    "name": "Big Charged Laser Attack",
+    "rarity": "RARE",
+    "bp": 1,
+    "abilities": [
+      {
+        "conditions": [
+          {
+            "variable": "ENERGY",
+            "comparison": "GE",
+            "threshold": 5,
+            "consume_resource": 1
+          }
+        ],
+        "effects": [
+          {
+            "actor_category": "THIS",
+            "actor_quantity": 1,
+            "action": "ATTACK",
+            "value": 20,
             "target_category": "ENEMY",
             "target_quantity": 1,
             "dispersion": 0.05,

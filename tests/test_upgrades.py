@@ -1,18 +1,18 @@
+import numpy as np
 import unittest
 
-from scripts.backend.factories import *
+from scripts.backend.factories import generate_badge, generate_card, generate_unit_upgrade
 from scripts.utilities import enums
 
 
 class TestUnitUpgrade(unittest.TestCase):
     def setUp(self):
+        np.random.seed(0)
         self.rarity_badges = {
             rarity: generate_badge(rarity=rarity)
             for rarity in enums.ERarity
         }
 
-    def test_rarity(self):
-        self.assertTrue(len(self.rarity_badges) > 0)
-
+    def test_badge_rarity(self):
         for rarity in enums.ERarity:
-            self.assertTrue(self.rarity_badges[rarity].rarity == rarity)
+            self.assertEqual(self.rarity_badges[rarity].rarity, rarity)

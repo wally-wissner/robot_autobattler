@@ -7,9 +7,9 @@ class AutoNameEnum(Enum):
 
 
 class ERarity(IntEnum):
-    COMMON = 0
-    UNCOMMON = 1
-    RARE = 2
+    COMMON = 1
+    UNCOMMON = 2
+    RARE = 3
 
 
 class ECollectable(AutoNameEnum):
