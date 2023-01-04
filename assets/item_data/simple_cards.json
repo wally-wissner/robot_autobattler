@@ -7,7 +7,7 @@
       {
         "conditions": [
         ],
-        "effects": [
+        "success_effects": [
           {
             "actor_category": "THIS",
             "actor_quantity": 1,
@@ -19,6 +19,8 @@
             "weapon": "LASER",
             "repetitions": 1
           }
+        ],
+        "failure_effects": [
         ]
       }
     ]
@@ -37,7 +39,7 @@
             "consume_resource": 1
           }
         ],
-        "effects": [
+        "success_effects": [
           {
             "actor_category": "THIS",
             "actor_quantity": 1,
@@ -49,6 +51,8 @@
             "weapon": "LASER",
             "repetitions": 1
           }
+        ],
+        "failure_effects": [
         ]
       }
     ]
@@ -67,7 +71,7 @@
             "consume_resource": 1
           }
         ],
-        "effects": [
+        "success_effects": [
           {
             "actor_category": "THIS",
             "actor_quantity": 1,
@@ -79,6 +83,8 @@
             "weapon": "LASER",
             "repetitions": 1
           }
+        ],
+        "failure_effects": [
         ]
       }
     ]

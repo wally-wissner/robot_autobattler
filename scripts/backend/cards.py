@@ -54,11 +54,13 @@ class CardAbilityEffect(object):
 @dataclass
 class CardAbility(object):
     conditions: list[CardAbilityCondition]
-    effects: list[CardAbilityEffect]
+    success_effects: list[CardAbilityEffect]
+    failure_effects: list[CardAbilityEffect]
 
     def get_text(self) -> str:
         condition_texts = [condition.get_text() for condition in self.conditions]
-        effect_texts = [effect.get_text() for effect in self.effects]
+        effect_texts = [effect.get_text() for effect in self.success_effects]
+        # TODO
         if self.conditions:
             return " and ".join(condition_texts) + ":" + "\n\t" + "\n\t".join(effect_texts)
         else:

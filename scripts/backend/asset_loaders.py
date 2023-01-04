@@ -76,7 +76,7 @@ def _load_simple_cards() -> list[SimpleCard]:
                     )
                     for condition in json_ability["conditions"]
                 ]
-                effects = [
+                success_effects = [
                     CardAbilityEffect(
                         actor_category=_convert(effect["actor_category"], enums.EUnitCategory),
                         actor_quantity=_convert(effect["actor_quantity"], [enums.EUnitQuantity, int]),
@@ -88,11 +88,26 @@ def _load_simple_cards() -> list[SimpleCard]:
                         weapon=_convert(effect["weapon"], enums.EWeapon),
                         repetitions=_convert(effect["repetitions"], int),
                     )
-                    for effect in json_ability["effects"]
+                    for effect in json_ability["success_effects"]
+                ]
+                failure_effects = [
+                    CardAbilityEffect(
+                        actor_category=_convert(effect["actor_category"], enums.EUnitCategory),
+                        actor_quantity=_convert(effect["actor_quantity"], [enums.EUnitQuantity, int]),
+                        action=_convert(effect["action"], enums.EUnitAction),
+                        value=_convert(effect["value"], list),
+                        target_category=_convert(effect["actor_category"], enums.EUnitCategory),
+                        target_quantity=_convert(effect["target_quantity"], [enums.EUnitQuantity, int]),
+                        dispersion=_convert(effect["dispersion"], float),
+                        weapon=_convert(effect["weapon"], enums.EWeapon),
+                        repetitions=_convert(effect["repetitions"], int),
+                    )
+                    for effect in json_ability["failure_effects"]
                 ]
                 ability = CardAbility(
                     conditions=conditions,
-                    effects=effects,
+                    success_effects=success_effects,
+                    failure_effects=failure_effects,
                 )
                 abilities.append(ability)
             card = SimpleCard(

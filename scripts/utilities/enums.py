@@ -7,6 +7,7 @@ class AutoNameEnum(Enum):
 
 
 class ERarity(IntEnum):
+    # np.random.choice does not preserve type of enums having value 0.
     COMMON = 1
     UNCOMMON = 2
     RARE = 3
