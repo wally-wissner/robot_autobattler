@@ -9,7 +9,7 @@ class TestUnitUpgrade(unittest.TestCase):
     def setUp(self):
         np.random.seed(0)
         self.rarity_badges = {
-            rarity: generate_badge(rarity=rarity)
+            rarity: generate_badge(rarity_range=(rarity, rarity))
             for rarity in enums.ERarity
         }
 

@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Iterable
 
 from scripts.backend.asset_loaders import badges, cards, simple_cards
 from scripts.backend.badges import Badge
@@ -6,7 +7,7 @@ from scripts.backend.cards import Card, SimpleCard
 from scripts.backend.team import Team
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.backend.unit import Unit
-from scripts.utilities import enums
+from scripts.utilities.enums import ERarity
 
 
 class GenerationError(Exception):
@@ -14,53 +15,68 @@ class GenerationError(Exception):
         super().__init__(*args)
 
 
-def random_rarity():
-    options = {
-        enums.ERarity.COMMON: 11 / 15,
-        enums.ERarity.UNCOMMON: 3 / 15,
-        enums.ERarity.RARE: 1 / 15,
+def random_rarity(min_rarity: ERarity = ERarity.COMMON, max_rarity: ERarity = ERarity.RARE) -> ERarity:
+    defaults = {
+        ERarity.COMMON: 11 / 15,
+        ERarity.UNCOMMON: 3 / 15,
+        ERarity.RARE: 1 / 15,
     }
-    return np.random.choice(list(options.keys()), p=list(options.values()))
+    distribution = np.array([
+        probability if min_rarity <= rarity <= max_rarity else 0
+        for rarity, probability in defaults.items()
+    ])
+    distribution = distribution / distribution.sum()
+    return np.random.choice(list(defaults.keys()), p=distribution)
 
 
-def generate_badge(rarity: enums.ERarity = None, bp: int = None) -> Badge:
-    rarity = rarity if rarity else random_rarity()
+def random_bp(min_bp: int = -np.inf, max_bp: int = np.inf) -> int:
+    # TODO
+    return 1
+
+
+def generate_badge(
+        rarity_range: Iterable[ERarity] = (ERarity.COMMON, ERarity.RARE),
+        bp_range: Iterable[int] = (-np.inf, np.inf)
+) -> Badge:
+    rarity = random_rarity(*rarity_range)
+    bp = random_bp(*bp_range)
     options = [
         badge
         for badge in badges
-        if (badge.rarity == rarity)
-        and (badge.bp == bp or bp is None)
+        if badge.rarity == rarity
+        and badge.bp == bp
     ]
     badge = np.random.choice(options)
     return badge
 
 
-def generate_card(rarity: enums.ERarity = None, bp: int = None) -> SimpleCard:
-    rarity = rarity if rarity else random_rarity()
+def generate_card(
+        rarity_range: Iterable[ERarity] = (ERarity.COMMON, ERarity.RARE),
+        bp_range: Iterable[int] = (-np.inf, np.inf)
+) -> SimpleCard:
+    rarity = random_rarity(*rarity_range)
+    bp = random_bp(*bp_range)
     options = [
         card
         for card in simple_cards
-        if (card.rarity == rarity)
-        and (card.bp == bp or bp is None)
+        if card.rarity == rarity
+        and card.bp == bp
     ]
     card = np.random.choice(options)
     return card
 
 
-def generate_unit_upgrade(rarity: enums.ERarity = None, bp: int = None) -> UnitUpgrade:
-    if rarity == enums.ERarity.COMMON:
-        rarities = [enums.ERarity.COMMON, enums.ERarity.COMMON]
-
-    rarities = np.random.shuffle(rarities)
-    # badge =
-    # card =
-    # unit_upgrade = UnitUpgrade(badge, card)
-    # return unit_upgrade
-    # TODO
-    pass
+def generate_unit_upgrade(
+        rarity_range: Iterable[ERarity] = (ERarity.COMMON, ERarity.RARE),
+        bp_range: Iterable[int] = (-np.inf, np.inf)
+) -> UnitUpgrade:
+    badge = generate_badge(rarity_range, bp_range)
+    card = generate_card(rarity_range, bp_range)
+    unit_upgrade = UnitUpgrade(badge, card)
+    return unit_upgrade
 
 
-def generate_unit(team: Team, level: int, quality: int) -> Unit:
+def generate_unit(team: Team, level: int, quality: float) -> Unit:
     unit = Unit(team=team, level=level)
     return unit
 
