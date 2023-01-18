@@ -1,0 +1,19 @@
+import numpy as np
+import unittest
+
+from scripts.backend.factories import generate_team
+from scripts.utilities import enums
+
+
+class TestTeam(unittest.TestCase):
+    def setUp(self):
+        np.random.seed(0)
+        self.team = generate_team(is_player=False, total_level=12, n_units=3, quality=.75)
+
+    def test_levels(self):
+        for unit in self.team.units:
+            self.assertGreater(unit.level, 0)
+
+    def test_unit_upgrades(self):
+        for unit in self.team.units:
+            self.assertGreater(len(unit.unit_upgrades), 0)

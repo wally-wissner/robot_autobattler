@@ -48,6 +48,12 @@ class Unit(object):
                     stat_modifiers.append(stat_modifier)
         return stat_modifiers
 
+    def bp_used(self):
+        return sum(unit_upgrade.bp for unit_upgrade in self.unit_upgrades)
+
+    def bp_available(self):
+        return self.level - self.bp_used()
+
     def take_damage(self, damage):
         self.stats[EStat.HP] -= damage
         if self.stats[EStat.HP].current_value <= 0:

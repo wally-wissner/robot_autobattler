@@ -3,6 +3,7 @@ import unittest
 from test_asset_loaders import TestAssetLoaders
 from test_event_history import TestEventHistory
 from test_inventory import TestInventory
+from test_team import TestTeam
 from test_upgrades import TestUnitUpgrade
 
 

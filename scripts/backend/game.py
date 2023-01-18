@@ -1,3 +1,5 @@
+import numpy as np
+
 from scripts.backend.cards import Card, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.event import Event, EventHistory
 from scripts.backend.team import Team
@@ -25,7 +27,7 @@ class Game(object):
 
         self.teams: list[Team] = []
 
-        self.level: int = 1
+        self.encounter: int = 1
         self.round: int = 1
         self.turn: int = 1
 
@@ -34,18 +36,22 @@ class Game(object):
     def units(self) -> set[Unit]:
         return {unit for team in self.teams for unit in team.units}
 
-    def start_level(self) -> None:
-        self.level += 1
+    def start_encounter(self) -> None:
+        self.encounter += 1
 
         for team in self.teams:
             for unit in team.units:
                 unit.status_effects.clear()
+                self.assign_initial_position(unit)
 
     def start_round(self) -> None:
         self.round += 1
 
     def start_turn(self) -> None:
         self.turn += 1
+
+    def assign_initial_position(self, unit: Unit):
+        unit.position = 10 * (np.random.randn() + unit.team)
 
     def evaluate_active_cards(self) -> None:
         # TODO

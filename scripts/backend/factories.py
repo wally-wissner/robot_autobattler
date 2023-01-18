@@ -77,11 +77,18 @@ def generate_unit_upgrade(
 
 
 def generate_unit(team: Team, level: int, quality: float) -> Unit:
+    if not (0 <= quality <= 1):
+        raise ValueError(f"Expected quality to be between 0 and 1. Received {quality}.")
     unit = Unit(team=team, level=level)
+    while unit.bp_available() > 0:
+        unit_upgrade = generate_unit_upgrade(bp_range=(-np.inf, unit.bp_available()))
+        unit.add_unit_upgrade(unit_upgrade)
     return unit
 
 
-def generate_team(is_player: bool = False, n_units: int = None, total_level: int = None, quality: int = None) -> Team:
+def generate_team(is_player: bool, total_level: int, quality: float, n_units: int = None) -> Team:
+    if not (0 <= quality <= 1):
+        raise ValueError(f"Expected quality to be between 0 and 1. Received {quality}.")
     team = Team(is_player=is_player)
     for _ in range(n_units):
         unit = generate_unit(team=team, level=total_level//n_units, quality=quality)
