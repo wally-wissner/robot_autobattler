@@ -52,7 +52,7 @@ class Application(object):
             self.draw()
         self.quit()
 
-    def handle_events(self, events: pg.event):
+    def handle_events(self, events: list[pg.event.Event]):
         for event in events:
             if event.type == pg.QUIT:
                 self.quit()
@@ -89,10 +89,6 @@ class Application(object):
     def quit(self):
         pg.quit()
         sys.exit()
-
-    def load_assets(self):
-        # TODO
-        pass
 
     def new_game(self, *args, **kwargs):
         self.game = Game(version=self.version)

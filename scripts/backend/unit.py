@@ -19,11 +19,11 @@ class Unit(object):
         self.status_effects = Inventory()
 
         default_stats = {
-            EStat.SIZE: Stat(estat=EStat.SIZE, base_value=10),
-            EStat.MASS: Stat(estat=EStat.MASS, base_value=10),
+            EStat.SIZE: Stat(base_value=10),
+            EStat.MASS: Stat(base_value=10),
         }
         bonus_stats = {
-            stat: Stat(estat=stat, base_value=0)
+            stat: Stat(base_value=0)
             for stat in [
                 EStat.POWER,
                 EStat.LASER_POWER,
@@ -33,8 +33,8 @@ class Unit(object):
             ]
         }
         consumable_stats = {
-            EStat.HP: ConsumableStat(estat=EStat.HP, refill_on_level_start=True),
-            EStat.AP: ConsumableStat(estat=EStat.AP, refill_on_turn_start=True),
+            EStat.HP: ConsumableStat(refill_on_encounter_start=True),
+            EStat.AP: ConsumableStat(refill_on_turn_start=True),
         }
         self.stats = default_stats | bonus_stats | consumable_stats
 

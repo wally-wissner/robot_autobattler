@@ -12,7 +12,7 @@ class Scene(ABC):
         self.application = application
 
     @abstractmethod
-    def handle_events(self, events):
+    def handle_events(self, events: list[pg.event.Event]):
         raise NotImplemented()
 
     @abstractmethod
