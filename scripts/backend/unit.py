@@ -19,7 +19,7 @@ class Unit(object):
         self.status_effects = Inventory()
 
         default_stats = {
-            EStat.SIZE: Stat(estat=EStat.MASS, base_value=10),
+            EStat.SIZE: Stat(estat=EStat.SIZE, base_value=10),
             EStat.MASS: Stat(estat=EStat.MASS, base_value=10),
         }
         bonus_stats = {
@@ -75,3 +75,6 @@ class Unit(object):
 
     def add_unit_upgrade(self, unit_upgrade: UnitUpgrade):
         self.unit_upgrades.append(unit_upgrade)
+
+    def color(self) -> tuple[int]:
+        return tuple(hash(self.id) // 10 ** (3 * i) % 256 for i in range(3))

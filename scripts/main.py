@@ -36,7 +36,9 @@ class Application(object):
 
         # Game setup.
         self.game: Game | None = None
-        self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
+        self.new_game()
+        # self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
+        self.active_scene: scenes.Scene = scenes.BattleScene(self)
         self.delta_time = 0
         self.playing = True
         self.load_assets()
@@ -91,6 +93,10 @@ class Application(object):
     def load_assets(self):
         # TODO
         pass
+
+    def new_game(self, *args, **kwargs):
+        self.game = Game(version=self.version)
+        self.game.start_encounter()
 
     def load_game(self):
         self.game = dill.load(self.game_save_path)
