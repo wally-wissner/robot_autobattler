@@ -3,9 +3,11 @@ def clamp(value, min_value, max_value):
     return sorted([value, min_value, max_value])[1]
 
 
-def shift_item(items: list, index: int, shift=1) -> bool:
-    can_shift = (0 <= index < len(items)) and (0 <= index + shift < len(items))
-    if can_shift:
+def can_shift(items: list, index: int, shift=1) -> bool:
+    return (0 <= index < len(items)) and (0 <= index + shift < len(items))
+
+
+def shift_item(items: list, index: int, shift=1) -> None:
+    if can_shift(items, index, shift):
         item = items.pop(index)
         items.insert(index + shift, item)
-    return can_shift
