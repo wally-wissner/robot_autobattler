@@ -23,25 +23,30 @@ mapping_weapon_accuracy = {
 
 
 class Game(object):
-    def __init__(self, version: str) -> None:
+    def __init__(self, version: str, seed: int) -> None:
         self.version = version
-
-        self.teams: list[Team] = [
-            generate_team(is_player=True, total_level=30, n_units=10, quality=.75),
-            generate_team(is_player=False, total_level=10, n_units=5, quality=.75)
-        ]
 
         self.encounter: int = 1
         self.round: int = 1
         self.turn: int = 1
 
-        event_history = EventHistory()
+        self.teams = self.generate_teams()
+        self.event_history = EventHistory()
+
+    def generate_teams(self) -> list[Team]:
+        teams: list[Team] = [
+            generate_team(is_player=True, total_level=30, n_units=10, quality=.75),
+            generate_team(is_player=False, total_level=10, n_units=5, quality=.75)
+        ]
+        return teams
 
     def units(self) -> set[Unit]:
         return {unit for team in self.teams for unit in team.units}
 
     def start_encounter(self) -> None:
         self.encounter += 1
+        self.round = 1
+        self.turn = 1
 
         for team in self.teams:
             for unit in team.units:
@@ -50,6 +55,7 @@ class Game(object):
 
     def start_round(self) -> None:
         self.round += 1
+        self.turn = 1
 
     def start_turn(self) -> None:
         self.turn += 1

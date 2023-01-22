@@ -41,7 +41,6 @@ class Application(object):
         self.active_scene: scenes.Scene = scenes.BattleScene(self)
         self.delta_time = 0
         self.playing = True
-        self.load_assets()
 
     def run(self):
         self.display.fill(colors.blue)
@@ -91,7 +90,7 @@ class Application(object):
         sys.exit()
 
     def new_game(self, *args, **kwargs):
-        self.game = Game(version=self.version)
+        self.game = Game(version=self.version, seed=0)
         self.game.start_encounter()
 
     def load_game(self):
