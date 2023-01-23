@@ -46,7 +46,7 @@ class MainMenuScene(Scene):
 
         settings_icon = pg.image.load("../assets/images/ui/settings-icon.png").convert_alpha()
         self.button_settings = UIImage(
-            self.application.relative_to_rect((.95, .95), (.99, .99)),
+            self.application.relative_to_rect((.95, .01), (.99, .05)),
             settings_icon,
             manager=self.application.ui_manager,
             # container=self.buttons_container,

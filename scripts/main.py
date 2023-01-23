@@ -37,8 +37,8 @@ class Application(object):
         # Game setup.
         self.game: Game | None = None
         self.new_game()
-        # self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
-        self.active_scene: scenes.Scene = scenes.BattleScene(self)
+        self.active_scene: scenes.Scene = scenes.MainMenuScene(self)
+        # self.active_scene: scenes.Scene = scenes.BattleScene(self)
         self.delta_time = 0
         self.playing = True
 
@@ -69,21 +69,20 @@ class Application(object):
     def relative_to_vector2(self, relative: pg.Vector2) -> pg.Vector2:
         relative = pg.Vector2(relative)
         resolution_width, resolution_height = self.settings.resolution
-        return pg.Vector2(relative.x * resolution_width, (1 - relative.y) * resolution_height)
-
-    def relative_to_rect(self, bottom_left: pg.Vector2, top_right: pg.Vector2) -> pg.Rect:
-        vector2_bottom_left = self.relative_to_vector2(bottom_left)
-        vector2_top_right = self.relative_to_vector2(top_right)
-        difference = vector2_top_right - vector2_bottom_left
-        return pg.Rect(
-            (vector2_bottom_left.x, vector2_bottom_left.y + difference.y),
-            (difference.x, -difference.y)
-        )
+        return pg.Vector2(relative.x * resolution_width, relative.y * resolution_height)
 
     def vector2_to_relative(self, pixel: pg.Vector2) -> pg.Vector2:
         pixel = pg.Vector2(pixel)
         resolution_width, resolution_height = self.settings.resolution
-        return pg.Vector2(pixel.x / resolution_width, 1 - pixel.y / resolution_height)
+        return pg.Vector2(pixel.x / resolution_width, pixel.y / resolution_height)
+
+    def relative_to_rect(self, top_left: pg.Vector2, bottom_right: pg.Vector2) -> pg.Rect:
+        vector2_top_left = self.relative_to_vector2(top_left)
+        vector2_bottom_right = self.relative_to_vector2(bottom_right)
+        return pg.Rect(
+            vector2_top_left,
+            vector2_bottom_right - vector2_top_left
+        )
 
     def quit(self):
         pg.quit()
