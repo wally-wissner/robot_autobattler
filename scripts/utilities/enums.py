@@ -6,6 +6,13 @@ class AutoNameEnum(Enum):
         return self
 
 
+class EScene(AutoNameEnum):
+    MAIN_MENU = auto()
+    SETTINGS_MENU = auto()
+    BATTLE = auto()
+    UPGRADE = auto()
+
+
 class ERarity(IntEnum):
     # np.random.choice does not preserve type of enums having value 0.
     COMMON = 1
