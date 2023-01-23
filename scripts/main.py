@@ -9,7 +9,7 @@ from scripts.backend.settings import SettingsManager
 from scripts.frontend import colors
 from scripts.utilities.singleton import Singleton
 from scripts.utilities.structure import absolute_path
-from utilities.enums import EScene
+from scripts.utilities.enums import EScene
 
 
 title = "Robot Autobattler"
@@ -38,7 +38,7 @@ class Application(object):
         self.scenes = {
             EScene.MAIN_MENU: scenes.MainMenuScene(self),
             EScene.SETTINGS_MENU: scenes.SettingsMenuScene(self),
-            "battle": scenes.BattleScene(self),
+            EScene.BATTLE: scenes.BattleScene(self),
             EScene.UPGRADE: scenes.UpgradeScene(self),
         }
 

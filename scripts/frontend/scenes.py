@@ -67,10 +67,10 @@ class MainMenuScene(Scene):
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.button_new_game:
                     self.application.new_game()
-                    self.application.change_scene("battle")
+                    self.application.change_scene(EScene.BATTLE)
                 if event.ui_element == self.button_continue:
                     self.application.load_game()
-                    self.application.change_scene("battle")
+                    self.application.change_scene(EScene.BATTLE)
 
     def draw(self):
         # todo
