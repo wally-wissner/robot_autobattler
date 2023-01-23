@@ -7,7 +7,6 @@ import scripts.frontend.scenes as scenes
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
 from scripts.frontend import colors
-from scripts.utilities.singleton import Singleton
 from scripts.utilities.structure import absolute_path
 from scripts.utilities.enums import EScene
 
@@ -16,7 +15,6 @@ title = "Robot Autobattler"
 version = "0.0.1"
 
 
-@Singleton
 class Application(object):
     def __init__(self) -> None:
         self.title = title
@@ -112,5 +110,5 @@ class Application(object):
 
 
 if __name__ == "__main__":
-    game = Application.instance()
+    game = Application()
     game.run()

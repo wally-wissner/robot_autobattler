@@ -4,10 +4,8 @@ from scripts.backend.battleboard.procedural_generation.procedural_generator impo
 from scripts.backend.battleboard.battle_tile import BattleTile
 from scripts.backend.battleboard.topology.discrete_topology import Tile, Tiling
 from scripts.backend.unit import Unit
-from scripts.utilities.singleton import Singleton
 
 
-@Singleton
 class BattleBoard(object):
     def __init__(self, tiling: Tiling, generator: ProceduralGenerator):
         self.tiling = tiling
