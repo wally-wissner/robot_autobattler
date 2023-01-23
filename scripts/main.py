@@ -18,7 +18,7 @@ version = "0.0.1"
 
 @Singleton
 class Application(object):
-    def __init__(self):
+    def __init__(self) -> None:
         self.title = title
         self.version = version
 
@@ -48,7 +48,7 @@ class Application(object):
         self.delta_time = 0
         self.playing = True
 
-    def run(self):
+    def run(self) -> None:
         self.display.fill(colors.blue)
         while self.playing:
             self.delta_time = self.clock.tick(self.settings.fps) / 1000
@@ -57,7 +57,7 @@ class Application(object):
             self.draw()
         self.quit()
 
-    def handle_events(self, events: list[pygame.event.Event]):
+    def handle_events(self, events: list[pygame.event.Event]) -> None:
         for event in events:
             self.ui_manager.process_events(event)
             if event.type == pygame.QUIT:
@@ -65,11 +65,11 @@ class Application(object):
 
         self.active_scene.handle_events(events)
 
-    def update(self):
+    def update(self) -> None:
         pygame.display.update()
         self.ui_manager.update(self.delta_time)
 
-    def draw(self):
+    def draw(self) -> None:
         self.display.fill(color=colors.blue)
         self.active_scene.draw()
         self.ui_manager.draw_ui(self.display)
@@ -92,25 +92,23 @@ class Application(object):
             vector2_bottom_right - vector2_top_left
         )
 
-    def quit(self):
+    def quit(self) -> None:
         pygame.quit()
         sys.exit()
 
-    def new_game(self, *args, **kwargs):
+    def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
         self.game.start_encounter()
 
-    def load_game(self):
+    def load_game(self) -> None:
         self.game = dill.load(self.game_save_path)
 
-    def save_game(self):
+    def save_game(self) -> None:
         dill.dump(self.game, self.game_save_path)
 
-    def change_scene(self, scene_type: EScene):
+    def change_scene(self, scene_type: EScene) -> None:
         self.active_scene.disable()
-        # self.active_scene = self.scenes[scene_type]
-        if scene_type == "battle":
-            self.active_scene = scenes.BattleScene(self)
+        self.active_scene = self.scenes[scene_type]
 
 
 if __name__ == "__main__":

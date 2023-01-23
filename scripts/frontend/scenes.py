@@ -9,19 +9,19 @@ from scripts.utilities.enums import EStat, EScene
 
 
 class Scene(ABC):
-    def __init__(self, application):
+    def __init__(self, application) -> None:
         self.application = application
         self.ui_elements = set()
 
     @abstractmethod
-    def handle_events(self, events: list[pygame.event.Event]):
+    def handle_events(self, events: list[pygame.event.Event]) -> None:
         raise NotImplemented()
 
     @abstractmethod
-    def draw(self):
+    def draw(self) -> None:
         raise NotImplemented()
 
-    def disable(self):
+    def disable(self) -> None:
         for ui_element in self.ui_elements:
             ui_element.hide()
 
