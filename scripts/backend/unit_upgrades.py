@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from scripts.backend.badges import Badge
-from scripts.backend.cards import Card, SimpleCard
+from scripts.backend.cards import Card
 from scripts.utilities.identifiers import uuid_identifier
 
 
@@ -9,7 +9,7 @@ from scripts.utilities.identifiers import uuid_identifier
 @dataclass
 class UnitUpgrade(object):
     badge: Badge
-    card: SimpleCard
+    card: Card
     removable: bool = True
 
     @property

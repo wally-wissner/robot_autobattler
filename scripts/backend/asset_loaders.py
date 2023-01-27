@@ -2,7 +2,7 @@ import json
 from xml.etree.ElementTree import fromstring
 
 from scripts.backend.badges import Badge
-from scripts.backend.cards import Card, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
+from scripts.backend.cards import AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
 from scripts.utilities.structure import absolute_path
@@ -45,11 +45,11 @@ def _load_badges() -> list[Badge]:
     return badges
 
 
-def _load_cards() -> list[Card]:
+def _load_cards() -> list[AdvancedCard]:
     with open(absolute_path("assets/item_data/cards.xml")) as f:
         tree = fromstring(f.read())
         cards = [
-            Card(
+            AdvancedCard(
                 name=element.get("name"),
                 rarity=enums.ERarity[element.get("rarity")],
                 bp=int(element.get("bp")),

@@ -3,7 +3,7 @@ from typing import Iterable
 
 from scripts.backend.asset_loaders import badges, cards, simple_cards
 from scripts.backend.badges import Badge
-from scripts.backend.cards import Card, SimpleCard
+from scripts.backend.cards import Card
 from scripts.backend.team import Team
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.backend.unit import Unit
@@ -53,7 +53,7 @@ def generate_badge(
 def generate_card(
         rarity_range: Iterable[ERarity] = (ERarity.COMMON, ERarity.RARE),
         bp_range: Iterable[int] = (-np.inf, np.inf)
-) -> SimpleCard:
+) -> Card:
     rarity = random_rarity(*rarity_range)
     bp = random_bp(*bp_range)
     options = [

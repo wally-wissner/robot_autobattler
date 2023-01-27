@@ -9,6 +9,10 @@ class Card(object):
     name: str
     rarity: enums.ERarity
     bp: int
+
+
+@dataclass
+class AdvancedCard(Card):
     abilities: ElementTree
 
     def get_text(self) -> str:
@@ -68,10 +72,7 @@ class CardAbility(object):
 
 
 @dataclass
-class SimpleCard(object):
-    name: str
-    rarity: enums.ERarity
-    bp: int
+class SimpleCard(Card):
     abilities: list[CardAbility]
 
     def get_text(self) -> str:

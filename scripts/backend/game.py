@@ -1,6 +1,6 @@
 import numpy as np
 
-from scripts.backend.cards import Card, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
+from scripts.backend.cards import Card, AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.event import Event, EventHistory
 from scripts.backend.team import Team
 from scripts.backend.unit import Unit
@@ -48,10 +48,10 @@ class Game(object):
         self.round = 1
         self.turn = 1
 
+        self.place_units()
         for team in self.teams:
             for unit in team.units:
                 unit.status_effects.clear()
-                self.assign_initial_position(unit)
 
     def start_round(self) -> None:
         self.round += 1
@@ -60,18 +60,20 @@ class Game(object):
     def start_turn(self) -> None:
         self.turn += 1
 
-    def assign_initial_position(self, unit: Unit) -> None:
+    def place_units(self) -> None:
         deviation = 10
         team_distance = 50
-        team_center = team_distance * np.array([-1 if unit.team.is_player else 1, 0])
-        unit_relative_position = np.random.randn(2)
-        unit.position = deviation * unit_relative_position + team_center
+        for team in self.teams:
+            for unit in team.units:
+                team_center = team_distance * np.array([-1 if unit.team.is_player else 1, 0])
+                unit_relative_position = np.random.randn(2)
+                unit.position = deviation * unit_relative_position + team_center
 
     def evaluate_active_cards(self) -> None:
         # TODO
         pass
 
-    def evaluate_card(self, actor: Unit, card: SimpleCard) -> None:
+    def evaluate_card(self, actor: Unit, card: Card) -> None:
         for card_ability in card.abilities:
             self.evaluate_card_ability(actor, card_ability)
 
