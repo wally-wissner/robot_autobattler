@@ -12,8 +12,8 @@ class Team(object):
     def __init__(self, is_player: bool):
         self.is_player: bool = is_player
         self.units: list[Unit] = []
-        self.unit_upgrades = Inventory()
-        self.collectables = Inventory()
+        self.unit_upgrades: Inventory[UnitUpgrade, int] = Inventory()
+        self.collectables: Inventory[ECollectable, int] = Inventory()
 
         self.library: deque[Card] = deque()
         self.hand: deque[Card] = deque()
