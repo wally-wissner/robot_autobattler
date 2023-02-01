@@ -1,11 +1,18 @@
 import numpy as np
 from collections import deque
+from dataclasses import dataclass
 
 from scripts.backend.cards import Card
 from scripts.backend.inventory import Inventory
 from scripts.backend.unit import Unit
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.utilities.enums import ECollectable
+
+
+@dataclass
+class CardIndex:
+    i_unit: int
+    i_unit_upgrade: int
 
 
 class Team(object):
@@ -19,12 +26,15 @@ class Team(object):
         self.hand: deque[Card] = deque()
         self.graveyard: deque[Card] = deque()
 
-    def card_order(self) -> dict[Card, tuple[int, int]]:
+    def card_order(self) -> dict[Card, CardIndex]:
         return {
-            unit_upgrade.card: (i_unit, i_unit_upgrade)
+            unit_upgrade.card: CardIndex(i_unit, i_unit_upgrade)
             for i_unit, unit in enumerate(self.units)
             for i_unit_upgrade, unit_upgrade in enumerate(unit.unit_upgrades)
         }
+
+    def card_actor(self, card: Card) -> Unit:
+        return self.units[self.card_order()[card].i_unit]
 
     def build_library(self) -> None:
         library = deque(self.card_order())

@@ -70,10 +70,12 @@ class Game(object):
                 unit.position = deviation * unit_relative_position + team_center
 
     def evaluate_active_cards(self) -> None:
-        # TODO
-        pass
+        for team in self.teams:
+            card = team.hand.pop()
+            self.evaluate_card(actor=team.card_actor(card), card=card)
+            team.graveyard.append(card)
 
-    def evaluate_card(self, actor: Unit, card: Card) -> None:
+    def evaluate_card(self, actor: Unit, card: SimpleCard) -> None:
         for card_ability in card.abilities:
             self.evaluate_card_ability(actor, card_ability)
 
