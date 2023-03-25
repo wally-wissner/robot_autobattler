@@ -52,7 +52,9 @@ class Game(object):
         for team in self.teams:
             for unit in team.units:
                 unit.status_effects.clear()
-
+                unit.size = self.unit_stat_value(unit, enums.EStat.SIZE)
+                unit.mass = self.unit_stat_value(unit, enums.EStat.MASS)
+    
     def start_round(self) -> None:
         self.round += 1
         self.turn = 1

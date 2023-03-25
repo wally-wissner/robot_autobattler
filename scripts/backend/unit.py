@@ -1,7 +1,7 @@
 import numpy as np
 
-from pygame import Vector2
 from scripts.backend.inventory import Inventory
+from scripts.backend.physics import DiscBody
 from scripts.backend.unitstat import Stat, ConsumableStat
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.utilities.enums import EStat
@@ -9,9 +9,8 @@ from scripts.utilities.identifiers import uuid_identifier
 
 
 @uuid_identifier
-class Unit(object):
+class Unit(DiscBody):
     def __init__(self, team, level):
-        self.team = team
         self.level = level
         self.alive = True
 
@@ -38,7 +37,7 @@ class Unit(object):
         }
         self.stats = default_stats | bonus_stats | consumable_stats
 
-        self._position = None
+        super().__init__(team=team)
 
     def stat_modifiers(self, stat: EStat):
         stat_modifiers = []
@@ -65,16 +64,8 @@ class Unit(object):
     def level_up_cost(self):
         return int(np.sqrt(self.level))
 
-    @property
-    def position(self) -> Vector2:
-        return self._position
-
-    @position.setter
-    def position(self, vector: Vector2):
-        self._position = vector
-
     def add_unit_upgrade(self, unit_upgrade: UnitUpgrade):
         self.unit_upgrades.append(unit_upgrade)
 
     def color(self) -> tuple[int]:
-        return tuple(hash(self.id) // 10 ** (3 * i) % 256 for i in range(3))
+        return tuple(int(hash(self.id) // 10 ** (3 * i) % 256) for i in range(3))

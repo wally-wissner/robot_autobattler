@@ -3,15 +3,16 @@ import pygame
 from shapely.geometry import Point, Polygon
 
 
-class PhysicsObject(object):
+class PhysicsBody(object):
     def __init__(
             self,
             shape: Polygon,
-            mass: float,
+            mass: float = 0,
             position: pygame.Vector2 = pygame.Vector2(),
             velocity: pygame.Vector2 = pygame.Vector2(),
             acceleration: pygame.Vector2 = pygame.Vector2(),
             resistance: float = 0,
+            team=None,
     ):
         self.shape = shape
         self.mass = mass
@@ -19,6 +20,9 @@ class PhysicsObject(object):
         self.velocity = velocity
         self.acceleration = acceleration
         self.resistance = resistance
+        self.team = team
+
+        self.objects_touched: list[PhysicsBody] = []
 
     def update(self, dt):
         self.velocity += (self.acceleration - self.resistance * self.velocity) * dt
@@ -28,8 +32,8 @@ class PhysicsObject(object):
             self.velocity = pygame.Vector2()
 
 
-class DiscObject(PhysicsObject):
-    def __init__(self, radius: float, *args, **kwargs):
+class DiscBody(PhysicsBody):
+    def __init__(self, radius: float = 0, *args, **kwargs):
         self._radius = radius
         super().__init__(shape=Point().buffer(distance=radius), *args, **kwargs)
 
