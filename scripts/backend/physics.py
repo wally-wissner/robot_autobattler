@@ -1,5 +1,6 @@
 import math
 import pygame
+from pygame import Vector2
 from shapely.geometry import Point, Polygon
 
 
@@ -28,8 +29,17 @@ class PhysicsBody(object):
         self.velocity += (self.acceleration - self.resistance * self.velocity) * dt
         self.position += self.velocity * dt
 
-        if math.isclose((self.velocity - pygame.Vector2()).magnitude(), 0, abs_tol=1e-8):
+        if not self.is_moving():
             self.velocity = pygame.Vector2()
+            self.acceleration = pygame.Vector2()
+
+    def is_moving(self):
+        velocity_near_zero = math.isclose(self.velocity.magnitude(), 0, abs_tol=1e-8)
+        acceleration_near_zero = math.isclose(self.acceleration.magnitude(), 0, abs_tol=1e-8)
+        return not (velocity_near_zero and acceleration_near_zero)
+
+    def to_vector2(self):
+        return Vector2(self.position)
 
 
 class DiscBody(PhysicsBody):

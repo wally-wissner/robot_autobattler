@@ -99,6 +99,7 @@ class BattleScene(Scene):
         pass
 
     def draw(self):
+        self.application.game.update_physics(self.application.delta_time)
         for unit in self.application.game.units():
             pygame.draw.circle(
                 surface=self.application.display,

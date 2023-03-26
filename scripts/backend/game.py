@@ -1,4 +1,5 @@
 import numpy as np
+from pygame import Vector2
 
 from scripts.backend.cards import Card, AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.event import Event, EventHistory
@@ -54,7 +55,11 @@ class Game(object):
                 unit.status_effects.clear()
                 unit.size = self.unit_stat_value(unit, enums.EStat.SIZE)
                 unit.mass = self.unit_stat_value(unit, enums.EStat.MASS)
-    
+
+    def update_physics(self, dt):
+        for i, unit in enumerate(self.units()):
+            unit.update(dt)
+
     def start_round(self) -> None:
         self.round += 1
         self.turn = 1
