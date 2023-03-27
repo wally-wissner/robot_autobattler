@@ -1,8 +1,8 @@
 import numpy as np
-from pygame import Vector2
 
 from scripts.backend.cards import Card, AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.event import Event, EventHistory
+from scripts.backend.physics import PhysicsBody
 from scripts.backend.team import Team
 from scripts.backend.unit import Unit
 from scripts.backend.factories import generate_team
@@ -34,6 +34,9 @@ class Game(object):
         self.teams = self.generate_teams()
         self.event_history = EventHistory()
 
+        self.projectiles: list[PhysicsBody] = list()
+        self.obstacles: list[PhysicsBody] = list()
+
     def generate_teams(self) -> list[Team]:
         teams: list[Team] = [
             generate_team(is_player=True, total_level=30, n_units=10, quality=.75),
@@ -41,8 +44,11 @@ class Game(object):
         ]
         return teams
 
-    def units(self) -> set[Unit]:
-        return {unit for team in self.teams for unit in team.units}
+    def physics_bodies(self) -> list[PhysicsBody]:
+        return self.units() + self.obstacles + self.projectiles
+
+    def units(self) -> list[Unit]:
+        return [unit for team in self.teams for unit in team.units]
 
     def start_encounter(self) -> None:
         self.encounter += 1
@@ -57,8 +63,8 @@ class Game(object):
                 unit.mass = self.unit_stat_value(unit, enums.EStat.MASS)
 
     def update_physics(self, dt):
-        for i, unit in enumerate(self.units()):
-            unit.update(dt)
+        for physics_body in self.physics_bodies():
+            physics_body.update(dt)
 
     def start_round(self) -> None:
         self.round += 1
@@ -82,9 +88,12 @@ class Game(object):
             self.evaluate_card(actor=team.card_actor(card), card=card)
             team.graveyard.append(card)
 
-    def evaluate_card(self, actor: Unit, card: SimpleCard) -> None:
-        for card_ability in card.abilities:
-            self.evaluate_card_ability(actor, card_ability)
+    def evaluate_card(self, actor: Unit, card: Card) -> None:
+        if isinstance(card, SimpleCard):
+            for card_ability in card.abilities:
+                self.evaluate_card_ability(actor, card_ability)
+        else:
+            raise NotImplementedError("Non-simple cards not implemented.")
 
     def evaluate_card_ability(self, actor: Unit, card_ability: CardAbility) -> None:
         # TODO
