@@ -12,32 +12,25 @@ from scripts.utilities.identifiers import uuid_identifier
 class Unit(DiscBody):
     def __init__(self, team, level):
         self.level = level
-        self.alive = True
 
+        self.alive = True
         self.unit_upgrades: list[UnitUpgrade] = []
         self.status_effects = Inventory()
-
-        default_stats = {
-            EStat.SIZE: Stat(base_value=10),
-            EStat.MASS: Stat(base_value=10),
-        }
-        bonus_stats = {
-            stat: Stat(base_value=0)
-            for stat in [
-                EStat.POWER,
-                EStat.LASER_POWER,
-                EStat.MISSILE_POWER,
-                EStat.RAILGUN_POWER,
-                EStat.ARMOR,
-            ]
-        }
-        consumable_stats = {
-            EStat.HP: ConsumableStat(refill_on_encounter_start=True),
-            EStat.AP: ConsumableStat(refill_on_turn_start=True),
-        }
-        self.stats = default_stats | bonus_stats | consumable_stats
+        self.stats = self._init_stats()
 
         super().__init__(team=team)
+
+    def _init_stats(self) -> dict[EStat, Stat]:
+        stats = {}
+        for stat in EStat:
+            stats[stat] = Stat(base_value=0)
+        # Non-zero default stats.
+            stats[EStat.MASS] = Stat(base_value=10)
+            stats[EStat.SIZE] = Stat(base_value=10)
+        # Consumable stats.
+            stats[EStat.HP] = ConsumableStat(refill_on_encounter_start=True)
+            stats[EStat.AP] = ConsumableStat(refill_on_turn_start=True)
+        return stats
 
     def stat_modifiers(self, stat: EStat):
         stat_modifiers = []

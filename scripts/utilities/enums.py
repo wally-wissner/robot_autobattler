@@ -25,12 +25,15 @@ class ECollectable(AutoNameEnum):
 
 
 class EStat(AutoNameEnum):
+    # Consumable stats.
+    HP = auto()
+    AP = auto()
+
+    # Non-zero default stats.
     SIZE = auto()
     MASS = auto()
 
-    HP = auto()
-
-    AP = auto()
+    # Zero default stats.
     AP_SOT_ENDURANCE = auto()
     AP_ON_EOT = auto()
 
