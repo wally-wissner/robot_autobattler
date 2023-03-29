@@ -5,7 +5,8 @@ from abc import ABC, abstractmethod
 from pygame_gui.elements import UIButton, UIImage, UIPanel
 from pygame_gui.elements.ui_window import UIWindow
 
-from scripts.utilities.enums import EStat, EScene
+from scripts.frontend.fonts import get_font
+from scripts.utilities.enums import EFont, EScene, EStat
 
 
 class Scene(ABC):
@@ -31,7 +32,7 @@ class MainMenuScene(Scene):
         super().__init__(application)
 
         self.buttons_container = UIPanel(
-            relative_rect=self.application.relative_to_rect((.05, .05), (.95, .95)),
+            relative_rect=self.application.relative_to_rect((.35, .45), (.65, .80)),
             starting_layer_height=0,
             manager=self.application.ui_manager,
         )
@@ -39,15 +40,15 @@ class MainMenuScene(Scene):
 
         self.button_continue = UIButton(
             relative_rect=self.application.relative_to_rect((.40, .65), (.60, .75)),
-            text="Continue",
+            text="continue();",
             manager=self.application.ui_manager,
             # container=self.buttons_container,
         )
         self.ui_elements.add(self.button_continue)
 
         self.button_new_game = UIButton(
-            relative_rect=self.application.relative_to_rect((.40, .5), (.60, .6)),
-            text="New Game",
+            relative_rect=self.application.relative_to_rect((.40, .50), (.60, .60)),
+            text="new_game();",
             manager=self.application.ui_manager,
             # container=self.buttons_container,
         )
@@ -74,6 +75,9 @@ class MainMenuScene(Scene):
 
     def draw(self):
         # todo
+        self.application.display.blit(
+            get_font(EFont.JETBRAINS_MONO_REGULAR, 64).render(self.application.title, 0, (255, 240, 230)), (10, 10)
+        )
         pass
 
 

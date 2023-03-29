@@ -175,3 +175,7 @@ class EEventType(AutoNameEnum):
     UPGRADE_ATTACHED = auto()
     UNIT_ATTACKED = auto()
     RESOURCE_PRODUCED = auto()
+
+
+class EFont(AutoNameEnum):
+    JETBRAINS_MONO_REGULAR = auto()

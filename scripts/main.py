@@ -7,7 +7,6 @@ import scripts.frontend.scenes as scenes
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
 from scripts.frontend import colors
-from scripts.utilities.structure import absolute_path
 from scripts.utilities.enums import EScene
 
 
