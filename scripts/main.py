@@ -29,12 +29,13 @@ class Application(object):
 
         self.window = arcade.Window(*self.settings.resolution, title=title, resizable=True)
         self.window.on_draw = self.on_draw
+        self.window.on_update = self.on_update
 
         self.scenes = {
             EScene.MAIN_MENU: scenes.MainMenuScene(self),
-            # EScene.SETTINGS_MENU: scenes.SettingsMenuScene(self),
-            # EScene.BATTLE: scenes.BattleScene(self),
-            # EScene.UPGRADE: scenes.UpgradeScene(self),
+            EScene.SETTINGS_MENU: scenes.SettingsMenuScene(self),
+            EScene.BATTLE: scenes.BattleScene(self),
+            EScene.UPGRADE: scenes.UpgradeScene(self),
         }
 
         # Game setup.
@@ -49,6 +50,9 @@ class Application(object):
         # file_path = arcade.resources.resolve_resource_path(path)
         # pyglet.font.add_file(str(file_path))
         # pyglet.font.load("JETBRAINS_MONO_REGULAR")
+
+    def on_update(self, delta_time):
+        self.delta_time = delta_time
 
     def on_draw(self) -> None:
         self.window.clear()
@@ -83,6 +87,7 @@ class Application(object):
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
         self.game.start_encounter()
+        self.change_scene(scene_type=EScene.BATTLE)
 
     def load_game(self, *args, **kwargs) -> None:
         self.game = dill.load(self.game_save_path)
@@ -93,6 +98,7 @@ class Application(object):
     def change_scene(self, scene_type: EScene, *args, **kwargs) -> None:
         self.active_scene.disable()
         self.active_scene = self.scenes[scene_type]
+        self.active_scene.enable()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-import numpy as np
+import math
 
 from scripts.backend.inventory import Inventory
 from scripts.backend.physics import DiscBody
@@ -55,7 +55,7 @@ class Unit(DiscBody):
         self.alive = False
 
     def level_up_cost(self):
-        return int(np.sqrt(self.level))
+        return int(math.sqrt(self.level))
 
     def add_unit_upgrade(self, unit_upgrade: UnitUpgrade):
         self.unit_upgrades.append(unit_upgrade)

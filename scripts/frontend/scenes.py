@@ -36,6 +36,7 @@ class Scene(ABC):
 
     def disable(self) -> None:
         self.ui_manager.disable()
+        self.application.window.clear()
 
 
 class MainMenuScene(Scene):
@@ -91,10 +92,6 @@ class MainMenuScene(Scene):
             anchor_y="baseline",
         )
         self.ui_manager.draw()
-        # # todo
-        # self.application.display.blit(
-        #     get_font(EFont.JETBRAINS_MONO_REGULAR, 64).render(self.application.title, 0, (255, 240, 230)), (10, 10)
-        # )
 
 
 class SettingsMenuScene(Scene):
@@ -110,23 +107,24 @@ class SettingsMenuScene(Scene):
         pass
 
 
-# class BattleScene(Scene):
-#     def __init__(self, application):
-#         super().__init__(application)
-#
-#     def handle_events(self, events):
-#         # todo
-#         pass
-#
-#     def draw(self):
-#         self.application.game.update_physics(self.application.delta_time)
-#         for unit in self.application.game.units():
-#             pygame.draw.circle(
-#                 surface=self.application.display,
-#                 color=unit.color(),
-#                 center=unit.position + np.array(self.application.settings.resolution) / 2,
-#                 radius=self.application.game.unit_stat_value(unit, EStat.SIZE),
-#             )
+class BattleScene(Scene):
+    def __init__(self, application):
+        super().__init__(application)
+
+    def handle_events(self, events):
+        # todo
+        pass
+
+    def draw(self):
+        self.application.game.update_physics(self.application.delta_time)
+        for unit in self.application.game.units():
+            arcade.draw_circle_filled(
+                center_x=unit.position.x,
+                center_y=unit.position.y,
+                radius=self.application.game.unit_stat_value(unit, EStat.SIZE),
+                color=unit.color(),
+            )
+        self.ui_manager.draw()
 
 
 class UpgradeScene(Scene):

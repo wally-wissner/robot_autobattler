@@ -17,17 +17,17 @@ class PhysicsBody(object):
     ):
         self.shape = shape
         self.mass = mass
-        self.position = position
-        self.velocity = velocity
-        self.acceleration = acceleration
+        self.position = Vector2(position)
+        self.velocity = Vector2(velocity)
+        self.acceleration = Vector2(acceleration)
         self.resistance = resistance
         self.team = team
 
         self.objects_touched: list[PhysicsBody] = []
 
     def update(self, dt):
-        self.velocity += (self.acceleration - self.resistance * self.velocity) * dt
-        self.position += self.velocity * dt
+        self.velocity = (self.acceleration - self.resistance * self.velocity) * dt + self.velocity
+        self.position = self.velocity * dt + self.position
 
         if not self.is_moving():
             self.velocity = Vector2()

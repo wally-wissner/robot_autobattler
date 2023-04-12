@@ -1,5 +1,4 @@
 import math
-from dataclasses import astuple, dataclass
 
 
 def clamp(value, min_value, max_value):
@@ -17,13 +16,22 @@ def shift_item(items: list, index: int, shift=1) -> None:
         items.insert(index + shift, item)
 
 
-@dataclass
 class Vector2:
-    x: float = 0
-    y: float = 0
+    def __init__(self, *args, **kwargs):
+        if not args and not kwargs:
+            self.x, self.y = 0, 0
+        if len(args) == 1:
+            self.x, self.y = args[0]
+        if len(args) == 2:
+            self.x, self.y = args
+        if kwargs:
+            self.x, self.y = kwargs["x"], kwargs["y"]
+
+    def as_tuple(self):
+        return self.x, self.y
 
     def __iter__(self):
-        return iter(astuple(self))
+        return iter(self.as_tuple())
 
     def __eq__(self, other):
         return self.x, self.y == other.x, other.y
@@ -47,5 +55,7 @@ class Vector2:
         return Vector2(round(self.x, n), round(self.y, n))
 
     def magnitude(self):
-        math.sqrt(self.x**2 + self.y**2)
+        return math.sqrt(self.x**2 + self.y**2)
 
+    def __repr__(self):
+        return f"Vector2({self.x}, {self.y})"
