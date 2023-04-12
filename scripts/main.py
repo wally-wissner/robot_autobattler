@@ -3,7 +3,6 @@ import arcade.gui
 import dill
 import pathlib
 import pyglet
-import sys
 
 from config import ROOT_DIRECTORY
 import scripts.frontend.scenes as scenes
@@ -14,12 +13,8 @@ from scripts.utilities.enums import EScene
 from scripts.utilities.game_math import Vector2
 
 
-title = "Robot Autobattler"
-version = "0.0.1"
-
-
 class Application(object):
-    def __init__(self) -> None:
+    def __init__(self, title, version) -> None:
         self.title = title
         self.version = version
 
@@ -34,6 +29,7 @@ class Application(object):
         self.window = arcade.Window(*self.settings.resolution, title=title, resizable=True)
         self.ui_manager = arcade.gui.UIManager()
         self.ui_manager.enable()
+        self.window.on_draw = self.on_draw
 
         self.scenes = {
             EScene.MAIN_MENU: scenes.MainMenuScene(self),
@@ -52,34 +48,14 @@ class Application(object):
         pass
         # pyglet.font.add_file()
 
+    def on_draw(self) -> None:
+        self.window.clear()
+        self.ui_manager.draw()
+
     def run(self) -> None:
         arcade.run()
-        self.window.run()
-        # self.ui_manager.clear()
-        # self.ui_manager.draw()
-        # while self.playing:
-        #     self.handle_events(pygame.event.get())
-        #     self.update()
-        #     self.draw()
-        # self.quit()
+        arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
 
-    # def handle_events(self, events: list[pygame.event.Event]) -> None:
-    #     for event in events:
-    #         self.ui_manager.process_events(event)
-    #         if event.type == pygame.QUIT:
-    #             self.quit()
-    #
-    #     self.active_scene.handle_events(events)
-
-    # def update(self) -> None:
-    #     pygame.display.update()
-    #     self.ui_manager.update(self.delta_time)
-    #
-    # def draw(self) -> None:
-    #     self.display.fill(color=colors.blue)
-    #     self.active_scene.draw()
-    #     self.ui_manager.draw_ui(self.display)
-    #
     # def relative_to_vector2(self, relative: Vector2) -> Vector2:
     #     relative = Vector2(*relative)
     #     resolution_width, resolution_height = self.settings.resolution
@@ -100,7 +76,6 @@ class Application(object):
 
     def quit(self) -> None:
         arcade.exit()
-        sys.exit()
 
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
@@ -118,5 +93,5 @@ class Application(object):
 
 
 if __name__ == "__main__":
-    game = Application()
+    game = Application(title="Robot Autobattler", version="0.0.1")
     game.run()
