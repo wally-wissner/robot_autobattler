@@ -37,6 +37,9 @@ class Vector2:
     def __mul__(self, other):
         return Vector2(self.x * other, self.y * other)
 
+    def __rmul__(self, other):
+        return self * other
+
     def __truediv__(self, other):
         return Vector2(self.x / other, self.y / other)
 
