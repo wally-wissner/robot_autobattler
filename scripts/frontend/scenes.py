@@ -7,13 +7,15 @@ from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
 
 
-class QuitButton(arcade.gui.UIFlatButton):
-    def __init__(self, application, *args, **kwargs) -> None:
-        self.application = application
+class ApplicationButton(arcade.gui.UIFlatButton):
+    def __init__(self, on_click, *args, **kwargs) -> None:
+        self.args = args
+        self.kwargs = kwargs
         super().__init__(*args, **kwargs)
+        self._on_click = on_click
 
     def on_click(self, event: arcade.gui.UIOnClickEvent):
-        self.application.quit()
+        self._on_click(*self.args, **self.kwargs)
 
 
 class Scene(ABC):
@@ -48,13 +50,13 @@ class MainMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        start_button = arcade.gui.UIFlatButton(text="Start Game", width=200)
-        self.v_box.add(start_button.with_space_around(bottom=20))
+        new_game = ApplicationButton(self.application.new_game, text="New Game", width=200)
+        self.v_box.add(new_game.with_space_around(bottom=20))
 
         settings_button = arcade.gui.UIFlatButton(text="Settings", width=200)
         self.v_box.add(settings_button.with_space_around(bottom=20))
 
-        quit_button = QuitButton(self.application, text="Quit", width=200)
+        quit_button = ApplicationButton(self.application.quit, text="Quit", width=200)
         self.v_box.add(quit_button)
 
         self.ui_manager.add(

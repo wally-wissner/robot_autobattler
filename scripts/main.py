@@ -77,20 +77,20 @@ class Application(object):
     #         vector2_bottom_right - vector2_top_left
     #     )
 
-    def quit(self) -> None:
+    def quit(self, *args, **kwargs) -> None:
         arcade.exit()
 
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
         self.game.start_encounter()
 
-    def load_game(self) -> None:
+    def load_game(self, *args, **kwargs) -> None:
         self.game = dill.load(self.game_save_path)
 
-    def save_game(self) -> None:
+    def save_game(self, *args, **kwargs) -> None:
         dill.dump(self.game, self.game_save_path)
 
-    def change_scene(self, scene_type: EScene) -> None:
+    def change_scene(self, scene_type: EScene, *args, **kwargs) -> None:
         self.active_scene.disable()
         self.active_scene = self.scenes[scene_type]
 
