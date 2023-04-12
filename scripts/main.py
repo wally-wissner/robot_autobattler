@@ -41,7 +41,6 @@ class Application(object):
         self.active_scene = self.scenes[EScene.MAIN_MENU]
         self.active_scene.enable()
         self.delta_time = 0
-        self.playing = True
 
     def load_assets(self):
         pass

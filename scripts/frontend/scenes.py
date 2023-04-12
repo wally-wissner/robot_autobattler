@@ -76,6 +76,16 @@ class MainMenuScene(Scene):
         #             self.application.change_scene(EScene.BATTLE)
 
     def draw(self):
+        arcade.draw_text(
+            text=self.application.title,
+            start_x=.5 * self.application.window.width,
+            start_y=.8 * self.application.window.height,
+            color=arcade.color.BLACK,
+            font_size=48,
+            bold=True,
+            anchor_x="center",
+            anchor_y="center",
+        )
         self.ui_manager.draw()
         # # todo
         # self.application.display.blit(
