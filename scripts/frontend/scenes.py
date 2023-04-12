@@ -41,7 +41,8 @@ class MainMenuScene(Scene):
         super().__init__(application)
 
         # Set background color
-        arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
+        # arcade.set_background_color(arcade.color.BLACK_BEAN)
+        arcade.set_background_color((40, 40, 40))
 
         # Create a vertical BoxGroup to align buttons
         self.v_box = arcade.gui.UIBoxLayout()
@@ -80,11 +81,12 @@ class MainMenuScene(Scene):
             text=self.application.title,
             start_x=.5 * self.application.window.width,
             start_y=.8 * self.application.window.height,
-            color=arcade.color.BLACK,
+            color=(65, 255, 0),
+            font_name=self.application.default_font,
             font_size=48,
-            bold=True,
+            # bold=True,
             anchor_x="center",
-            anchor_y="center",
+            anchor_y="baseline",
         )
         self.ui_manager.draw()
         # # todo

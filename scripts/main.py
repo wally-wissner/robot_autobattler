@@ -19,9 +19,10 @@ class Application(object):
         self.version = version
 
         self.game_save_path = pathlib.Path(ROOT_DIRECTORY, "player_data/save.pickle")
-        print(self.game_save_path)
 
         self.load_assets()
+        # self.default_font = str(pathlib.Path(ROOT_DIRECTORY, "assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        self.default_font = "Courier New"
 
         self.settings = SettingsManager()
         self.settings.load()
@@ -44,7 +45,10 @@ class Application(object):
 
     def load_assets(self):
         pass
-        # pyglet.font.add_file()
+        # path = pathlib.Path(ROOT_DIRECTORY, "assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
+        # file_path = arcade.resources.resolve_resource_path(path)
+        # pyglet.font.add_file(str(file_path))
+        # pyglet.font.load("JETBRAINS_MONO_REGULAR")
 
     def on_draw(self) -> None:
         self.window.clear()
