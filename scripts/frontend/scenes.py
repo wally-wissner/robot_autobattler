@@ -19,7 +19,7 @@ class QuitButton(arcade.gui.UIFlatButton):
 class Scene(ABC):
     def __init__(self, application) -> None:
         self.application = application
-        self.ui_elements = set()
+        self.ui_manager = arcade.gui.UIManager()
 
     @abstractmethod
     def handle_events(self, events: list[arcade.gui.UIEvent]) -> None:
@@ -29,9 +29,11 @@ class Scene(ABC):
     def draw(self) -> None:
         raise NotImplemented()
 
+    def enable(self) -> None:
+        self.ui_manager.enable()
+
     def disable(self) -> None:
-        for ui_element in self.ui_elements:
-            ui_element.hide()
+        self.ui_manager.disable()
 
 
 class MainMenuScene(Scene):
@@ -54,7 +56,7 @@ class MainMenuScene(Scene):
         quit_button = QuitButton(self.application, text="Quit", width=200)
         self.v_box.add(quit_button)
 
-        self.application.ui_manager.add(
+        self.ui_manager.add(
             arcade.gui.UIAnchorWidget(
                 anchor_x="center_x",
                 anchor_y="center_y",
@@ -74,7 +76,7 @@ class MainMenuScene(Scene):
         #             self.application.change_scene(EScene.BATTLE)
 
     def draw(self):
-        pass
+        self.ui_manager.draw()
         # # todo
         # self.application.display.blit(
         #     get_font(EFont.JETBRAINS_MONO_REGULAR, 64).render(self.application.title, 0, (255, 240, 230)), (10, 10)

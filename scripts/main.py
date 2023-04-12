@@ -27,8 +27,6 @@ class Application(object):
         self.settings.load()
 
         self.window = arcade.Window(*self.settings.resolution, title=title, resizable=True)
-        self.ui_manager = arcade.gui.UIManager()
-        self.ui_manager.enable()
         self.window.on_draw = self.on_draw
 
         self.scenes = {
@@ -41,6 +39,7 @@ class Application(object):
         # Game setup.
         self.game: Game | None = None
         self.active_scene = self.scenes[EScene.MAIN_MENU]
+        self.active_scene.enable()
         self.delta_time = 0
         self.playing = True
 
@@ -50,7 +49,8 @@ class Application(object):
 
     def on_draw(self) -> None:
         self.window.clear()
-        self.ui_manager.draw()
+        self.active_scene.draw()
+        # self.active_scene.ui_manager.draw()
 
     def run(self) -> None:
         arcade.run()
