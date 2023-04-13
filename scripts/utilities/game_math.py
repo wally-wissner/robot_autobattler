@@ -1,4 +1,5 @@
 import math
+from pyglet.math import Vec2
 
 
 def clamp(value, min_value, max_value):
@@ -16,16 +17,17 @@ def shift_item(items: list, index: int, shift=1) -> None:
         items.insert(index + shift, item)
 
 
-class Vector2:
+class Vector2(Vec2):
     def __init__(self, *args, **kwargs):
         if not args and not kwargs:
-            self.x, self.y = 0, 0
-        if len(args) == 1:
-            self.x, self.y = args[0]
-        if len(args) == 2:
-            self.x, self.y = args
-        if kwargs:
-            self.x, self.y = kwargs["x"], kwargs["y"]
+            x, y = 0, 0
+        elif len(args) == 1:
+            x, y = args[0]
+        elif len(args) == 2:
+            x, y = args
+        else:
+            x, y = kwargs["x"], kwargs["y"]
+        super().__init__(x, y)
 
     def as_tuple(self):
         return self.x, self.y

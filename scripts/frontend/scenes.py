@@ -1,10 +1,11 @@
 import arcade
 import arcade.gui
-import numpy as np
+from pyglet.math import Vec2
 from abc import ABC, abstractmethod
 
 from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
+from scripts.utilities.game_math import Vector2
 
 
 class ApplicationButton(arcade.gui.UIFlatButton):
@@ -110,6 +111,8 @@ class SettingsMenuScene(Scene):
 class BattleScene(Scene):
     def __init__(self, application):
         super().__init__(application)
+        self.camera = arcade.Camera(window=self.application.window)
+        self.camera.move(Vec2())
 
     def handle_events(self, events):
         # todo
