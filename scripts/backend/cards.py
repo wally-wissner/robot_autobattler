@@ -10,14 +10,17 @@ class Card(object):
     rarity: enums.ERarity
     bp: int
 
+    def description(self):
+        return self.name
+
 
 @dataclass
 class AdvancedCard(Card):
     abilities: ElementTree
 
-    def get_text(self) -> str:
+    def description(self) -> str:
         # TODO
-        return ""
+        return self.name
 
 
 @dataclass
@@ -27,7 +30,7 @@ class CardAbilityCondition(object):
     threshold: enums.EVariable | float
     consume_resource: bool
 
-    def get_text(self) -> str:
+    def description(self) -> str:
         if self.consume_resource:
             return f"CONSUME {self.threshold} {self.variable}"
         else:
@@ -62,7 +65,7 @@ class CardAbility(object):
     failure_effects: list[CardAbilityEffect]
 
     def get_text(self) -> str:
-        condition_texts = [condition.get_text() for condition in self.conditions]
+        condition_texts = [condition.description() for condition in self.conditions]
         effect_texts = [effect.get_text() for effect in self.success_effects]
         # TODO
         if self.conditions:

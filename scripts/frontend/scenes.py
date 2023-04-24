@@ -1,8 +1,8 @@
 import arcade
 import arcade.gui
-from pyglet.math import Vec2
 from abc import ABC, abstractmethod
 
+from scripts.backend.unit_upgrades import UnitUpgrade
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.game_math import Vector2
@@ -17,6 +17,21 @@ class ApplicationButton(arcade.gui.UIFlatButton):
 
     def on_click(self, event: arcade.gui.UIOnClickEvent):
         self._on_click(*self.args, **self.kwargs)
+
+
+class TextBox(arcade.gui.UILabel):
+    def __init__(self, height, width, text):
+        super().__init__(width=width, height=height, text=text)
+        # background = arcade.draw_rectangle_filled(width=width, height=height)
+        # self.add(arcade.gui.)
+
+
+class UIUnitUpgrade(arcade.gui.UIBoxLayout, arcade.gui.UIDraggableMixin):
+    def __init__(self, unit_upgrade: UnitUpgrade):
+        super().__init__(x=500, y=500)
+        self.unit_upgrade = unit_upgrade
+        self.add(TextBox(width=100, height=100, text=unit_upgrade.card.description()))
+        self.add(TextBox(width=100, height=100, text=unit_upgrade.badge.description()))
 
 
 class Scene(ABC):
@@ -129,6 +144,8 @@ class BattleScene(Scene):
                 radius=self.application.game.unit_stat_value(unit, EStat.SIZE),
                 color=unit.color(),
             )
+            for unit_upgrade in unit.unit_upgrades:
+                self.ui_manager.add(UIUnitUpgrade(unit_upgrade=unit_upgrade))
         self.ui_manager.draw()
 
 

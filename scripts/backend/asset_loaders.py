@@ -28,7 +28,7 @@ def _load_badges() -> list[Badge]:
         badges = [
             Badge(
                 name=json_badge["name"],
-                description=json_badge["description"],
+                description_text=json_badge["description"],
                 rarity=enums.ERarity[json_badge["rarity"]],
                 bp=json_badge["bp"],
                 stat_modifiers=set(
