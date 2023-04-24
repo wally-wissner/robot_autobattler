@@ -1,6 +1,7 @@
 import arcade
 import arcade.gui
 from abc import ABC, abstractmethod
+from PIL import Image, ImageDraw
 
 from scripts.backend.unit_upgrades import UnitUpgrade
 # from scripts.frontend.fonts import get_font
@@ -19,19 +20,23 @@ class ApplicationButton(arcade.gui.UIFlatButton):
         self._on_click(*self.args, **self.kwargs)
 
 
-class TextBox(arcade.gui.UILabel):
-    def __init__(self, height, width, text):
-        super().__init__(width=width, height=height, text=text)
+class TextBox(arcade.gui.UITexturePane):
+    def __init__(self, height, width, texture, text):
+        label = arcade.gui.UILabel(text=text)
+        super().__init__(width=width, height=height, tex=texture, text=text, child=label)
         # background = arcade.draw_rectangle_filled(width=width, height=height)
         # self.add(arcade.gui.)
 
 
 class UIUnitUpgrade(arcade.gui.UIBoxLayout, arcade.gui.UIDraggableMixin):
+    texture_card = arcade.texture.Texture(name="bg_card", image=Image.new('RGB', (200, 200), (100, 25, 25)))
+    texture_badge = arcade.texture.Texture(name="bg_badge", image=Image.new('RGB', (200, 200), (25, 25, 100)))
+
     def __init__(self, unit_upgrade: UnitUpgrade):
-        super().__init__(x=500, y=500)
+        super().__init__(x=500, y=500, vertical=False)
         self.unit_upgrade = unit_upgrade
-        self.add(TextBox(width=100, height=100, text=unit_upgrade.card.description()))
-        self.add(TextBox(width=100, height=100, text=unit_upgrade.badge.description()))
+        self.add(TextBox(width=200, height=200, texture=self.texture_card, text=unit_upgrade.card.description()))
+        self.add(TextBox(width=200, height=200, texture=self.texture_badge, text=unit_upgrade.badge.description()))
 
 
 class Scene(ABC):
@@ -145,7 +150,8 @@ class BattleScene(Scene):
                 color=unit.color(),
             )
             for unit_upgrade in unit.unit_upgrades:
-                self.ui_manager.add(UIUnitUpgrade(unit_upgrade=unit_upgrade))
+                uu = UIUnitUpgrade(unit_upgrade=unit_upgrade)
+        self.ui_manager.add(uu)
         self.ui_manager.draw()
 
 
