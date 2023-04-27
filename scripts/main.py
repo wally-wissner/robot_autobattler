@@ -14,11 +14,15 @@ from scripts.utilities.game_math import Vector2
 
 
 class Application(object):
-    def __init__(self, title, version) -> None:
+    def __init__(self, title: str, version: str) -> None:
         self.title = title
         self.version = version
 
         self.game_save_path = pathlib.Path(ROOT_DIRECTORY, "player_data/save.pickle")
+
+        # Game setup.
+        self.game = Game(version=self.version, seed=0)
+        self.delta_time = 0
 
         self.load_assets()
         # self.default_font = str(pathlib.Path(ROOT_DIRECTORY, "assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
@@ -38,11 +42,9 @@ class Application(object):
             EScene.UPGRADE: scenes.UpgradeScene(self),
         }
 
-        # Game setup.
-        self.game: Game | None = None
+        # Scene setup.
         self.active_scene = self.scenes[EScene.MAIN_MENU]
         self.active_scene.enable()
-        self.delta_time = 0
 
     def load_assets(self):
         pass
