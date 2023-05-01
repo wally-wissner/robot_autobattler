@@ -22,21 +22,24 @@ class ApplicationButton(arcade.gui.UIFlatButton):
 
 class TextBox(arcade.gui.UITexturePane):
     def __init__(self, height, width, texture, text):
-        label = arcade.gui.UILabel(text=text)
-        super().__init__(tex=texture, text=text, child=label, size_hint=1)
+        label = arcade.gui.UILabel(text=text, width=width, height=height)
+        super().__init__(tex=texture, text=text, child=label, size_hint=1, width=width, height=height)
         # background = arcade.draw_rectangle_filled(width=width, height=height)
         # self.add(arcade.gui.)
 
 
 class UIUnitUpgrade(arcade.gui.UIBoxLayout, arcade.gui.UIDraggableMixin):
-    texture_card = arcade.texture.Texture(name="bg_card", image=Image.new('RGB', (200, 100), (100, 25, 25)))
-    texture_badge = arcade.texture.Texture(name="bg_badge", image=Image.new('RGB', (200, 100), (25, 25, 100)))
+    height = 200
+    width = 200
+
+    texture_card = arcade.texture.Texture(name="bg_card", image=Image.new('RGB', (width, height//2), (100, 25, 25)))
+    texture_badge = arcade.texture.Texture(name="bg_badge", image=Image.new('RGB', (width, height//2), (25, 25, 100)))
 
     def __init__(self, unit_upgrade: UnitUpgrade):
-        super().__init__(x=500, y=500, vertical=True, space_between=10)
+        super().__init__(x=500, y=500, vertical=True, space_between=0)
         self.unit_upgrade = unit_upgrade
-        self.add(TextBox(width=200, height=100, texture=self.texture_card, text=unit_upgrade.card.description()))
-        self.add(TextBox(width=200, height=100, texture=self.texture_badge, text=unit_upgrade.badge.description()))
+        self.add(TextBox(width=self.width, height=self.height//2, texture=self.texture_card, text=unit_upgrade.card.description()))
+        self.add(TextBox(width=self.width, height=self.height//2, texture=self.texture_badge, text=unit_upgrade.badge.description()))
 
 
 class Scene(ABC):
@@ -64,6 +67,9 @@ class MainMenuScene(Scene):
     def __init__(self, application):
         super().__init__(application)
 
+        width = 200
+        gap = 15
+
         # Set background color
         # arcade.set_background_color(arcade.color.BLACK_BEAN)
         arcade.set_background_color((40, 40, 40))
@@ -72,13 +78,16 @@ class MainMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        new_game = ApplicationButton(self.application.new_game, text="New Game", width=200)
-        self.v_box.add(new_game.with_space_around(bottom=20))
+        button_new_game = ApplicationButton(self.application.new_game, text="New Game", width=width)
+        self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
-        settings_button = arcade.gui.UIFlatButton(text="Settings", width=200)
-        self.v_box.add(settings_button.with_space_around(bottom=20))
+        button_continue = ApplicationButton(self.application.load_game, text="Continue", width=width)
+        self.v_box.add(button_continue.with_space_around(bottom=gap))
 
-        quit_button = ApplicationButton(self.application.quit, text="Quit", width=200)
+        settings_button = arcade.gui.UIFlatButton(text="Settings", width=width)
+        self.v_box.add(settings_button.with_space_around(bottom=gap))
+
+        quit_button = ApplicationButton(self.application.quit, text="Quit", width=width)
         self.v_box.add(quit_button)
 
         self.ui_manager.add(
