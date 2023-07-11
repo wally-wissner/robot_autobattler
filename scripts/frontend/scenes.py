@@ -21,14 +21,14 @@ class ApplicationButton(arcade.gui.UIFlatButton):
 
 
 class TextBox(arcade.gui.UITexturePane):
-    def __init__(self, height, width, texture, text):
-        label = arcade.gui.UILabel(text=text, width=width, height=height)
+    def __init__(self, height, width, texture, text, font_size):
+        label = arcade.gui.UILabel(text=text, width=width, height=height, font_size=font_size)
         super().__init__(tex=texture, text=text, child=label, size_hint=1, width=width, height=height)
         # background = arcade.draw_rectangle_filled(width=width, height=height)
         # self.add(arcade.gui.)
 
 
-class UIUnitUpgrade(arcade.gui.UIBoxLayout, arcade.gui.UIDraggableMixin):
+class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
     height = 200
     width = 200
 
@@ -36,10 +36,23 @@ class UIUnitUpgrade(arcade.gui.UIBoxLayout, arcade.gui.UIDraggableMixin):
     texture_badge = arcade.texture.Texture(name="bg_badge", image=Image.new('RGB', (width, height//2), (25, 25, 100)))
 
     def __init__(self, unit_upgrade: UnitUpgrade):
-        super().__init__(x=500, y=500, vertical=True, space_between=0)
         self.unit_upgrade = unit_upgrade
-        self.add(TextBox(width=self.width, height=self.height//2, texture=self.texture_card, text=unit_upgrade.card.description()))
-        self.add(TextBox(width=self.width, height=self.height//2, texture=self.texture_badge, text=unit_upgrade.badge.description()))
+        self.box = arcade.gui.UIBoxLayout(x=500, y=500, vertical=True, space_between=0)
+        self.box.add(TextBox(
+            width=self.width,
+            height=self.height//2,
+            texture=self.texture_card,
+            text=self.unit_upgrade.card.description(),
+            font_size=20,
+        ))
+        self.box.add(TextBox(
+            width=self.width,
+            height=self.height//2,
+            texture=self.texture_badge,
+            text=self.unit_upgrade.badge.description(),
+            font_size=20,
+        ))
+        super().__init__(child=self.box, border_color=arcade.color.WHITE, border_width=2)
 
 
 class Scene(ABC):
