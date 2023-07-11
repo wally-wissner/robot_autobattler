@@ -32,8 +32,14 @@ class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
     height = 200
     width = 200
 
-    texture_card = arcade.texture.Texture(name="bg_card", image=Image.new('RGB', (width, height//2), (100, 25, 25)))
-    texture_badge = arcade.texture.Texture(name="bg_badge", image=Image.new('RGB', (width, height//2), (25, 25, 100)))
+    texture_card = arcade.texture.Texture(
+        name="bg_card",
+        image=Image.new(mode='RGB', size=(width, height//2),color=(100, 25, 25)),
+    )
+    texture_badge = arcade.texture.Texture(
+        name="bg_badge",
+        image=Image.new(mode='RGB', size=(width, height//2), color=(25, 25, 100)),
+    )
 
     def __init__(self, unit_upgrade: UnitUpgrade):
         self.unit_upgrade = unit_upgrade
