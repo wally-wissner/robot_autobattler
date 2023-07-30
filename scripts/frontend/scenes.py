@@ -34,7 +34,7 @@ class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
 
     texture_card = arcade.texture.Texture(
         name="bg_card",
-        image=Image.new(mode='RGB', size=(width, height//2),color=(100, 25, 25)),
+        image=Image.new(mode='RGB', size=(width, height//2), color=(100, 25, 25)),
     )
     texture_badge = arcade.texture.Texture(
         name="bg_badge",
