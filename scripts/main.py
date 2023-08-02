@@ -1,14 +1,13 @@
 import arcade
 import arcade.gui
 import dill
-import pathlib
 import pyglet
+from pyglet import resource
 
-from config import ROOT_DIRECTORY
+from config import absolute_path
 import scripts.frontend.scenes as scenes
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
-from scripts.frontend import colors
 from scripts.utilities.enums import EScene
 from scripts.utilities.game_math import Vector2
 
@@ -18,17 +17,21 @@ class Application(object):
         self.title = title
         self.version = version
 
-        self.game_save_path = pathlib.Path(ROOT_DIRECTORY, "player_data/save.pickle")
+        self.game_save_path = absolute_path("player_data/save.pickle")
 
         # Game setup.
         self.game = Game(version=self.version, seed=0)
         self.delta_time = 0
 
         self.load_assets()
-        # self.default_font = str(pathlib.Path(ROOT_DIRECTORY, "assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = str(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
         self.default_font = "Courier New"
+        
+        # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
 
-        self.settings = SettingsManager()
+        self.settings = SettingsManager(application=self)
         self.settings.load()
 
         self.window = arcade.Window(*self.settings.resolution, title=title, resizable=True)
@@ -48,7 +51,7 @@ class Application(object):
 
     def load_assets(self):
         pass
-        # path = pathlib.Path(ROOT_DIRECTORY, "assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
+        # path = absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
         # file_path = arcade.resources.resolve_resource_path(path)
         # pyglet.font.add_file(str(file_path))
         # pyglet.font.load("JETBRAINS_MONO_REGULAR")

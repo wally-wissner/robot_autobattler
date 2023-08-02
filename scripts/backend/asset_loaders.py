@@ -5,7 +5,7 @@ from scripts.backend.badges import Badge
 from scripts.backend.cards import AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
-from scripts.utilities.structure import absolute_path
+from config import absolute_path, _ROOT_DIRECTORY
 
 
 def _convert(value, enum_options):
