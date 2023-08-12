@@ -1,84 +1,146 @@
-import numpy as np
-import pygame
-import pygame_gui
+import arcade
+import arcade.gui
 from abc import ABC, abstractmethod
-from pygame_gui.elements import UIButton, UIImage, UIPanel
-from pygame_gui.elements.ui_window import UIWindow
+from PIL import Image, ImageDraw
 
-from scripts.frontend.fonts import get_font
+from scripts.backend.unit_upgrades import UnitUpgrade
+# from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
+from scripts.utilities.game_math import Vector2
+
+
+class ApplicationButton(arcade.gui.UIFlatButton):
+    def __init__(self, on_click, *args, **kwargs) -> None:
+        self.args = args
+        self.kwargs = kwargs
+        super().__init__(*args, **kwargs)
+        self._on_click = on_click
+
+    def on_click(self, event: arcade.gui.UIOnClickEvent):
+        self._on_click(*self.args, **self.kwargs)
+
+
+class TextBox(arcade.gui.UITexturePane):
+    def __init__(self, height, width, texture, text, font_size):
+        label = arcade.gui.UILabel(text=text, width=width, height=height, font_size=font_size)
+        super().__init__(tex=texture, text=text, child=label, size_hint=1, width=width, height=height)
+        # background = arcade.draw_rectangle_filled(width=width, height=height)
+        # self.add(arcade.gui.)
+
+
+class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
+    height = 200
+    width = 200
+
+    texture_card = arcade.texture.Texture(
+        name="bg_card",
+        image=Image.new(mode='RGB', size=(width, height//2), color=(100, 25, 25)),
+    )
+    texture_badge = arcade.texture.Texture(
+        name="bg_badge",
+        image=Image.new(mode='RGB', size=(width, height//2), color=(25, 25, 100)),
+    )
+
+    def __init__(self, unit_upgrade: UnitUpgrade):
+        self.unit_upgrade = unit_upgrade
+        self.box = arcade.gui.UIBoxLayout(x=500, y=500, vertical=True, space_between=0)
+        self.box.add(TextBox(
+            width=self.width,
+            height=self.height//2,
+            texture=self.texture_card,
+            text=self.unit_upgrade.card.description(),
+            font_size=20,
+        ))
+        self.box.add(TextBox(
+            width=self.width,
+            height=self.height//2,
+            texture=self.texture_badge,
+            text=self.unit_upgrade.badge.description(),
+            font_size=20,
+        ))
+        super().__init__(child=self.box, border_color=arcade.color.WHITE, border_width=2)
 
 
 class Scene(ABC):
     def __init__(self, application) -> None:
         self.application = application
-        self.ui_elements = set()
+        self.ui_manager = arcade.gui.UIManager()
 
     @abstractmethod
-    def handle_events(self, events: list[pygame.event.Event]) -> None:
+    def handle_events(self, events: list[arcade.gui.UIEvent]) -> None:
         raise NotImplemented()
 
     @abstractmethod
     def draw(self) -> None:
         raise NotImplemented()
 
+    def enable(self) -> None:
+        self.ui_manager.enable()
+
     def disable(self) -> None:
-        for ui_element in self.ui_elements:
-            ui_element.hide()
+        self.ui_manager.disable()
+        self.application.window.clear()
 
 
 class MainMenuScene(Scene):
     def __init__(self, application):
         super().__init__(application)
 
-        self.buttons_container = UIPanel(
-            relative_rect=self.application.relative_to_rect((.35, .45), (.65, .80)),
-            starting_layer_height=0,
-            manager=self.application.ui_manager,
-        )
-        self.ui_elements.add(self.buttons_container)
+        width = 200
+        gap = 15
 
-        self.button_continue = UIButton(
-            relative_rect=self.application.relative_to_rect((.40, .65), (.60, .75)),
-            text="continue();",
-            manager=self.application.ui_manager,
-            # container=self.buttons_container,
-        )
-        self.ui_elements.add(self.button_continue)
+        # Set background color
+        # arcade.set_background_color(arcade.color.BLACK_BEAN)
+        arcade.set_background_color((40, 40, 40))
 
-        self.button_new_game = UIButton(
-            relative_rect=self.application.relative_to_rect((.40, .50), (.60, .60)),
-            text="new_game();",
-            manager=self.application.ui_manager,
-            # container=self.buttons_container,
-        )
-        self.ui_elements.add(self.button_new_game)
+        # Create a vertical BoxGroup to align buttons
+        self.v_box = arcade.gui.UIBoxLayout()
 
+        # Create the buttons
+        button_new_game = ApplicationButton(self.application.new_game, text="New Game", width=width)
+        self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
-        settings_icon = pygame.image.load("../assets/images/ui/settings-icon.png").convert_alpha()
-        self.button_settings = UIImage(
-            self.application.relative_to_rect((.95, .01), (.99, .05)),
-            settings_icon,
-            manager=self.application.ui_manager,
-            # container=self.buttons_container,
+        button_continue = ApplicationButton(self.application.load_game, text="Continue", width=width)
+        self.v_box.add(button_continue.with_space_around(bottom=gap))
+
+        settings_button = arcade.gui.UIFlatButton(text="Settings", width=width)
+        self.v_box.add(settings_button.with_space_around(bottom=gap))
+
+        quit_button = ApplicationButton(self.application.quit, text="Quit", width=width)
+        self.v_box.add(quit_button)
+
+        self.ui_manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x="center_x",
+                anchor_y="center_y",
+                child=self.v_box,
+            )
         )
 
     def handle_events(self, events):
-        for event in events:
-            if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == self.button_new_game:
-                    self.application.new_game()
-                    self.application.change_scene(EScene.BATTLE)
-                if event.ui_element == self.button_continue:
-                    self.application.load_game()
-                    self.application.change_scene(EScene.BATTLE)
+        pass
+        # for event in events:
+        #     if event.type == pygame_gui.UI_BUTTON_PRESSED:
+        #         if event.ui_element == self.button_new_game:
+        #             self.application.new_game()
+        #             self.application.change_scene(EScene.BATTLE)
+        #         if event.ui_element == self.button_continue:
+        #             self.application.load_game()
+        #             self.application.change_scene(EScene.BATTLE)
 
     def draw(self):
-        # todo
-        self.application.display.blit(
-            get_font(EFont.JETBRAINS_MONO_REGULAR, 64).render(self.application.title, 0, (255, 240, 230)), (10, 10)
+        arcade.draw_text(
+            text=self.application.title,
+            start_x=.5 * self.application.window.width,
+            start_y=.8 * self.application.window.height,
+            color=(65, 255, 0),
+            font_name=self.application.default_font,
+            font_size=48,
+            # bold=True,
+            anchor_x="center",
+            anchor_y="baseline",
         )
-        pass
+        self.ui_manager.draw()
 
 
 class SettingsMenuScene(Scene):
@@ -97,6 +159,15 @@ class SettingsMenuScene(Scene):
 class BattleScene(Scene):
     def __init__(self, application):
         super().__init__(application)
+        # self.camera = arcade.Camera(window=self.application.window)
+        # self.camera.move(Vec2())
+        # self.camera.update()
+        # self.camera.use()
+
+        for unit in self.application.game.units():
+            for unit_upgrade in unit.unit_upgrades:
+                uu = UIUnitUpgrade(unit_upgrade=unit_upgrade)
+        self.ui_manager.add(uu)
 
     def handle_events(self, events):
         # todo
@@ -105,12 +176,13 @@ class BattleScene(Scene):
     def draw(self):
         self.application.game.update_physics(self.application.delta_time)
         for unit in self.application.game.units():
-            pygame.draw.circle(
-                surface=self.application.display,
-                color=unit.color(),
-                center=unit.position + np.array(self.application.settings.resolution) / 2,
+            arcade.draw_circle_filled(
+                center_x=unit.position.x,
+                center_y=unit.position.y,
                 radius=self.application.game.unit_stat_value(unit, EStat.SIZE),
+                color=unit.color(),
             )
+        self.ui_manager.draw()
 
 
 class UpgradeScene(Scene):
@@ -124,56 +196,3 @@ class UpgradeScene(Scene):
     def draw(self):
         # todo
         pass
-
-
-class TestScene(Scene):
-    def __init__(self, application):
-        super().__init__(application)
-
-        self.circle_position = pygame.Vector2(
-            self.application.settings.resolution[0] / 2,
-            self.application.settings.resolution[1] / 2,
-        )
-
-        self.button_layout_rect = pygame.Rect((0, 0), (100, 30))
-
-        self.button = UIButton(
-            relative_rect=self.button_layout_rect,
-            text="Hello",
-            manager=self.application.ui_manager,
-            # container=gui.elements.CON,
-        )
-
-        self.button_new_game = UIButton(
-            relative_rect=self.application.relative_to_rect((.40, .5), (.60, .6)),
-            text="New Game",
-            manager=self.application.ui_manager,
-        )
-
-    def handle_events(self, events):
-        for event in events:
-            if event.operation == pygame.KEYDOWN:
-                key = event.key
-
-                if key == pygame.K_LEFT:
-                    self.circle_position += [-1, 0]
-                if key == pygame.K_RIGHT:
-                    self.circle_position += [1, 0]
-
-            if event.operation == pygame.MOUSEBUTTONDOWN:
-                pos = event.pos
-                print(pos)
-                # if sprite.get_rect().collidepoint(x, y):
-                #     print('clicked on image')
-
-            if event.operation == pygame.MOUSEBUTTONUP:
-                pos = event.pos
-
-    def draw(self):
-        self.circle_position += np.random.randn(2)
-        pygame.draw.circle(self.application.display, (255, 255, 255), self.circle_position, 4)
-        pygame.draw.circle(self.application.display, (0, 0, 255), self.circle_position, 3)
-
-        # self.display.blit(bg, (0, 0))
-        # pg.draw.rect()
-

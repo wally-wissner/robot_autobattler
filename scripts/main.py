@@ -1,36 +1,37 @@
+import arcade
+import arcade.gui
 import dill
-import pygame
-import sys
-from pygame_gui.ui_manager import UIManager
+import pyglet
+from pyglet import resource
 
 import scripts.frontend.scenes as scenes
+from config import absolute_path
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
-from scripts.frontend import colors
 from scripts.utilities.enums import EScene
-
-
-title = "Robot Autobattler"
-version = "0.0.1"
+from scripts.utilities.game_math import Vector2
 
 
 class Application(object):
-    def __init__(self) -> None:
+    def __init__(self, title: str, version: str) -> None:
         self.title = title
         self.version = version
 
-        self.game_save_path = "../player_data/save.pickle"
+        self.game_save_path = absolute_path("player_data/save.pickle")
 
-        self.settings = SettingsManager()
+        # Game setup.
+        self.game = Game(version=self.version, seed=0)
+        self.delta_time = 0
+
+        self.default_font = None
+        self.load_assets()
+
+        self.settings = SettingsManager(application=self)
         self.settings.load()
 
-        # Pygame setup.
-        pygame.init()
-        self.display = pygame.display.set_mode(self.settings.resolution)
-        pygame.display.set_caption(self.title)
-        self.ui_manager = UIManager(self.settings.resolution)
-        self.clock = pygame.time.Clock()
-        pygame.key.set_repeat(500, 100)
+        self.window = arcade.Window(*self.settings.resolution, title=title, resizable=True)
+        self.window.on_draw = self.on_draw
+        self.window.on_update = self.on_update
 
         self.scenes = {
             EScene.MAIN_MENU: scenes.MainMenuScene(self),
@@ -39,75 +40,74 @@ class Application(object):
             EScene.UPGRADE: scenes.UpgradeScene(self),
         }
 
-        # Game setup.
-        self.game: Game | None = None
+        # Scene setup.
         self.active_scene = self.scenes[EScene.MAIN_MENU]
-        self.delta_time = 0
-        self.playing = True
+        self.active_scene.enable()
+
+    def load_assets(self):
+        self.default_font = "Courier New"
+
+        # path = absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
+        # file_path = arcade.resources.resolve_resource_path(path)
+        # pyglet.font.add_file(str(file_path))
+        # pyglet.font.load("JETBRAINS_MONO_REGULAR")
+
+        # self.default_font = str(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+
+        # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
+
+    def on_update(self, delta_time):
+        self.delta_time = delta_time
+
+    def on_draw(self) -> None:
+        self.window.clear()
+        self.active_scene.draw()
+        # self.active_scene.ui_manager.draw()
 
     def run(self) -> None:
-        self.display.fill(colors.blue)
-        while self.playing:
-            self.delta_time = self.clock.tick(self.settings.fps) / 1000
-            self.handle_events(pygame.event.get())
-            self.update()
-            self.draw()
-        self.quit()
+        arcade.run()
+        arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
 
-    def handle_events(self, events: list[pygame.event.Event]) -> None:
-        for event in events:
-            self.ui_manager.process_events(event)
-            if event.type == pygame.QUIT:
-                self.quit()
+    # def relative_to_vector2(self, relative: Vector2) -> Vector2:
+    #     relative = Vector2(*relative)
+    #     resolution_width, resolution_height = self.settings.resolution
+    #     return Vector2(relative.x * resolution_width, relative.y * resolution_height)
+    #
+    # def vector2_to_relative(self, pixel: Vector2) -> Vector2:
+    #     pixel = Vector2(*pixel)
+    #     resolution_width, resolution_height = self.settings.resolution
+    #     return Vector2(pixel.x / resolution_width, pixel.y / resolution_height)
+    #
+    # def relative_to_rect(self, top_left: Vector2, bottom_right: Vector2) -> pygame.Rect:
+    #     vector2_top_left = self.relative_to_vector2(top_left)
+    #     vector2_bottom_right = self.relative_to_vector2(bottom_right)
+    #     return pygame.Rect(
+    #         vector2_top_left,
+    #         vector2_bottom_right - vector2_top_left
+    #     )
 
-        self.active_scene.handle_events(events)
-
-    def update(self) -> None:
-        pygame.display.update()
-        self.ui_manager.update(self.delta_time)
-
-    def draw(self) -> None:
-        self.display.fill(color=colors.blue)
-        self.active_scene.draw()
-        self.ui_manager.draw_ui(self.display)
-
-    def relative_to_vector2(self, relative: pygame.Vector2) -> pygame.Vector2:
-        relative = pygame.Vector2(relative)
-        resolution_width, resolution_height = self.settings.resolution
-        return pygame.Vector2(relative.x * resolution_width, relative.y * resolution_height)
-
-    def vector2_to_relative(self, pixel: pygame.Vector2) -> pygame.Vector2:
-        pixel = pygame.Vector2(pixel)
-        resolution_width, resolution_height = self.settings.resolution
-        return pygame.Vector2(pixel.x / resolution_width, pixel.y / resolution_height)
-
-    def relative_to_rect(self, top_left: pygame.Vector2, bottom_right: pygame.Vector2) -> pygame.Rect:
-        vector2_top_left = self.relative_to_vector2(top_left)
-        vector2_bottom_right = self.relative_to_vector2(bottom_right)
-        return pygame.Rect(
-            vector2_top_left,
-            vector2_bottom_right - vector2_top_left
-        )
-
-    def quit(self) -> None:
-        pygame.quit()
-        sys.exit()
+    def quit(self, *args, **kwargs) -> None:
+        arcade.exit()
 
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
         self.game.start_encounter()
+        self.change_scene(scene_type=EScene.BATTLE)
 
-    def load_game(self) -> None:
+    def load_game(self, *args, **kwargs) -> None:
         self.game = dill.load(self.game_save_path)
 
-    def save_game(self) -> None:
+    def save_game(self, *args, **kwargs) -> None:
         dill.dump(self.game, self.game_save_path)
 
-    def change_scene(self, scene_type: EScene) -> None:
+    def change_scene(self, scene_type: EScene, *args, **kwargs) -> None:
         self.active_scene.disable()
         self.active_scene = self.scenes[scene_type]
+        self.active_scene.enable()
 
 
 if __name__ == "__main__":
-    game = Application()
-    game.run()
+    application = Application(title="Robot Autobattler", version="0.0.1")
+    application.run()

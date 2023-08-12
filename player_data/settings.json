@@ -7,10 +7,6 @@
     "default": [800, 600],
     "current": [800, 600]
   },
-  "volume_overall": {
-    "default": 100,
-    "current": 100
-  },
   "volume_music": {
     "default": 100,
     "current": 100

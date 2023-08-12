@@ -7,6 +7,7 @@ from scripts.backend.inventory import Inventory
 from scripts.backend.unit import Unit
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.utilities.enums import ECollectable
+from scripts.utilities.game_math import Vector2
 
 
 @dataclass

@@ -1,16 +1,17 @@
 import json
+from config import absolute_path
 
 
-filename_settings = "../player_data/settings.json"
+filename_settings = absolute_path("player_data/settings.json")
 
 
 class SettingsManager:
-    def __init__(self):
+    def __init__(self, application):
+        self.application = application
         self.dict = None
 
         # self.resolution = None
         # self.fps = None
-        # self.volume_overall = None
         # self.volume_music = None
         # self.volume_sfx = None
 

@@ -5,7 +5,7 @@ from scripts.backend.badges import Badge
 from scripts.backend.cards import AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
-from scripts.utilities.structure import absolute_path
+from config import absolute_path, _ROOT_DIRECTORY
 
 
 def _convert(value, enum_options):
@@ -28,7 +28,7 @@ def _load_badges() -> list[Badge]:
         badges = [
             Badge(
                 name=json_badge["name"],
-                description=json_badge["description"],
+                description_text=json_badge["description"],
                 rarity=enums.ERarity[json_badge["rarity"]],
                 bp=json_badge["bp"],
                 stat_modifiers=set(
