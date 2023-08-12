@@ -23,6 +23,14 @@ class SettingsManager:
     # def resolution(self, value):
     #     pass
 
+    @property
+    def width(self):
+        return self["resolution"][0]
+
+    @property
+    def height(self):
+        return self["resolution"][1]
+
     def __getattr__(self, item):
         if item in self.__dict__:
             return self.__dict__[item]

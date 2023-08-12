@@ -1,7 +1,7 @@
 import math
 from shapely.geometry import Point, Polygon
 
-from scripts.utilities.game_math import Vector2
+from scripts.utilities.geometry import Vector2
 
 
 class PhysicsBody(object):
@@ -12,7 +12,7 @@ class PhysicsBody(object):
             position: Vector2 = Vector2(),
             velocity: Vector2 = Vector2(),
             acceleration: Vector2 = Vector2(),
-            resistance: float = 0,
+            friction: float = 0,
             team=None,
     ):
         self.shape = shape
@@ -20,13 +20,13 @@ class PhysicsBody(object):
         self.position = Vector2(position)
         self.velocity = Vector2(velocity)
         self.acceleration = Vector2(acceleration)
-        self.resistance = resistance
+        self.friction = friction
         self.team = team
 
         self.objects_touched: list[PhysicsBody] = []
 
     def update(self, dt):
-        self.velocity = (self.acceleration - self.resistance * self.velocity) * dt + self.velocity
+        self.velocity = (self.acceleration - self.friction * self.velocity) * dt + self.velocity
         self.position = self.velocity * dt + self.position
 
         if not self.is_moving():

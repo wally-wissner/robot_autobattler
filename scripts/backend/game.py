@@ -7,7 +7,8 @@ from scripts.backend.team import Team
 from scripts.backend.unit import Unit
 from scripts.backend.factories import generate_team
 from scripts.utilities import enums
-from scripts.utilities.game_math import clamp, Vector2
+from scripts.utilities.game_math import clamp
+from scripts.utilities.geometry import Vector2
 
 
 mapping_weapon_power = {
@@ -59,12 +60,8 @@ class Game(object):
         for team in self.teams:
             for unit in team.units:
                 unit.status_effects.clear()
-                unit.size = self.unit_stat_value(unit, enums.EStat.SIZE)
-                unit.mass = self.unit_stat_value(unit, enums.EStat.MASS)
-
-    def update_physics(self, dt):
-        for physics_body in self.physics_bodies():
-            physics_body.update(dt)
+                unit.size = self.stat_value(unit, enums.EStat.SIZE)
+                unit.mass = self.stat_value(unit, enums.EStat.MASS)
 
     def start_round(self) -> None:
         self.round += 1
@@ -120,7 +117,7 @@ class Game(object):
                 )
                 affected_unit.take_damage(damage)
 
-    def unit_stat_value(self, unit: Unit, stat: enums.EStat) -> float:
+    def stat_value(self, unit: Unit, stat: enums.EStat) -> float:
         # Initialize value to base value.
         value = unit.stats[stat].base_value
         # Split stat modifiers by operation.
@@ -136,3 +133,7 @@ class Game(object):
             value = max(stat_modifier.value for stat_modifier in stat_modifiers[enums.EOperation.ASSIGN])
         # Bound value between min value and max value.
         return clamp(value, unit.stats[stat].min_value, unit.stats[stat].max_value)
+
+    def update_physics(self, dt):
+        for physics_body in self.physics_bodies():
+            physics_body.update(dt)

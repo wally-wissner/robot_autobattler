@@ -4,8 +4,8 @@
     "current": 30
   },
   "resolution": {
-    "default": [800, 600],
-    "current": [800, 600]
+    "default": [1600, 900],
+    "current": [1600, 900]
   },
   "volume_music": {
     "default": 100,

@@ -9,7 +9,7 @@ from config import absolute_path
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
 from scripts.utilities.enums import EScene
-from scripts.utilities.game_math import Vector2
+from scripts.utilities.geometry import Vector2
 
 
 class Application(object):
@@ -70,16 +70,18 @@ class Application(object):
         arcade.run()
         arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
 
-    # def relative_to_vector2(self, relative: Vector2) -> Vector2:
-    #     relative = Vector2(*relative)
-    #     resolution_width, resolution_height = self.settings.resolution
-    #     return Vector2(relative.x * resolution_width, relative.y * resolution_height)
-    #
-    # def vector2_to_relative(self, pixel: Vector2) -> Vector2:
-    #     pixel = Vector2(*pixel)
-    #     resolution_width, resolution_height = self.settings.resolution
-    #     return Vector2(pixel.x / resolution_width, pixel.y / resolution_height)
-    #
+    def rel2vec(self, relative: Vector2) -> Vector2:
+        if isinstance(relative, Vector2):
+            assert relative.relative
+        relative = Vector2(*relative)
+        return Vector2(relative.x * self.settings.width, relative.y * self.settings.height, relative=False)
+
+    def vec2rel(self, pixel: Vector2) -> Vector2:
+        if isinstance(pixel, Vector2):
+            assert pixel.relative
+        pixel = Vector2(*pixel)
+        return Vector2(pixel.x / self.settings.width, pixel.y / self.settings.height, relative=True)
+
     # def relative_to_rect(self, top_left: Vector2, bottom_right: Vector2) -> pygame.Rect:
     #     vector2_top_left = self.relative_to_vector2(top_left)
     #     vector2_bottom_right = self.relative_to_vector2(bottom_right)

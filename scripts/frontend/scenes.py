@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 from scripts.backend.unit_upgrades import UnitUpgrade
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
-from scripts.utilities.game_math import Vector2
+from scripts.utilities.geometry import Vector2
 
 
 class ApplicationButton(arcade.gui.UIFlatButton):
@@ -179,7 +179,7 @@ class BattleScene(Scene):
             arcade.draw_circle_filled(
                 center_x=unit.position.x,
                 center_y=unit.position.y,
-                radius=self.application.game.unit_stat_value(unit, EStat.SIZE),
+                radius=self.application.game.stat_value(unit, EStat.SIZE),
                 color=unit.color(),
             )
         self.ui_manager.draw()
