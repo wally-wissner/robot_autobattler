@@ -4,8 +4,8 @@ import dill
 import pyglet
 from pyglet import resource
 
-from config import absolute_path
 import scripts.frontend.scenes as scenes
+from config import absolute_path
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
 from scripts.utilities.enums import EScene
@@ -23,13 +23,8 @@ class Application(object):
         self.game = Game(version=self.version, seed=0)
         self.delta_time = 0
 
+        self.default_font = None
         self.load_assets()
-        # self.default_font = str(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        # self.default_font = pyglet.font.load(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        self.default_font = "Courier New"
-        
-        # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
 
         self.settings = SettingsManager(application=self)
         self.settings.load()
@@ -50,11 +45,18 @@ class Application(object):
         self.active_scene.enable()
 
     def load_assets(self):
-        pass
+        self.default_font = "Courier New"
+
         # path = absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
         # file_path = arcade.resources.resolve_resource_path(path)
         # pyglet.font.add_file(str(file_path))
         # pyglet.font.load("JETBRAINS_MONO_REGULAR")
+
+        # self.default_font = str(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+
+        # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
 
     def on_update(self, delta_time):
         self.delta_time = delta_time
@@ -107,5 +109,5 @@ class Application(object):
 
 
 if __name__ == "__main__":
-    game = Application(title="Robot Autobattler", version="0.0.1")
-    game.run()
+    application = Application(title="Robot Autobattler", version="0.0.1")
+    application.run()
