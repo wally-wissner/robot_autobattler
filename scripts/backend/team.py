@@ -10,7 +10,7 @@ from scripts.utilities.enums import ECollectable
 from scripts.utilities.game_math import Vector2
 
 
-@dataclass
+@dataclass(eq=True, order=True)
 class CardIndex:
     i_unit: int
     i_unit_upgrade: int
