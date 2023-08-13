@@ -11,8 +11,8 @@ class ETerrain(Enum):
 
 
 debug_colors = {
-    ETerrain.Ground: colors.light_brown,
-    ETerrain.Wall: colors.dark_brown,
+    ETerrain.Ground: colors.LIGHT_BROWN,
+    ETerrain.Wall: colors.DARK_BROWN,
 }
 
 

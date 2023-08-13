@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from PIL import Image, ImageDraw
 
 from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.frontend import colors
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.geometry import Vector2
@@ -34,31 +35,31 @@ class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
 
     texture_card = arcade.texture.Texture(
         name="bg_card",
-        image=Image.new(mode='RGB', size=(width, height//2), color=(100, 25, 25)),
+        image=Image.new(mode='RGB', size=(width, height//2), color=colors.RETRO_RED),
     )
     texture_badge = arcade.texture.Texture(
         name="bg_badge",
-        image=Image.new(mode='RGB', size=(width, height//2), color=(25, 25, 100)),
+        image=Image.new(mode='RGB', size=(width, height//2), color=colors.RETRO_BLUE),
     )
 
     def __init__(self, unit_upgrade: UnitUpgrade):
         self.unit_upgrade = unit_upgrade
-        self.box = arcade.gui.UIBoxLayout(x=500, y=500, vertical=True, space_between=0)
+        self.box = arcade.gui.UIBoxLayout(x=300, y=300, vertical=True, space_between=0)
         self.box.add(TextBox(
             width=self.width,
             height=self.height//2,
             texture=self.texture_card,
             text=self.unit_upgrade.card.description(),
-            font_size=20,
+            font_size=10,
         ))
         self.box.add(TextBox(
             width=self.width,
             height=self.height//2,
             texture=self.texture_badge,
             text=self.unit_upgrade.badge.description(),
-            font_size=20,
+            font_size=10,
         ))
-        super().__init__(child=self.box, border_color=arcade.color.WHITE, border_width=2)
+        super().__init__(child=self.box, border_color=colors.WHITE, border_width=2)
 
 
 class Scene(ABC):
@@ -90,8 +91,7 @@ class MainMenuScene(Scene):
         gap = 15
 
         # Set background color
-        # arcade.set_background_color(arcade.color.BLACK_BEAN)
-        arcade.set_background_color((40, 40, 40))
+        arcade.set_background_color(color=colors.DARK_GRAY)
 
         # Create a vertical BoxGroup to align buttons
         self.v_box = arcade.gui.UIBoxLayout()
@@ -133,7 +133,7 @@ class MainMenuScene(Scene):
             text=self.application.title,
             start_x=.5 * self.application.window.width,
             start_y=.8 * self.application.window.height,
-            color=(65, 255, 0),
+            color=colors.NEON_GREEN,
             font_name=self.application.default_font,
             font_size=48,
             # bold=True,

@@ -36,7 +36,6 @@ class Vector2(Vec2):
 
     def __sub__(self, other: Self):
         other = Vector2(other)
-        print(other)
         return Vector2(self.x - other.x, self.y - other.y)
 
     def __mul__(self, other: float):

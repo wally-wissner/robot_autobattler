@@ -71,11 +71,12 @@ class Game(object):
         self.turn += 1
 
     def place_units(self) -> None:
-        deviation = 10
+        deviation = 50
         team_distance = 50
         for team in self.teams:
             for unit in team.units:
-                team_center = team_distance * np.array([-1 if unit.team.is_player else 1, 0])
+                # team_center = Vector2(.25, .5) if team.is_player else Vector2(.75, .5)
+                team_center = Vector2(400, 450) if team.is_player else Vector2(1200, 450)
                 unit_relative_position = np.random.randn(2)
                 unit.position = Vector2(deviation * unit_relative_position + team_center)
 
