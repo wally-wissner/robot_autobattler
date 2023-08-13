@@ -33,16 +33,15 @@ class Application(object):
         self.window.on_draw = self.on_draw
         self.window.on_update = self.on_update
 
+        # Scene setup.
         self.scenes = {
             EScene.MAIN_MENU: scenes.MainMenuScene(self),
             EScene.SETTINGS_MENU: scenes.SettingsMenuScene(self),
             EScene.BATTLE: scenes.BattleScene(self),
             EScene.UPGRADE: scenes.UpgradeScene(self),
         }
-
-        # Scene setup.
-        self.active_scene = self.scenes[EScene.MAIN_MENU]
-        self.active_scene.enable()
+        self.active_scene = None
+        self.change_scene(EScene.MAIN_MENU)
 
     def load_assets(self):
         self.default_font = "Courier New"
@@ -105,7 +104,8 @@ class Application(object):
         dill.dump(self.game, self.game_save_path)
 
     def change_scene(self, scene_type: EScene, *args, **kwargs) -> None:
-        self.active_scene.disable()
+        if self.active_scene:
+            self.active_scene.disable()
         self.active_scene = self.scenes[scene_type]
         self.active_scene.enable()
 
