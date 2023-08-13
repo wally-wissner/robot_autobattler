@@ -1,16 +1,22 @@
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
+from collections import namedtuple
 
-DARK_GRAY = (40, 40, 40)
 
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+Color = namedtuple("Color", "r g b")
 
-NEON_GREEN = (65, 255, 0)
 
-LIGHT_BROWN = (160, 82, 45)
+BLACK = Color(0, 0, 0)
+WHITE = Color(255, 255, 255)
+
+DARK_GRAY = Color(40, 40, 40)
+
+RED = Color(255, 0, 0)
+GREEN = Color(0, 255, 0)
+BLUE = Color(0, 0, 255)
+
+NEON_GREEN = Color(65, 255, 0)
+
+LIGHT_BROWN = Color(160, 82, 45)
 DARK_BROWN = (139, 69, 19)
 
-RETRO_RED = (100, 25, 25)
-RETRO_BLUE = (25, 25, 100)
+RETRO_RED = Color(100, 25, 25)
+RETRO_BLUE = Color(25, 25, 100)

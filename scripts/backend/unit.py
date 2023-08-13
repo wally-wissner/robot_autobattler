@@ -4,6 +4,7 @@ from scripts.backend.inventory import Inventory
 from scripts.backend.physics import DiscBody
 from scripts.backend.unitstat import Stat, ConsumableStat
 from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.frontend.colors import Color
 from scripts.utilities.enums import EStat
 from scripts.utilities.identifiers import uuid_identifier
 
@@ -60,5 +61,5 @@ class Unit(DiscBody):
     def add_unit_upgrade(self, unit_upgrade: UnitUpgrade):
         self.unit_upgrades.append(unit_upgrade)
 
-    def color(self) -> tuple[int]:
-        return tuple(int(hash(self.id) // 10 ** (3 * i) % 256) for i in range(3))
+    def color(self) -> Color:
+        return Color(*(int(hash(self.id) // 10 ** (3 * i) % 256) for i in range(3)))
