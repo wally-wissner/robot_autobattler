@@ -59,7 +59,7 @@ class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
             text=self.unit_upgrade.badge.description(),
             font_size=10,
         ))
-        super().__init__(child=self.box, border_color=colors.WHITE, border_width=2)
+        super().__init__(child=self.box, border_color=colors.RARE, border_width=3)
 
 
 class Scene(ABC):
