@@ -129,6 +129,7 @@ class MainMenuScene(Scene):
         #             self.application.change_scene(EScene.BATTLE)
 
     def draw(self):
+        # Title
         arcade.draw_text(
             text=self.application.title,
             start_x=.5 * self.application.window.width,
@@ -139,6 +140,18 @@ class MainMenuScene(Scene):
             # bold=True,
             anchor_x="center",
             anchor_y="baseline",
+        )
+        # Version
+        arcade.draw_text(
+            text=f"Version {self.application.version}",
+            start_x=.95 * self.application.window.width,
+            start_y=.05 * self.application.window.height,
+            color=colors.NEON_GREEN,
+            font_name=self.application.default_font,
+            font_size=20,
+            # bold=True,
+            anchor_x="right",
+            anchor_y="bottom",
         )
         self.ui_manager.draw()
 
