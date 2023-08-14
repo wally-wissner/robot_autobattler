@@ -29,7 +29,7 @@ class TextBox(arcade.gui.UITexturePane):
         # self.add(arcade.gui.)
 
 
-class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
+class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
     height = 200
     width = 200
 
@@ -59,7 +59,7 @@ class UIUnitUpgrade(arcade.gui.UIBorder, arcade.gui.UIDraggableMixin):
             text=self.unit_upgrade.badge.description(),
             font_size=10,
         ))
-        super().__init__(child=self.box, border_color=colors.RARE, border_width=3)
+        super().__init__(child=self.box, bg_color=colors.RARE, padding=(2, 2, 2, 2))
 
 
 class Scene(ABC):
