@@ -132,8 +132,8 @@ class MainMenuScene(Scene):
         # Title
         arcade.draw_text(
             text=self.application.title,
-            start_x=.5 * self.application.window.width,
-            start_y=.8 * self.application.window.height,
+            start_x=self.application.rel2abs(x=.5),
+            start_y=self.application.rel2abs(y=.8),
             color=colors.NEON_GREEN,
             font_name=self.application.default_font,
             font_size=48,
@@ -144,8 +144,8 @@ class MainMenuScene(Scene):
         # Version
         arcade.draw_text(
             text=f"Version {self.application.version}",
-            start_x=.95 * self.application.window.width,
-            start_y=.05 * self.application.window.height,
+            start_x=self.application.rel2abs(x=.95),
+            start_y=self.application.rel2abs(y=.05),
             color=colors.NEON_GREEN,
             font_name=self.application.default_font,
             font_size=20,

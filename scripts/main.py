@@ -69,15 +69,25 @@ class Application(object):
         arcade.run()
         arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
 
-    def rel2vec(self, relative: Vector2) -> Vector2:
-        if isinstance(relative, Vector2):
-            assert relative.relative
-        relative = Vector2(*relative)
-        return Vector2(relative.x * self.settings.width, relative.y * self.settings.height, relative=False)
+    def rel2abs(self, relative: Vector2 = None, x: float = None, y: float = None) -> Vector2 | float:
+        if x and y:
+            relative = Vector2(x, y, relative=True)
+        if relative:
+            if isinstance(relative, Vector2):
+                assert relative.relative
+            else:
+                relative = Vector2(*relative, relative=True)
+            return Vector2(relative.x * self.window.width, relative.y * self.window.height, relative=False)
+        elif x:
+            return x * self.window.width
+        elif y:
+            return y * self.window.height
+        else:
+            raise ValueError("Must supply relative or x or y.")
 
-    def vec2rel(self, pixel: Vector2) -> Vector2:
+    def abs2rel(self, pixel: Vector2 = None, x: float = None, y: float = None) -> Vector2 | float:
         if isinstance(pixel, Vector2):
-            assert pixel.relative
+            assert not pixel.relative
         pixel = Vector2(*pixel)
         return Vector2(pixel.x / self.settings.width, pixel.y / self.settings.height, relative=True)
 
