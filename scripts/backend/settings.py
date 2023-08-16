@@ -10,11 +10,6 @@ class SettingsManager:
         self.application = application
         self.dict = None
 
-        # self.resolution = None
-        # self.fps = None
-        # self.volume_music = None
-        # self.volume_sfx = None
-
     # @property
     # def resolution(self):
     #     return self._resolution
@@ -25,11 +20,11 @@ class SettingsManager:
 
     @property
     def width(self):
-        return self["resolution"][0]
+        return self.resolution[0]
 
     @property
     def height(self):
-        return self["resolution"][1]
+        return self.resolution[1]
 
     def __getattr__(self, item):
         if item in self.__dict__:
