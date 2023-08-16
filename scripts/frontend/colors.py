@@ -8,6 +8,7 @@ BLACK = ColorRGB(0, 0, 0)
 WHITE = ColorRGB(255, 255, 255)
 
 DARK_GRAY = ColorRGB(40, 40, 40)
+LIGHT_GRAY = ColorRGB(80, 80, 80)
 
 RED = ColorRGB(255, 0, 0)
 GREEN = ColorRGB(0, 255, 0)

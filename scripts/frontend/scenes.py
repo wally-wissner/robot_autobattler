@@ -12,8 +12,8 @@ from scripts.utilities.geometry import Vector2
 
 
 class Scene(ABC):
-    def __init__(self, application) -> None:
-        self.application = application
+    def __init__(self, app) -> None:
+        self.app = app
         self.ui_manager = arcade.gui.UIManager()
 
     @abstractmethod
@@ -29,12 +29,12 @@ class Scene(ABC):
 
     def disable(self) -> None:
         self.ui_manager.disable()
-        self.application.window.clear()
+        self.app.window.clear()
 
 
 class MainMenuScene(Scene):
-    def __init__(self, application):
-        super().__init__(application)
+    def __init__(self, app):
+        super().__init__(app)
 
         width = 200
         gap = 15
@@ -46,16 +46,16 @@ class MainMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        button_new_game = ui.UIApplicationButton(self.application.new_game, text="New Game", width=width)
+        button_new_game = ui.UIApplicationButton(self.app.new_game, text="New Game", width=width)
         self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
-        button_continue = ui.UIApplicationButton(self.application.load_game, text="Continue", width=width)
+        button_continue = ui.UIApplicationButton(self.app.load_game, text="Continue", width=width)
         self.v_box.add(button_continue.with_space_around(bottom=gap))
 
         settings_button = arcade.gui.UIFlatButton(text="Settings", width=width)
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
-        quit_button = ui.UIApplicationButton(self.application.quit, text="Quit", width=width)
+        quit_button = ui.UIApplicationButton(self.app.quit, text="Quit", width=width)
         self.v_box.add(quit_button)
 
         self.ui_manager.add(
@@ -80,11 +80,11 @@ class MainMenuScene(Scene):
     def draw(self):
         # Title
         arcade.draw_text(
-            text=self.application.title,
-            start_x=self.application.rel2abs(x=.5),
-            start_y=self.application.rel2abs(y=.8),
+            text=self.app.title,
+            start_x=self.app.rel2abs(x=.5),
+            start_y=self.app.rel2abs(y=.8),
             color=colors.NEON_GREEN,
-            font_name=self.application.default_font,
+            font_name=self.app.default_font,
             font_size=48,
             # bold=True,
             anchor_x="center",
@@ -92,11 +92,11 @@ class MainMenuScene(Scene):
         )
         # Version
         arcade.draw_text(
-            text=f"Version {self.application.version}",
-            start_x=self.application.rel2abs(x=.95),
-            start_y=self.application.rel2abs(y=.05),
+            text=f"Version {self.app.version}",
+            start_x=self.app.rel2abs(x=.95),
+            start_y=self.app.rel2abs(y=.05),
             color=colors.NEON_GREEN,
-            font_name=self.application.default_font,
+            font_name=self.app.default_font,
             font_size=20,
             # bold=True,
             anchor_x="right",
@@ -106,8 +106,8 @@ class MainMenuScene(Scene):
 
 
 class SettingsMenuScene(Scene):
-    def __init__(self, application):
-        super().__init__(application)
+    def __init__(self, app):
+        super().__init__(app)
 
     def handle_events(self, events):
         # todo
@@ -119,14 +119,14 @@ class SettingsMenuScene(Scene):
 
 
 class BattleScene(Scene):
-    def __init__(self, application):
-        super().__init__(application)
+    def __init__(self, app):
+        super().__init__(app)
         # self.camera = arcade.Camera(window=self.application.window)
         # self.camera.move(Vec2())
         # self.camera.update()
         # self.camera.use()
 
-        for unit in self.application.game.units():
+        for unit in self.app.game.units():
             for unit_upgrade in unit.unit_upgrades:
                 uu = ui.UIUnitUpgrade(unit_upgrade=unit_upgrade)
         self.ui_manager.add(uu)
@@ -136,20 +136,30 @@ class BattleScene(Scene):
         pass
 
     def draw(self):
-        self.application.game.update_physics(self.application.delta_time)
-        for unit in self.application.game.units():
+        self.app.game.update_physics(self.app.delta_time)
+        for unit in self.app.game.units():
             arcade.draw_circle_filled(
                 center_x=unit.position.x,
                 center_y=unit.position.y,
-                radius=self.application.game.stat_value(unit, EStat.SIZE),
+                radius=self.app.game.stat_value(unit, EStat.SIZE),
                 color=unit.color(),
             )
+
+        menu_bar_height = .075
+        arcade.draw_rectangle_filled(
+            center_x=self.app.rel2abs(x=.5),
+            center_y=self.app.rel2abs(y=1-menu_bar_height/2),
+            width=self.app.rel2abs(x=1),
+            height=self.app.rel2abs(y=menu_bar_height),
+            color=colors.LIGHT_GRAY,
+        )
+
         self.ui_manager.draw()
 
 
 class UpgradeScene(Scene):
-    def __init__(self, application):
-        super().__init__(application)
+    def __init__(self, app):
+        super().__init__(app)
 
     def handle_events(self, events):
         # todo
