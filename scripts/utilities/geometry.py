@@ -54,12 +54,12 @@ class Vector2(Vec2):
         return f"Vector2({self.x}, {self.y})"
 
 
-class Rectangle(object):
+class Rectangle:
     def __init__(self, points: Iterable[Vector2]):
         self.x_min = min(point.x for point in points)
         self.x_max = max(point.x for point in points)
-        self.y_min = min(point.x for point in points)
-        self.y_max = max(point.x for point in points)
+        self.y_min = min(point.y for point in points)
+        self.y_max = max(point.y for point in points)
 
         self.bottom_left = Vector2(self.x_min, self.y_min)
         self.top_left = Vector2(self.x_min, self.y_max)
