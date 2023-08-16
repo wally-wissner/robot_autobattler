@@ -67,7 +67,6 @@ class Application(object):
 
     def run(self) -> None:
         arcade.run()
-        arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
 
     def _transform(self, f, vec: Vector2 = None, x: float = None, y: float = None) -> Vector2 | float:
         if x and y:
