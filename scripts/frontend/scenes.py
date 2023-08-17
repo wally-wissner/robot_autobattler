@@ -120,6 +120,9 @@ class SettingsMenuScene(Scene):
 
 class BattleScene(Scene):
     def __init__(self, app):
+        self.menu_bar_height = .075
+        self.menu_bar_y = 1 - self.menu_bar_height / 2
+
         super().__init__(app)
         # self.camera = arcade.Camera(window=self.application.window)
         # self.camera.move(Vec2())
@@ -145,12 +148,11 @@ class BattleScene(Scene):
                 color=unit.color(),
             )
 
-        menu_bar_height = .075
         arcade.draw_rectangle_filled(
             center_x=self.app.rel2abs(x=.5),
-            center_y=self.app.rel2abs(y=1-menu_bar_height/2),
+            center_y=self.app.rel2abs(y=self.menu_bar_y),
             width=self.app.rel2abs(x=1),
-            height=self.app.rel2abs(y=menu_bar_height),
+            height=self.app.rel2abs(y=self.menu_bar_height),
             color=colors.LIGHT_GRAY,
         )
 
