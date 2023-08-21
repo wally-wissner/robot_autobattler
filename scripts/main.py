@@ -34,13 +34,13 @@ class Application(object):
         self.window.on_update = self.on_update
 
         # Scene setup.
-        self.scenes = {
-            EScene.MAIN_MENU: scenes.MainMenuScene(self),
-            EScene.SETTINGS_MENU: scenes.SettingsMenuScene(self),
-            EScene.BATTLE: scenes.BattleScene(self),
-            EScene.UPGRADE: scenes.UpgradeScene(self),
+        self._scene_map = {
+            EScene.MAIN_MENU: scenes.MainMenuScene,
+            EScene.SETTINGS_MENU: scenes.SettingsMenuScene,
+            EScene.BATTLE: scenes.BattleScene,
+            EScene.UPGRADE: scenes.UpgradeScene,
         }
-        self.active_scene = None
+        self._active_scene = None
         self.change_scene(EScene.MAIN_MENU)
 
     def load_assets(self):
@@ -62,7 +62,7 @@ class Application(object):
 
     def on_draw(self) -> None:
         self.window.clear()
-        self.active_scene.draw()
+        self._active_scene.draw()
         # self.active_scene.ui_manager.draw()
 
     def run(self) -> None:
@@ -110,10 +110,10 @@ class Application(object):
         dill.dump(self.game, self.game_save_path)
 
     def change_scene(self, scene_type: EScene, *args, **kwargs) -> None:
-        if self.active_scene:
-            self.active_scene.disable()
-        self.active_scene = self.scenes[scene_type]
-        self.active_scene.enable()
+        if self._active_scene:
+            self._active_scene.disable()
+        self._active_scene = self._scene_map[scene_type](self)
+        self._active_scene.enable()
 
 
 if __name__ == "__main__":

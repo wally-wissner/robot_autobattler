@@ -3,6 +3,7 @@ import arcade.gui
 from abc import ABC, abstractmethod
 from PIL import Image, ImageDraw
 
+from config import absolute_path
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.frontend import colors
 from scripts.frontend import ui
@@ -120,10 +121,11 @@ class SettingsMenuScene(Scene):
 
 class BattleScene(Scene):
     def __init__(self, app):
+        super().__init__(app)
+
         self.menu_bar_height = .075
         self.menu_bar_y = 1 - self.menu_bar_height / 2
 
-        super().__init__(app)
         # self.camera = arcade.Camera(window=self.application.window)
         # self.camera.move(Vec2())
         # self.camera.update()
@@ -133,6 +135,23 @@ class BattleScene(Scene):
             for unit_upgrade in unit.unit_upgrades:
                 uu = ui.UIUnitUpgrade(unit_upgrade=unit_upgrade)
         self.ui_manager.add(uu)
+
+        settings_button = arcade.gui.UITextureButton(
+                x=self.app.rel2abs(x=.95),
+                y=self.app.rel2abs(y=self.menu_bar_y),
+                width=self.app.rel2abs(y=.9 * self.menu_bar_height),
+                height=self.app.rel2abs(y=.9 * self.menu_bar_height),
+                texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
+            )
+        settings_button.on_click(self.app.change_scene(EScene.SETTINGS_MENU))
+        anchored_settings_button = arcade.gui.UIAnchorWidget(
+            child=settings_button,
+            # align_x=,
+            # align_y=,
+            anchor_x='center_x',
+            anchor_y='center_y',
+        )
+        self.ui_manager.add(anchored_settings_button)
 
     def handle_events(self, events):
         # todo
