@@ -125,6 +125,7 @@ class BattleScene(Scene):
 
         self.menu_bar_height = .075
         self.menu_bar_y = 1 - self.menu_bar_height / 2
+        self.icon_height = .8 * self.menu_bar_height
 
         # self.camera = arcade.Camera(window=self.application.window)
         # self.camera.move(Vec2())
@@ -137,19 +138,19 @@ class BattleScene(Scene):
         self.ui_manager.add(uu)
 
         settings_button = arcade.gui.UITextureButton(
-                x=self.app.rel2abs(x=.95),
-                y=self.app.rel2abs(y=self.menu_bar_y),
-                width=self.app.rel2abs(y=.9 * self.menu_bar_height),
-                height=self.app.rel2abs(y=.9 * self.menu_bar_height),
+                x=0,
+                y=0,
+                width=self.app.rel2abs(y=self.icon_height),
+                height=self.app.rel2abs(y=self.icon_height),
                 texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
             )
         settings_button.on_click(self.app.change_scene(EScene.SETTINGS_MENU))
         anchored_settings_button = arcade.gui.UIAnchorWidget(
             child=settings_button,
-            # align_x=,
-            # align_y=,
-            anchor_x='center_x',
-            anchor_y='center_y',
+            align_x=self.app.rel2abs(x=-.0125),
+            align_y=self.app.rel2abs(y=-self.menu_bar_height / 4),
+            anchor_x='right',
+            anchor_y='top',
         )
         self.ui_manager.add(anchored_settings_button)
 
@@ -172,7 +173,7 @@ class BattleScene(Scene):
             center_y=self.app.rel2abs(y=self.menu_bar_y),
             width=self.app.rel2abs(x=1),
             height=self.app.rel2abs(y=self.menu_bar_height),
-            color=colors.LIGHT_GRAY,
+            color=colors.RED,
         )
 
         self.ui_manager.draw()
