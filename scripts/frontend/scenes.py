@@ -179,7 +179,7 @@ class BattleScene(Scene):
             center_y=self.menu_rect.center.y,
             width=self.menu_rect.width,
             height=self.menu_rect.height,
-            color=colors.RED,
+            color=colors.LIGHT_GRAY,
         )
 
         self.ui_manager.draw()
