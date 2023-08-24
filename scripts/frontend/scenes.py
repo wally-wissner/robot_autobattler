@@ -9,7 +9,7 @@ from scripts.frontend import colors
 from scripts.frontend import ui
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
-from scripts.utilities.geometry import Vector2
+from scripts.utilities.geometry import Rectangle, Vector2
 
 
 class Scene(ABC):
@@ -123,9 +123,12 @@ class BattleScene(Scene):
     def __init__(self, app):
         super().__init__(app)
 
-        self.menu_bar_height = .075
-        self.menu_bar_y = 1 - self.menu_bar_height / 2
-        self.icon_height = .8 * self.menu_bar_height
+        self.menu_rect = Rectangle([
+            self.app.rel2abs(Vector2(0, .925)),
+            self.app.rel2abs(Vector2(1, 1)),
+        ])
+
+        self.icon_height = .8 * self.menu_rect.height
 
         # self.camera = arcade.Camera(window=self.application.window)
         # self.camera.move(Vec2())
@@ -138,21 +141,24 @@ class BattleScene(Scene):
         self.ui_manager.add(uu)
 
         settings_button = arcade.gui.UITextureButton(
-                x=0,
-                y=0,
-                width=self.app.rel2abs(y=self.icon_height),
-                height=self.app.rel2abs(y=self.icon_height),
-                texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
-            )
-        settings_button.on_click(self.app.change_scene(EScene.SETTINGS_MENU))
-        anchored_settings_button = arcade.gui.UIAnchorWidget(
-            child=settings_button,
-            align_x=self.app.rel2abs(x=-.0125),
-            align_y=self.app.rel2abs(y=-self.menu_bar_height / 4),
-            anchor_x='right',
-            anchor_y='top',
+            x=self.app.rel2abs(x=.975) - self.icon_height / 2,
+            y=self.menu_rect.center.y - self.icon_height / 2,
+            width=self.icon_height,
+            height=self.icon_height,
+            texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
         )
-        self.ui_manager.add(anchored_settings_button)
+        settings_button.on_click(self.app.change_scene(EScene.SETTINGS_MENU))
+        self.ui_manager.add(settings_button)
+
+        # anchored_settings_button = arcade.gui.UIAnchorWidget(
+        #     child=settings_button,
+        #     align_x=self.app.rel2abs(x=-.0125),
+        #     align_y=-self.menu_rect.height / 2,
+        #     # align_y=self.app.rel2abs(y=-self.menu_rect.height / 4),
+        #     anchor_x='right',
+        #     anchor_y='top',
+        # )
+        # self.ui_manager.add(anchored_settings_button)
 
     def handle_events(self, events):
         # todo
@@ -169,10 +175,10 @@ class BattleScene(Scene):
             )
 
         arcade.draw_rectangle_filled(
-            center_x=self.app.rel2abs(x=.5),
-            center_y=self.app.rel2abs(y=self.menu_bar_y),
-            width=self.app.rel2abs(x=1),
-            height=self.app.rel2abs(y=self.menu_bar_height),
+            center_x=self.menu_rect.center.x,
+            center_y=self.menu_rect.center.y,
+            width=self.menu_rect.width,
+            height=self.menu_rect.height,
             color=colors.RED,
         )
 
