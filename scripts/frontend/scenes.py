@@ -47,16 +47,16 @@ class MainMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        button_new_game = ui.UIApplicationButton(self.app.new_game, text="New Game", width=width)
+        button_new_game = ui.UITextButton(self.app.new_game, text="New Game", width=width)
         self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
-        button_continue = ui.UIApplicationButton(self.app.load_game, text="Continue", width=width)
+        button_continue = ui.UITextButton(self.app.load_game, text="Continue", width=width)
         self.v_box.add(button_continue.with_space_around(bottom=gap))
 
-        settings_button = arcade.gui.UIFlatButton(text="Settings", width=width)
+        settings_button = ui.UITextButton(self.app.change_scene, scene=EScene.SETTINGS_MENU, text="Settings", width=width)
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
-        quit_button = ui.UIApplicationButton(self.app.quit, text="Quit", width=width)
+        quit_button = ui.UITextButton(self.app.quit, text="Quit", width=width)
         self.v_box.add(quit_button)
 
         self.ui_manager.add(
@@ -110,13 +110,39 @@ class SettingsMenuScene(Scene):
     def __init__(self, app):
         super().__init__(app)
 
+        width = 200
+        gap = 15
+
+        # Set background color
+        arcade.set_background_color(color=colors.DARK_GRAY)
+
+        # Create a vertical BoxGroup to align buttons
+        self.v_box = arcade.gui.UIBoxLayout()
+
+        # Create the buttons
+        music_volume_slider = ui.UITextButton(self.app.new_game, text="New Game", width=width)
+        self.v_box.add(music_volume_slider.with_space_around(bottom=gap))
+
+        sfx_volume_slider = ui.UITextButton(self.app.load_game, text="Continue", width=width)
+        self.v_box.add(sfx_volume_slider.with_space_around(bottom=gap))
+
+        return_button = ui.UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Return", width=width)
+        self.v_box.add(return_button)
+
+        self.ui_manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x="center_x",
+                anchor_y="center_y",
+                child=self.v_box,
+            )
+        )
+
     def handle_events(self, events):
         # todo
         pass
 
     def draw(self):
-        # todo
-        pass
+        self.ui_manager.draw()
 
 
 class BattleScene(Scene):

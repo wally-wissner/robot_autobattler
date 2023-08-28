@@ -101,7 +101,7 @@ class Application(object):
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
         self.game.start_encounter()
-        self.change_scene(scene_type=EScene.BATTLE)
+        self.change_scene(scene=EScene.BATTLE)
 
     def load_game(self, *args, **kwargs) -> None:
         self.game = dill.load(self.game_save_path)
@@ -109,10 +109,10 @@ class Application(object):
     def save_game(self, *args, **kwargs) -> None:
         dill.dump(self.game, self.game_save_path)
 
-    def change_scene(self, scene_type: EScene, *args, **kwargs) -> None:
+    def change_scene(self, scene: EScene, *args, **kwargs) -> None:
         if self._active_scene:
             self._active_scene.disable()
-        self._active_scene = self._scene_map[scene_type](self)
+        self._active_scene = self._scene_map[scene](self)
         self._active_scene.enable()
 
 
