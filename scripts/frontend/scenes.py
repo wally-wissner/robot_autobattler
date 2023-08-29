@@ -120,13 +120,7 @@ class SettingsMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        music_volume_slider = ui.UITextButton(self.app.new_game, text="New Game", width=width)
-        self.v_box.add(music_volume_slider.with_space_around(bottom=gap))
-
-        sfx_volume_slider = ui.UITextButton(self.app.load_game, text="Continue", width=width)
-        self.v_box.add(sfx_volume_slider.with_space_around(bottom=gap))
-
-        return_button = ui.UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Return", width=width)
+        return_button = ui.UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Done", width=width)
         self.v_box.add(return_button)
 
         self.ui_manager.add(
