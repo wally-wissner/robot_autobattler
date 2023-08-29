@@ -5,6 +5,7 @@ import pyglet
 from pyglet import resource
 
 import scripts.frontend.scenes as scenes
+from _version import __title__, __version__
 from config import absolute_path
 from scripts.backend.game import Game
 from scripts.backend.settings import SettingsManager
@@ -13,9 +14,9 @@ from scripts.utilities.geometry import Vector2
 
 
 class Application(object):
-    def __init__(self, title: str, version: str) -> None:
-        self.title = title
-        self.version = version
+    def __init__(self) -> None:
+        self.title = __title__
+        self.version = __version__
 
         self.game_save_path = absolute_path("player_data/save.pickle")
 
@@ -29,7 +30,7 @@ class Application(object):
         self.settings = SettingsManager(application=self)
         self.settings.load()
 
-        self.window = arcade.Window(*self.settings.resolution, title=title, resizable=True)
+        self.window = arcade.Window(*self.settings.resolution, title=self.title, resizable=True)
         self.window.on_draw = self.on_draw
         self.window.on_update = self.on_update
 
@@ -117,5 +118,5 @@ class Application(object):
 
 
 if __name__ == "__main__":
-    application = Application(title="Robot Autobattler", version="0.0.1")
+    application = Application()
     application.run()
