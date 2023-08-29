@@ -120,7 +120,7 @@ class SettingsMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        return_button = ui.UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Done", width=width)
+        return_button = ui.UITextButton(self.app.return_to_previous_scene, text="Done", width=width)
         self.v_box.add(return_button)
 
         self.ui_manager.add(

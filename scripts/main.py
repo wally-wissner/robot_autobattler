@@ -40,7 +40,8 @@ class Application(object):
             EScene.BATTLE: scenes.BattleScene,
             EScene.UPGRADE: scenes.UpgradeScene,
         }
-        self._active_scene = None
+        self._active_scene: scenes.Scene | None = None
+        self._scene_stack: list[EScene] = []
         self.change_scene(EScene.MAIN_MENU)
 
     def load_assets(self):
@@ -110,10 +111,18 @@ class Application(object):
         dill.dump(self.game, self.game_save_path)
 
     def change_scene(self, scene: EScene, *args, **kwargs) -> None:
+        self._scene_stack.append(scene)
         if self._active_scene:
             self._active_scene.disable()
         self._active_scene = self._scene_map[scene](self)
         self._active_scene.enable()
+
+    def return_to_previous_scene(self, *args, **kwargs):
+        try:
+            self._scene_stack.pop()
+            self.change_scene(self._scene_stack[-1])
+        except IndexError:
+            pass
 
 
 if __name__ == "__main__":
