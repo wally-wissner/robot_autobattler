@@ -1,6 +1,7 @@
 import arcade
 import arcade.gui
 from PIL import Image, ImageDraw
+from typing import Callable
 
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.frontend import colors
@@ -9,8 +10,8 @@ from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.geometry import Vector2
 
 
-class UIApplicationButton(arcade.gui.UIFlatButton):
-    def __init__(self, on_click, *args, **kwargs) -> None:
+class UITextButton(arcade.gui.UIFlatButton):
+    def __init__(self, on_click: Callable, *args, **kwargs) -> None:
         self.args = args
         self.kwargs = kwargs
         super().__init__(*args, **kwargs)
