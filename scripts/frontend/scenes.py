@@ -116,12 +116,21 @@ class SettingsMenuScene(Scene):
         # Set background color
         arcade.set_background_color(color=colors.DARK_GRAY)
 
-        # Create a vertical BoxGroup to align buttons
-        self.v_box = arcade.gui.UIBoxLayout()
+        # Create a vertical BoxGroup to align settings
+        self.v_box = arcade.gui.UIBoxLayout(vertical=True)
+
+        # Create a horizontal BoxGroup to align buttons
+        self.h_box = arcade.gui.UIBoxLayout(vertical=False)
 
         # Create the buttons
-        return_button = ui.UITextButton(self.app.return_to_previous_scene, text="Done", width=width)
-        self.v_box.add(return_button)
+        back_button = ui.UITextButton(self.app.return_to_previous_scene, text="Back", width=width)
+        self.h_box.add(back_button.with_space_around(right=gap))
+        main_menu_button = ui.UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Main Menu", width=width)
+        self.h_box.add(main_menu_button.with_space_around(right=gap))
+        exit_game_button = ui.UITextButton(self.app.quit, text="Exit Game", width=width)
+        self.h_box.add(exit_game_button)
+
+        self.v_box.add(self.h_box)
 
         self.ui_manager.add(
             arcade.gui.UIAnchorWidget(
