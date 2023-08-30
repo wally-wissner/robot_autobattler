@@ -9,6 +9,7 @@ class Card(object):
     name: str
     rarity: enums.ERarity
     bp: int
+    cooldown: float
 
     def description(self):
         return self.name
