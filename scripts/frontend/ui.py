@@ -41,33 +41,29 @@ class UITextBox(arcade.gui.UITexturePane):
 
 
 class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
-    height = 200
-    width = 200
-
-    texture_card = arcade.texture.Texture(
-        name="bg_card",
-        image=Image.new(mode='RGB', size=(width, height//2), color=colors.RETRO_RED),
-    )
-    texture_badge = arcade.texture.Texture(
-        name="bg_badge",
-        image=Image.new(mode='RGB', size=(width, height//2), color=colors.RETRO_BLUE),
-    )
-
-    def __init__(self, unit_upgrade: UnitUpgrade):
+    def __init__(self, unit_upgrade: UnitUpgrade, height, width, x, y):
         self.unit_upgrade = unit_upgrade
-        self.box = arcade.gui.UIBoxLayout(x=300, y=300, vertical=True, space_between=0)
+        self.texture_card = arcade.texture.Texture(
+            name="bg_card",
+            image=Image.new(mode='RGB', size=(width, height // 2), color=colors.RETRO_RED),
+        )
+        self.texture_badge = arcade.texture.Texture(
+            name="bg_badge",
+            image=Image.new(mode='RGB', size=(width, height // 2), color=colors.RETRO_BLUE),
+        )
+        self.box = arcade.gui.UIBoxLayout(x=x, y=y, vertical=True, space_between=0)
         self.box.add(UITextBox(
-            width=self.width,
-            height=self.height//2,
+            width=width,
+            height=height//2,
             texture=self.texture_card,
             text=self.unit_upgrade.card.description(),
             font_size=10,
         ))
         self.box.add(UITextBox(
-            width=self.width,
-            height=self.height//2,
+            width=width,
+            height=height//2,
             texture=self.texture_badge,
             text=self.unit_upgrade.badge.description(),
             font_size=10,
         ))
-        super().__init__(child=self.box, bg_color=colors.RARE, padding=(2, 2, 2, 2))
+        super().__init__(child=self.box, bg_color=colors.RARE, height=height, width=width, padding=(2, 2, 2, 2))
