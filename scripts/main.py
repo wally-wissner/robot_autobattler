@@ -45,7 +45,7 @@ class Application(object):
         self._scene_stack: list[EScene] = []
         self.change_scene(EScene.MAIN_MENU)
 
-    def load_assets(self):
+    def load_assets(self) -> None:
         self.default_font = "Courier New"
 
         # path = absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
@@ -59,7 +59,7 @@ class Application(object):
         # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
         # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
 
-    def on_update(self, delta_time):
+    def on_update(self, delta_time) -> None:
         self.delta_time = delta_time
 
     def on_draw(self) -> None:
@@ -118,7 +118,7 @@ class Application(object):
         self._active_scene = self._scene_map[scene](self)
         self._active_scene.enable()
 
-    def return_to_previous_scene(self, *args, **kwargs):
+    def return_to_previous_scene(self, *args, **kwargs) -> None:
         try:
             self._scene_stack.pop()
             self.change_scene(self._scene_stack[-1])
