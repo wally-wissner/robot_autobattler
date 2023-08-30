@@ -56,8 +56,8 @@ class MainMenuScene(Scene):
         settings_button = ui.UITextButton(self.app.change_scene, scene=EScene.SETTINGS, text="Settings", width=width)
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
-        quit_button = ui.UITextButton(self.app.quit, text="Quit", width=width)
-        self.v_box.add(quit_button)
+        exit_game_button = ui.UITextButton(self.app.quit, text="Exit Game", width=width)
+        self.v_box.add(exit_game_button)
 
         self.ui_manager.add(
             arcade.gui.UIAnchorWidget(
