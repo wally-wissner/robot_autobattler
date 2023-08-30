@@ -41,7 +41,7 @@ class UITextBox(arcade.gui.UITexturePane):
 
 
 class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
-    def __init__(self, unit_upgrade: UnitUpgrade, height, width, x, y):
+    def __init__(self, unit_upgrade: UnitUpgrade, height: int, width: int, x: int, y: int):
         self.unit_upgrade = unit_upgrade
         self.texture_card = arcade.texture.Texture(
             name="bg_card",
