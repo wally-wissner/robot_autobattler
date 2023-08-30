@@ -160,14 +160,15 @@ class BattleScene(Scene):
                 uu = ui.UIUnitUpgrade(unit_upgrade=unit_upgrade)
         self.ui_manager.add(uu)
 
-        settings_button = arcade.gui.UITextureButton(
+        settings_button = ui.UITextureButton(
             x=self.app.rel2abs(x=.975) - self.icon_height / 2,
             y=self.menu_rect.center.y - self.icon_height / 2,
             width=self.icon_height,
             height=self.icon_height,
             texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
+            on_click=self.app.change_scene,
+            scene=EScene.SETTINGS_MENU,
         )
-        settings_button.on_click(self.app.change_scene(EScene.SETTINGS_MENU))
         self.ui_manager.add(settings_button)
 
         # anchored_settings_button = arcade.gui.UIAnchorWidget(

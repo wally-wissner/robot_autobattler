@@ -21,6 +21,17 @@ class UITextButton(arcade.gui.UIFlatButton):
         self._on_click(*self.args, **self.kwargs)
 
 
+class UITextureButton(arcade.gui.UITextureButton):
+    def __init__(self, on_click: Callable, *args, **kwargs) -> None:
+        self.args = args
+        self.kwargs = kwargs
+        super().__init__(*args, **kwargs)
+        self._on_click = on_click
+
+    def on_click(self, event: arcade.gui.UIOnClickEvent):
+        self._on_click(*self.args, **self.kwargs)
+
+
 class UITextBox(arcade.gui.UITexturePane):
     def __init__(self, height, width, texture, text, font_size):
         label = arcade.gui.UILabel(text=text, width=width, height=height, font_size=font_size)
