@@ -37,7 +37,7 @@ class Application(object):
         # Scene setup.
         self._scene_map = {
             EScene.MAIN_MENU: scenes.MainMenuScene,
-            EScene.SETTINGS_MENU: scenes.SettingsMenuScene,
+            EScene.SETTINGS: scenes.SettingsScene,
             EScene.BATTLE: scenes.BattleScene,
             EScene.UPGRADE: scenes.UpgradeScene,
         }

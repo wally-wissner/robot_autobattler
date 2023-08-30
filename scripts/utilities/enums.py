@@ -8,7 +8,7 @@ class AutoNameEnum(Enum):
 
 class EScene(AutoNameEnum):
     MAIN_MENU = auto()
-    SETTINGS_MENU = auto()
+    SETTINGS = auto()
     BATTLE = auto()
     UPGRADE = auto()
 

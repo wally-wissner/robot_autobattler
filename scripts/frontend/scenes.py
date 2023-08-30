@@ -53,7 +53,7 @@ class MainMenuScene(Scene):
         button_continue = ui.UITextButton(self.app.load_game, text="Continue", width=width)
         self.v_box.add(button_continue.with_space_around(bottom=gap))
 
-        settings_button = ui.UITextButton(self.app.change_scene, scene=EScene.SETTINGS_MENU, text="Settings", width=width)
+        settings_button = ui.UITextButton(self.app.change_scene, scene=EScene.SETTINGS, text="Settings", width=width)
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
         quit_button = ui.UITextButton(self.app.quit, text="Quit", width=width)
@@ -106,7 +106,7 @@ class MainMenuScene(Scene):
         self.ui_manager.draw()
 
 
-class SettingsMenuScene(Scene):
+class SettingsScene(Scene):
     def __init__(self, app):
         super().__init__(app)
 
@@ -176,7 +176,7 @@ class BattleScene(Scene):
             height=self.icon_height,
             texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
             on_click=self.app.change_scene,
-            scene=EScene.SETTINGS_MENU,
+            scene=EScene.SETTINGS,
         )
         self.ui_manager.add(settings_button)
 
