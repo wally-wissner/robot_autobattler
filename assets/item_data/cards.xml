@@ -3,9 +3,11 @@
         <action type="ATTACK" weapon="LASER" damage="5"/>
         <action type="PRODUCE" resource="ENERGY" quantity="1"/>
     </card>
+
     <card name="Triple Shot" rarity="UNCOMMON" bp="1" cooldown="1">
         <action type="ATTACK" weapon="RAILGUN" damage="2" repetitions="3"/>
     </card>
+
     <card name="Have Three Get Three" rarity="UNCOMMON" bp="1" cooldown="0">
         <condition>
             <comparison>
