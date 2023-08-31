@@ -1,6 +1,7 @@
 import arcade
 import arcade.gui
 from dataclasses import dataclass
+from math import ceil
 from PIL import Image, ImageDraw
 from typing import Callable
 
@@ -56,8 +57,9 @@ class UIUpgradeComponent(UITextPane):
 
 class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
     def __init__(self, unit_upgrade: UnitUpgrade, width: int, height: int, x: int, y: int):
+        padding = tuple(ceil(width / 100) for _ in range(4))
         self.unit_upgrade = unit_upgrade
         self.box = arcade.gui.UIBoxLayout(x=x, y=y, vertical=True, space_between=0)
         self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.badge, width=width, description=False))
         self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.card, width=width, description=False))
-        super().__init__(child=self.box, bg_color=colors.RARE, width=width, height=height, padding=(2, 2, 2, 2))
+        super().__init__(child=self.box, bg_color=colors.RARE, width=width, height=height, padding=padding)
