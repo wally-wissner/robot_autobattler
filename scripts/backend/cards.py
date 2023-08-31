@@ -2,10 +2,11 @@ from dataclasses import dataclass
 from xml.etree import ElementTree
 
 from scripts.utilities import enums
+from scripts.backend.unit_upgrade_component import UnitUpgradeComponent
 
 
 @dataclass
-class Card(object):
+class Card(UnitUpgradeComponent):
     name: str
     rarity: enums.ERarity
     bp: int

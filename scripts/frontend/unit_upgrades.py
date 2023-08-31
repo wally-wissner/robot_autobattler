@@ -1,5 +1,6 @@
 import arcade
 import arcade.gui
+from dataclasses import dataclass
 from PIL import Image, ImageDraw
 from typing import Callable
 
