@@ -10,7 +10,6 @@ from scripts.backend.cards import Card
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.backend.unit_upgrade_components import UnitUpgradeComponent
 from scripts.frontend import colors
-from scripts.frontend.ui import UITextPane
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.geometry import Vector2
@@ -23,7 +22,7 @@ class TextureParams:
     height: int
 
 
-class UIUpgradeComponent(UITextPane):
+class UIUpgradeComponent(arcade.gui.UITexturePane):
     textures: dict[(TextureParams, arcade.Texture)] = {}
 
     def __init__(self, unit_upgrade_component: UnitUpgradeComponent, width: int, description: bool):
@@ -32,12 +31,23 @@ class UIUpgradeComponent(UITextPane):
         self.h = width // 2
         self.description = description
         self.texture_params = TextureParams(self._get_color(), self.h, self.w)
+
+        if description:
+            body = None
+        else:
+            body = arcade.gui.UILabel(
+                text=self.unit_upgrade_component.name,
+                width=self.w,
+                height=self.h,
+                font_size=self.w/15,
+            )
+
         super().__init__(
+            tex=self._get_texture(),
+            child=body,
+            size_hint=1,
             width=self.w,
             height=self.h,
-            texture=self._get_texture(),
-            text=self.unit_upgrade_component.name,
-            font_size=self.w/10,
         )
 
     def _get_color(self) -> colors.ColorRGB:
