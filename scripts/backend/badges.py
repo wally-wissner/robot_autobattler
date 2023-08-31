@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from scripts.backend.unit_upgrade_component import UnitUpgradeComponent
+from scripts.backend.unit_upgrade_components import UnitUpgradeComponent
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
 

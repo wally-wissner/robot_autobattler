@@ -4,7 +4,10 @@ from dataclasses import dataclass
 from PIL import Image, ImageDraw
 from typing import Callable
 
+from scripts.backend.badges import Badge
+from scripts.backend.cards import Card
 from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.backend.unit_upgrade_components import UnitUpgradeComponent
 from scripts.frontend import colors
 from scripts.frontend.ui import UITextPane
 # from scripts.frontend.fonts import get_font
@@ -12,32 +15,49 @@ from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.geometry import Vector2
 
 
+@dataclass(eq=True, frozen=True)
+class TextureParams:
+    color: colors.ColorRGB
+    width: int
+    height: int
+
+
+class UIUpgradeComponent(UITextPane):
+    textures: dict[(TextureParams, arcade.Texture)] = {}
+
+    def __init__(self, unit_upgrade_component: UnitUpgradeComponent, width: int, description: bool):
+        self.unit_upgrade_component = unit_upgrade_component
+        self.w = width
+        self.h = width // 2
+        self.description = description
+        self.texture_params = TextureParams(self._get_color(), self.h, self.w)
+        super().__init__(
+            width=self.w,
+            height=self.h,
+            texture=self._get_texture(),
+            text=self.unit_upgrade_component.name,
+            font_size=10,
+        )
+
+    def _get_color(self) -> colors.ColorRGB:
+        if isinstance(self, Badge):
+            return colors.RETRO_BLUE
+        elif isinstance(self, Card):
+            return colors.RETRO_RED
+
+    def _get_texture(self) -> arcade.Texture:
+        if self.texture_params not in self.textures:
+            self.textures[self.texture_params] = arcade.Texture(
+                name=str(self.texture_params),
+                image=Image.new(mode='RGB', size=(self.w, self.h), color=self._get_color()),
+            )
+        return self.textures[self.texture_params]
+
+
 class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
-    def __init__(self, unit_upgrade: UnitUpgrade, height: int, width: int, x: int, y: int):
+    def __init__(self, unit_upgrade: UnitUpgrade, width: int, height: int, x: int, y: int):
         self.unit_upgrade = unit_upgrade
-        self.card_color = colors.RETRO_RED
-        self.badge_color = colors.RETRO_BLUE
-        self.texture_card = arcade.texture.Texture(
-            name="bg_card",
-            image=Image.new(mode='RGB', size=(width, height // 2), color=self.card_color),
-        )
-        self.texture_badge = arcade.texture.Texture(
-            name="bg_badge",
-            image=Image.new(mode='RGB', size=(width, height // 2), color=self.badge_color),
-        )
         self.box = arcade.gui.UIBoxLayout(x=x, y=y, vertical=True, space_between=0)
-        self.box.add(UITextPane(
-            width=width,
-            height=height//2,
-            texture=self.texture_card,
-            text=self.unit_upgrade.card.name,
-            font_size=10,
-        ))
-        self.box.add(UITextPane(
-            width=width,
-            height=height//2,
-            texture=self.texture_badge,
-            text=self.unit_upgrade.badge.name,
-            font_size=10,
-        ))
-        super().__init__(child=self.box, bg_color=colors.RARE, height=height, width=width, padding=(2, 2, 2, 2))
+        self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.badge, width=width, description=False))
+        self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.card, width=width, description=False))
+        super().__init__(child=self.box, bg_color=colors.RARE, width=width, height=height, padding=(2, 2, 2, 2))
