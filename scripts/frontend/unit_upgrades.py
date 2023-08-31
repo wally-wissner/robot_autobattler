@@ -40,9 +40,9 @@ class UIUpgradeComponent(UITextPane):
         )
 
     def _get_color(self) -> colors.ColorRGB:
-        if isinstance(self, Badge):
+        if isinstance(self.unit_upgrade_component, Badge):
             return colors.RETRO_BLUE
-        elif isinstance(self, Card):
+        elif isinstance(self.unit_upgrade_component, Card):
             return colors.RETRO_RED
 
     def _get_texture(self) -> arcade.Texture:
