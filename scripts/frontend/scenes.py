@@ -6,7 +6,8 @@ from PIL import Image, ImageDraw
 from config import absolute_path
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.frontend import colors
-from scripts.frontend import ui
+from scripts.frontend.ui import UITextButton, UITextureButton
+from scripts.frontend.unit_upgrades import UIUnitUpgrade
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.geometry import Rectangle, Vector2
@@ -47,16 +48,16 @@ class MainMenuScene(Scene):
         self.v_box = arcade.gui.UIBoxLayout()
 
         # Create the buttons
-        button_new_game = ui.UITextButton(self.app.new_game, text="New Game", width=width)
+        button_new_game = UITextButton(self.app.new_game, text="New Game", width=width)
         self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
-        button_continue = ui.UITextButton(self.app.load_game, text="Continue", width=width)
+        button_continue = UITextButton(self.app.load_game, text="Continue", width=width)
         self.v_box.add(button_continue.with_space_around(bottom=gap))
 
-        settings_button = ui.UITextButton(self.app.change_scene, scene=EScene.SETTINGS, text="Settings", width=width)
+        settings_button = UITextButton(self.app.change_scene, scene=EScene.SETTINGS, text="Settings", width=width)
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
-        exit_game_button = ui.UITextButton(self.app.quit, text="Exit Game", width=width)
+        exit_game_button = UITextButton(self.app.quit, text="Exit Game", width=width)
         self.v_box.add(exit_game_button)
 
         self.ui_manager.add(
@@ -123,11 +124,11 @@ class SettingsScene(Scene):
         self.h_box = arcade.gui.UIBoxLayout(vertical=False)
 
         # Create the buttons
-        back_button = ui.UITextButton(self.app.return_to_previous_scene, text="Back", width=width)
+        back_button = UITextButton(self.app.return_to_previous_scene, text="Back", width=width)
         self.h_box.add(back_button.with_space_around(right=gap))
-        main_menu_button = ui.UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Main Menu", width=width)
+        main_menu_button = UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Main Menu", width=width)
         self.h_box.add(main_menu_button.with_space_around(right=gap))
-        exit_game_button = ui.UITextButton(self.app.quit, text="Exit Game", width=width)
+        exit_game_button = UITextButton(self.app.quit, text="Exit Game", width=width)
         self.h_box.add(exit_game_button)
 
         self.v_box.add(self.h_box)
@@ -166,10 +167,10 @@ class BattleScene(Scene):
 
         for unit in self.app.game.units():
             for unit_upgrade in unit.unit_upgrades:
-                uu = ui.UIUnitUpgrade(unit_upgrade=unit_upgrade)
+                uu = UIUnitUpgrade(unit_upgrade=unit_upgrade, x=300, y=300, width=200, height=200)
         self.ui_manager.add(uu)
 
-        settings_button = ui.UITextureButton(
+        settings_button = UITextureButton(
             x=self.app.rel2abs(x=.975) - self.icon_height / 2,
             y=self.menu_rect.center.y - self.icon_height / 2,
             width=self.icon_height,
@@ -224,5 +225,5 @@ class UpgradeScene(Scene):
         pass
 
     def draw(self):
-        # todo
-        pass
+        self.ui_manager.draw()
+
