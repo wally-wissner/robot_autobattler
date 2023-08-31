@@ -37,7 +37,7 @@ class UIUpgradeComponent(UITextPane):
             height=self.h,
             texture=self._get_texture(),
             text=self.unit_upgrade_component.name,
-            font_size=10,
+            font_size=self.w/10,
         )
 
     def _get_color(self) -> colors.ColorRGB:
@@ -56,10 +56,10 @@ class UIUpgradeComponent(UITextPane):
 
 
 class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
-    def __init__(self, unit_upgrade: UnitUpgrade, width: int, height: int, x: int, y: int):
+    def __init__(self, unit_upgrade: UnitUpgrade, width: int, height: int, x: int, y: int, description: bool):
         padding = tuple(ceil(width / 100) for _ in range(4))
         self.unit_upgrade = unit_upgrade
         self.box = arcade.gui.UIBoxLayout(x=x, y=y, vertical=True, space_between=0)
-        self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.badge, width=width, description=False))
-        self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.card, width=width, description=False))
+        self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.badge, width=width, description=description))
+        self.box.add(UIUpgradeComponent(unit_upgrade_component=unit_upgrade.card, width=width, description=description))
         super().__init__(child=self.box, bg_color=colors.RARE, width=width, height=height, padding=padding)

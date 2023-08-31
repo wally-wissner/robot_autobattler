@@ -167,7 +167,7 @@ class BattleScene(Scene):
 
         for unit in self.app.game.units():
             for unit_upgrade in unit.unit_upgrades:
-                uu = UIUnitUpgrade(unit_upgrade=unit_upgrade, x=300, y=300, width=200, height=200)
+                uu = UIUnitUpgrade(unit_upgrade=unit_upgrade, x=300, y=300, width=200, height=200, description=False)
         self.ui_manager.add(uu)
 
         settings_button = UITextureButton(
