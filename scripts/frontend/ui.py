@@ -31,3 +31,8 @@ class UITextureButton(arcade.gui.UITextureButton):
     def on_click(self, event: arcade.gui.UIOnClickEvent):
         self._on_click(*self.args, **self.kwargs)
 
+
+class UITextPane(arcade.gui.UITexturePane):
+    def __init__(self, height, width, texture, text, font_size):
+        label = arcade.gui.UILabel(text=text, width=width, height=height, font_size=font_size)
+        super().__init__(tex=texture, text=text, child=label, size_hint=1, width=width, height=height)
