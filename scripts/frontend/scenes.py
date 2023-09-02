@@ -223,11 +223,16 @@ class UpgradeScene(Scene):
         self.active_unit: Unit = None
         self.active_unit_upgrade: UnitUpgrade = None
 
-    def set_active_unit(self, unit: Unit):
+        self.team_pane = None
+        self.active_upgrade_pane = None
+        self.team_upgrades_pane = None
+        self.active_unit_upgrades_pane = None
+
+    def set_active_unit(self, unit: Unit) -> None:
         # todo
         pass
 
-    def set_active_unit_upgrade(self, unit_upgrade: UnitUpgrade):
+    def set_active_upgrade(self, unit_upgrade: UnitUpgrade) -> None:
         # todo
         pass
 
