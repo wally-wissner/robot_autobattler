@@ -32,13 +32,31 @@ class UIUpgradeComponent(arcade.gui.UITexturePane):
         self.description = description
         self.texture_params = TextureParams(self._get_color(), self.h, self.w)
 
+        v_proportions = (.175, .025, .8)
         if description:
-            body = None
+            name_label = arcade.gui.UILabel(
+                text=self.unit_upgrade_component.name,
+                width=self.w,
+                height=v_proportions[0] * self.h,
+                align="left",
+                font_size=self.w/20,
+            )
+            description_label = arcade.gui.UILabel(
+                text=self.unit_upgrade_component.description(),
+                width=self.w,
+                height=v_proportions[2] * self.h,
+                align="left",
+                font_size=self.w/25,
+            )
+            body = arcade.gui.widgets.UIBoxLayout()
+            body.add(name_label.with_space_around(bottom=v_proportions[1] * self.h))
+            body.add(description_label)
         else:
             body = arcade.gui.UILabel(
                 text=self.unit_upgrade_component.name,
                 width=self.w,
                 height=self.h,
+                align="center",
                 font_size=self.w/15,
             )
 
