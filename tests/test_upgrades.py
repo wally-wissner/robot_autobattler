@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 
-from scripts.backend.factories import generate_badge, generate_card, generate_unit_upgrade
+from scripts.backend.factories import generate_badge, generate_card, generate_upgrade
 from scripts.utilities import enums
 
 

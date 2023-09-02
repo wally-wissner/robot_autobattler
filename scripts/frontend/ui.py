@@ -3,7 +3,7 @@ import arcade.gui
 from PIL import Image, ImageDraw
 from typing import Callable
 
-from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.backend.upgrades import Upgrade
 from scripts.frontend import colors
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat

@@ -5,10 +5,10 @@ from PIL import Image, ImageDraw
 
 from config import absolute_path
 from scripts.backend.unit import Unit
-from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.backend.upgrades import Upgrade
 from scripts.frontend import colors
 from scripts.frontend.ui import UITextButton, UITextureButton
-from scripts.frontend.unit_upgrades import UIUnitUpgrade
+from scripts.frontend.upgrades import UIUnitUpgrade
 # from scripts.frontend.fonts import get_font
 from scripts.utilities.enums import EFont, EScene, EStat
 from scripts.utilities.geometry import Rectangle, Vector2
@@ -167,8 +167,8 @@ class BattleScene(Scene):
         # self.camera.use()
 
         for unit in self.app.game.units():
-            for unit_upgrade in unit.unit_upgrades:
-                uu = UIUnitUpgrade(unit_upgrade=unit_upgrade, x=300, y=300, width=200, height=200, description=False)
+            for upgrade in unit.upgrades:
+                uu = UIUnitUpgrade(upgrade=upgrade, x=300, y=300, width=200, height=200, description=False)
         self.ui_manager.add(uu)
 
         settings_button = UITextureButton(
@@ -221,18 +221,18 @@ class UpgradeScene(Scene):
     def __init__(self, app):
         super().__init__(app)
         self.active_unit: Unit = None
-        self.active_unit_upgrade: UnitUpgrade = None
+        self.active_upgrade: Upgrade = None
 
         self.team_pane = None
-        self.active_upgrade_pane = None
-        self.team_upgrades_pane = None
-        self.active_unit_upgrades_pane = None
+        self.unit_pane = None
+        self.upgrade_pane = None
+        self.inventory_pane = None
 
     def set_active_unit(self, unit: Unit) -> None:
         # todo
         pass
 
-    def set_active_upgrade(self, unit_upgrade: UnitUpgrade) -> None:
+    def set_active_upgrade(self, upgrade: Upgrade) -> None:
         # todo
         pass
 

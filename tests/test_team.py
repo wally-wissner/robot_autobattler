@@ -14,6 +14,6 @@ class TestTeam(unittest.TestCase):
         for unit in self.team.units:
             self.assertGreater(unit.level, 0)
 
-    def test_unit_upgrades(self):
+    def test_upgrades(self):
         for unit in self.team.units:
-            self.assertGreater(len(unit.unit_upgrades), 0)
+            self.assertGreater(len(unit.upgrades), 0)
