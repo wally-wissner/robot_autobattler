@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from PIL import Image, ImageDraw
 
 from config import absolute_path
+from scripts.backend.unit import Unit
 from scripts.backend.unit_upgrades import UnitUpgrade
 from scripts.frontend import colors
 from scripts.frontend.ui import UITextButton, UITextureButton
@@ -219,6 +220,16 @@ class BattleScene(Scene):
 class UpgradeScene(Scene):
     def __init__(self, app):
         super().__init__(app)
+        self.active_unit: Unit = None
+        self.active_unit_upgrade: UnitUpgrade = None
+
+    def set_active_unit(self, unit: Unit):
+        # todo
+        pass
+
+    def set_active_unit_upgrade(self, unit_upgrade: UnitUpgrade):
+        # todo
+        pass
 
     def handle_events(self, events):
         # todo
