@@ -7,7 +7,7 @@ from scripts.utilities.identifiers import uuid_identifier
 
 @uuid_identifier
 @dataclass
-class UnitUpgrade(object):
+class Upgrade(object):
     badge: Badge
     card: Card
     removable: bool = True

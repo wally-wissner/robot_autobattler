@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
-from scripts.backend.unit_upgrade_components import UnitUpgradeComponent
+from scripts.backend.upgrade_components import UpgradeComponent
 from scripts.backend.unitstat import StatModifier
 from scripts.utilities import enums
 
 
 @dataclass
-class Badge(UnitUpgradeComponent):
+class Badge(UpgradeComponent):
     name: str
     rarity: enums.ERarity
     bp: int

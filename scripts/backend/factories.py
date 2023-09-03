@@ -5,7 +5,7 @@ from scripts.backend.asset_loaders import badges, cards, simple_cards
 from scripts.backend.badges import Badge
 from scripts.backend.cards import Card
 from scripts.backend.team import Team
-from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.backend.upgrades import Upgrade
 from scripts.backend.unit import Unit
 from scripts.utilities.enums import ERarity
 
@@ -66,14 +66,14 @@ def generate_card(
     return card
 
 
-def generate_unit_upgrade(
+def generate_upgrade(
         rarity_range: Iterable[ERarity] = (ERarity.COMMON, ERarity.RARE),
         bp_range: Iterable[int] = (-np.inf, np.inf)
-) -> UnitUpgrade:
+) -> Upgrade:
     badge = generate_badge(rarity_range, bp_range)
     card = generate_card(rarity_range, bp_range)
-    unit_upgrade = UnitUpgrade(badge, card)
-    return unit_upgrade
+    upgrade = Upgrade(badge, card)
+    return upgrade
 
 
 def generate_unit(team: Team, level: int, quality: float) -> Unit:
@@ -81,8 +81,8 @@ def generate_unit(team: Team, level: int, quality: float) -> Unit:
         raise ValueError(f"Expected quality to be between 0 and 1. Received {quality}.")
     unit = Unit(team=team, level=level)
     while unit.bp_available() > 0:
-        unit_upgrade = generate_unit_upgrade(bp_range=(-np.inf, unit.bp_available()))
-        unit.add_unit_upgrade(unit_upgrade)
+        upgrade = generate_upgrade(bp_range=(-np.inf, unit.bp_available()))
+        unit.add_upgrade(upgrade)
     return unit
 
 

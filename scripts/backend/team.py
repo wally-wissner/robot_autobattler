@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from scripts.backend.cards import Card
 from scripts.backend.inventory import Inventory
 from scripts.backend.unit import Unit
-from scripts.backend.unit_upgrades import UnitUpgrade
+from scripts.backend.upgrades import Upgrade
 from scripts.utilities.enums import ECollectable
 from scripts.utilities.geometry import Vector2
 
@@ -13,14 +13,14 @@ from scripts.utilities.geometry import Vector2
 @dataclass(eq=True, order=True)
 class CardIndex:
     i_unit: int
-    i_unit_upgrade: int
+    i_upgrade: int
 
 
 class Team(object):
     def __init__(self, is_player: bool):
         self.is_player: bool = is_player
         self.units: list[Unit] = []
-        self.unit_upgrades: Inventory[UnitUpgrade, int] = Inventory()
+        self.upgrades: Inventory[Upgrade, int] = Inventory()
         self.collectables: Inventory[ECollectable, int] = Inventory()
 
         self.library: deque[Card] = deque()
@@ -29,9 +29,9 @@ class Team(object):
 
     def card_order(self) -> dict[Card, CardIndex]:
         return {
-            unit_upgrade.card: CardIndex(i_unit, i_unit_upgrade)
+            upgrade.card: CardIndex(i_unit, i_upgrade)
             for i_unit, unit in enumerate(self.units)
-            for i_unit_upgrade, unit_upgrade in enumerate(unit.unit_upgrades)
+            for i_upgrade, upgrade in enumerate(unit.upgrades)
         }
 
     def card_actor(self, card: Card) -> Unit:

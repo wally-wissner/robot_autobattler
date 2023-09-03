@@ -45,6 +45,9 @@ class Game(object):
         ]
         return teams
 
+    def player_team(self) -> Team:
+        return self.teams[0]
+
     def physics_bodies(self) -> list[PhysicsBody]:
         return self.units() + self.obstacles + self.projectiles
 

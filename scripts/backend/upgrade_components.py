@@ -5,7 +5,7 @@ from scripts.utilities import enums
 
 
 @dataclass
-class UnitUpgradeComponent(ABC):
+class UpgradeComponent(ABC):
     name: str
     rarity: enums.ERarity
     bp: int
