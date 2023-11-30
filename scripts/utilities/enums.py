@@ -27,6 +27,14 @@ class ERarity(IntEnum):
     RARE = 3
 
 
+class EBadgeScope(AutoNameEnum):
+    CARD = auto()  # Badge's stats affect the card it's attached to.
+    UNIT = auto()  # Badge's stats affect all cards on the unit.
+    ALLIES = auto()  # Badge's stats affect all the units allies.
+    ENEMIES = auto()  # Badge's stats affect all the unit's enemies.
+    UNITS = auto()  # Badge's stats affect all units on all teams.
+
+
 class ECollectable(AutoNameEnum):
     SCRAP = auto()
 
