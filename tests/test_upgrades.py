@@ -1,8 +1,8 @@
 import numpy as np
 import unittest
 
-from scripts.backend.factories import generate_badge, generate_card, generate_upgrade
-from scripts.utilities import enums
+from src.scripts.backend.factories import generate_badge, generate_card, generate_upgrade
+from src.scripts.utilities import enums
 
 
 class TestUnitUpgrade(unittest.TestCase):

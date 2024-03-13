@@ -1,8 +1,8 @@
 import numpy as np
 import unittest
 
-from scripts.backend.factories import generate_team
-from scripts.utilities import enums
+from src.scripts.backend.factories import generate_team
+from src.scripts.utilities import enums
 
 
 class TestTeam(unittest.TestCase):

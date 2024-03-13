@@ -1,6 +1,6 @@
 import unittest
-from scripts.utilities.enums import EEventType
-from scripts.backend.event import Event, EventHistory
+from src.scripts.utilities.enums import EEventType
+from src.scripts.backend.event import Event, EventHistory
 
 
 class TestEventHistory(unittest.TestCase):
