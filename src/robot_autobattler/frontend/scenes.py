@@ -253,24 +253,51 @@ class BattleScene(Scene):
         self.ui_manager.draw()
 
 
+class TeamPane:
+    """UI pane that shows all the units on the player's team."""
+    pass
+
+
+class UnitPane:
+    """UI pane that shows the upgrades attached to the currently selected unit."""
+    pass
+
+
+class UpgradePane:
+    """UI pane that shows the text of the currently selected upgrade."""
+    def __init__(self, app, width: float, height: float):
+        self.width = width
+        self.height = height
+        self.upgrade = None
+
+    def set_upgrade(self, upgrade):
+        self.upgrade = upgrade
+        # UIUnitUpgrade(upgrade)
+
+
+class InventoryPane:
+    """UI pane that shows all the upgrades the player has the ability to equip."""
+    pass
+
+
 class UpgradeScene(Scene):
     def __init__(self):
         super().__init__()
         self.active_unit: Unit = None
         self.active_upgrade: Upgrade = None
 
-        self.team_pane = None
-        self.unit_pane = None
-        self.upgrade_pane = None
-        self.inventory_pane = None
+        self.team_pane = TeamPane()
+        self.unit_pane = UnitPane()
+        self.upgrade_pane = UpgradePane(app, 200, 200)
+        self.inventory_pane = InventoryPane()
 
     def set_active_unit(self, unit: Unit) -> None:
-        # todo
-        pass
+        self.active_unit = unit
+        # self.unit_pane.
 
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
-        # todo
-        pass
+        self.active_upgrade = upgrade
+        self.upgrade_pane.set_upgrade(upgrade)
 
     def handle_events(self, events):
         # todo
