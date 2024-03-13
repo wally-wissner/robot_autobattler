@@ -1,5 +1,5 @@
 import unittest
-from src.scripts.backend.inventory import Inventory
+from src.backend.inventory import Inventory
 
 
 class TestInventory(unittest.TestCase):
