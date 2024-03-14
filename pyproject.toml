@@ -1,0 +1,21 @@
+[project]
+name = "Robot Autobattler"
+version = "0.0.1"
+authors = [
+    {name = "Wally Wissner", email = "wally.wissner@gmail.com"}
+]
+maintainers = [
+    {name = "Wally Wissner", email = "wally.wissner@gmail.com"}
+]
+requires-python = ">= 3.11"
+dependencies = [
+    "arcade >= 2.6.17",
+    "dill >= 0.3.6",
+    "numpy >= 1.18.2",
+    "pandas >= 1.5.0",
+    "Pillow >= 10.0.0",
+    "pyglet >= 2.0.5",
+    "scipy >= 1.5.4",
+    "shapely >= 1.8.0",
+]
+readme = {file = "README.md", content-type = "text/markdown"}
