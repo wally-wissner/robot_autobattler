@@ -1,8 +1,8 @@
 from enum import Enum
 
 from src.frontend import colors
-from src.src.backend.battleboard import BattleBoard
-from src.src.backend.battleboard import Tile
+from src.backend.battleboard import BattleBoard
+from src.backend.battleboard import Tile
 
 
 class ETerrain(Enum):

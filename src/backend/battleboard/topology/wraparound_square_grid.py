@@ -1,4 +1,4 @@
-from src.src.backend.battleboard import Tiling, Tile
+from src.backend.battleboard import Tiling, Tile
 
 
 class Square(Tile):

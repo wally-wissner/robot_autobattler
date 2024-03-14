@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import RegularPolygon
 import numpy as np
 
-from src.src.backend.battleboard import Tiling
+from src.backend.battleboard import Tiling
 
 
 class ProceduralGenerator(dict):
@@ -45,7 +45,7 @@ class ProceduralGenerator(dict):
 
 
 if __name__ == "__main__":
-    from src.src.backend.battleboard import TwistedTorusHexTiling
+    from src.backend.battleboard import TwistedTorusHexTiling
     m = ProceduralGenerator(
         tiling=TwistedTorusHexTiling(board_radius=20, tile_size=1),
         polygon_vertices=6,

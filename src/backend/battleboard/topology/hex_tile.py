@@ -1,7 +1,7 @@
 import numpy as np
 from pygame.math import Vector2
 
-from src.src.backend.battleboard import Tile
+from src.backend.battleboard import Tile
 
 
 class Hex(Tile):

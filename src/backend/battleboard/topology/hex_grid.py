@@ -1,8 +1,8 @@
 import numpy as np
 from pygame.math import Vector2
 
-from src.src.backend.battleboard import Tiling
-from src.src.backend.battleboard import Hex
+from src.backend.battleboard import Tiling
+from src.backend.battleboard import Hex
 
 
 class FlatHexTiling(Tiling):

@@ -1,6 +1,6 @@
 from src.backend.unit import Unit
 from src.backend.unitstat import EStat
-from src.src.backend.battleboard import Tile
+from src.backend.battleboard import Tile
 
 
 class Command(object):

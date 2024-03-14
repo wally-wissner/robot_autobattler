@@ -1,8 +1,8 @@
 from typing import Iterable
 
-from src.src.backend.battleboard import ProceduralGenerator
-from src.src.backend.battleboard import BattleTile
-from src.src.backend.battleboard import Tile, Tiling
+from src.backend.battleboard import ProceduralGenerator
+from src.backend.battleboard import BattleTile
+from src.backend.battleboard import Tile, Tiling
 from src.backend.unit import Unit
 
 
