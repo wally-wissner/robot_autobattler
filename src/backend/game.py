@@ -40,8 +40,8 @@ class Game(object):
 
     def generate_teams(self) -> list[Team]:
         teams: list[Team] = [
-            generate_team(is_player=True, total_level=30, n_units=10, quality=.75),
-            generate_team(is_player=False, total_level=10, n_units=5, quality=.75)
+            generate_team(is_player=True, total_level=30, n_units=10, quality=0.75),
+            generate_team(is_player=False, total_level=10, n_units=5, quality=0.75),
         ]
         return teams
 
@@ -79,9 +79,13 @@ class Game(object):
         for team in self.teams:
             for unit in team.units:
                 # team_center = Vector2(.25, .5) if team.is_player else Vector2(.75, .5)
-                team_center = Vector2(400, 450) if team.is_player else Vector2(1200, 450)
+                team_center = (
+                    Vector2(400, 450) if team.is_player else Vector2(1200, 450)
+                )
                 unit_relative_position = np.random.randn(2)
-                unit.position = Vector2(deviation * unit_relative_position + team_center)
+                unit.position = Vector2(
+                    deviation * unit_relative_position + team_center
+                )
 
     def evaluate_active_cards(self) -> None:
         for team in self.teams:
@@ -134,7 +138,10 @@ class Game(object):
         for stat_modifier in stat_modifiers[enums.EOperation.TIMES]:
             value *= stat_modifier.value
         if stat_modifiers[enums.EOperation.ASSIGN]:
-            value = max(stat_modifier.value for stat_modifier in stat_modifiers[enums.EOperation.ASSIGN])
+            value = max(
+                stat_modifier.value
+                for stat_modifier in stat_modifiers[enums.EOperation.ASSIGN]
+            )
         # Bound value between min value and max value.
         return clamp(value, unit.stats[stat].min_value, unit.stats[stat].max_value)
 

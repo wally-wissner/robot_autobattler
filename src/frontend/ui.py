@@ -5,6 +5,7 @@ from typing import Callable
 
 from src.backend.upgrades import Upgrade
 from src.frontend import colors
+
 # from src.frontend.fonts import get_font
 from src.utilities.enums import EFont, EScene, EStat
 from src.utilities.geometry import Vector2
@@ -33,6 +34,17 @@ class UITextureButton(arcade.gui.UITextureButton):
 
 
 class UITextPane(arcade.gui.UITexturePane):
-    def __init__(self, height: int, width: int, texture: arcade.Texture, text: str, font_size: float):
-        label = arcade.gui.UILabel(text=text, width=width, height=height, font_size=font_size)
-        super().__init__(tex=texture, text=text, child=label, size_hint=1, width=width, height=height)
+    def __init__(
+        self,
+        height: int,
+        width: int,
+        texture: arcade.Texture,
+        text: str,
+        font_size: float,
+    ):
+        label = arcade.gui.UILabel(
+            text=text, width=width, height=height, font_size=font_size
+        )
+        super().__init__(
+            tex=texture, text=text, child=label, size_hint=1, width=width, height=height
+        )

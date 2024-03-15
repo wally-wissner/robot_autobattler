@@ -71,7 +71,9 @@ class CardAbility(object):
         effect_texts = [effect.get_text() for effect in self.success_effects]
         # TODO
         if self.conditions:
-            return " and ".join(condition_texts) + ":" + "\n\t" + "\n\t".join(effect_texts)
+            return (
+                " and ".join(condition_texts) + ":" + "\n\t" + "\n\t".join(effect_texts)
+            )
         else:
             return "\n".join(effect_texts)
 

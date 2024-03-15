@@ -13,22 +13,39 @@ class Stat(object):
 
 
 class ConsumableStat(Stat):
-    def __init__(self, refill_on_turn_start=False, refill_on_encounter_start=False, base_value=0, min_value=0, max_value=np.inf):
+    def __init__(
+        self,
+        refill_on_turn_start=False,
+        refill_on_encounter_start=False,
+        base_value=0,
+        min_value=0,
+        max_value=np.inf,
+    ):
         self.refill_on_turn_start = refill_on_turn_start
         self.refill_on_level_start = refill_on_encounter_start
 
         self.current_value = None
 
-        super().__init__(base_value=base_value, min_value=min_value, max_value=max_value)
+        super().__init__(
+            base_value=base_value, min_value=min_value, max_value=max_value
+        )
 
     def __add__(self, other: int) -> bool:
-        needed_squeeze = self.current_value + other == clamp(self.current_value - other, self.min_value, self.max_value)
-        self.current_value = clamp(self.current_value + other, self.min_value, self.max_value)
+        needed_squeeze = self.current_value + other == clamp(
+            self.current_value - other, self.min_value, self.max_value
+        )
+        self.current_value = clamp(
+            self.current_value + other, self.min_value, self.max_value
+        )
         return not needed_squeeze
 
     def __sub__(self, other: int) -> bool:
-        needed_squeeze = self.current_value - other == clamp(self.current_value - other, self.min_value, self.max_value)
-        self.current_value = clamp(self.current_value - other, self.min_value, self.max_value)
+        needed_squeeze = self.current_value - other == clamp(
+            self.current_value - other, self.min_value, self.max_value
+        )
+        self.current_value = clamp(
+            self.current_value - other, self.min_value, self.max_value
+        )
         return not needed_squeeze
 
     def on_turn_start(self):

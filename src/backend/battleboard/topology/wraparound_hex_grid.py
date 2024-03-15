@@ -6,20 +6,27 @@ from src.backend.battleboard import Hex
 
 
 class TwistedTorusHexTiling(Tiling):
-    def __init__(self, board_radius: int, tile_size: float | int, flat_top: bool = True):
+    def __init__(
+        self, board_radius: int, tile_size: float | int, flat_top: bool = True
+    ):
         super().__init__(tile_size=tile_size)
 
         self.board_radius = board_radius
         self.flat_top = flat_top
 
         self.tiles = Hex.zero().disk(radius=self.board_radius)
-        self._mirror_centers = Hex((2 * self.board_radius + 1, -self.board_radius, -self.board_radius - 1)).rotations()
+        self._mirror_centers = Hex(
+            (2 * self.board_radius + 1, -self.board_radius, -self.board_radius - 1)
+        ).rotations()
 
     def _mirrors(self, tile: Hex) -> set[Hex]:
         return {tile + center for center in self._mirror_centers}
 
     def neighbors(self, tile: Hex) -> set[Hex]:
-        return {self.modulo(tile + direction) for direction in Hex.directions(include_zero=False)}
+        return {
+            self.modulo(tile + direction)
+            for direction in Hex.directions(include_zero=False)
+        }
 
     def distance(self, start: Hex, end: Hex):
         distance = min(
@@ -30,7 +37,9 @@ class TwistedTorusHexTiling(Tiling):
         return distance
 
     def nearest_center(self, tile: Hex) -> Hex:
-        return min([center for center in self._mirror_centers], key=lambda x: x.distance(tile))
+        return min(
+            [center for center in self._mirror_centers], key=lambda x: x.distance(tile)
+        )
 
     def modulo(self, tile: Hex) -> Hex:
         return tile - self.nearest_center(tile)
@@ -102,22 +111,22 @@ class TwistedTorusHexTiling(Tiling):
 
     def from_cartesian(self, point: Vector2) -> Hex:
         if self.flat_top:
-            transformation = np.array([[2/3, 0], [-1/3, np.sqrt(3)/3]])
+            transformation = np.array([[2 / 3, 0], [-1 / 3, np.sqrt(3) / 3]])
         else:
-            transformation = np.array([[np.sqrt(3)/3, -1/3], [0, 2/3]])
+            transformation = np.array([[np.sqrt(3) / 3, -1 / 3], [0, 2 / 3]])
 
         point = np.array(point).reshape(-1)
         q, r = transformation @ point / self.tile_size
 
-        hex = Hex((q, r, -q-r))
+        hex = Hex((q, r, -q - r))
 
         return hex
 
     def to_cartesian(self, tile: Hex) -> Vector2:
         if self.flat_top:
-            transformation = np.array([[3/2, 0], [np.sqrt(3)/2, np.sqrt(3)]])
+            transformation = np.array([[3 / 2, 0], [np.sqrt(3) / 2, np.sqrt(3)]])
         else:
-            transformation = np.array([[np.sqrt(3), np.sqrt(3)/2], [0, 3/2]])
+            transformation = np.array([[np.sqrt(3), np.sqrt(3) / 2], [0, 3 / 2]])
 
         qr = np.array([[tile.q], [tile.r]])
         point = Vector2((transformation @ qr * self.tile_size).reshape(-1).tolist())
@@ -128,7 +137,7 @@ class TwistedTorusHexTiling(Tiling):
 if __name__ == "__main__":
     print(Hex((-2, 1, 1)))
     print(Hex((-2, 1, 1)) == Hex((-2, 1, 1)))
-    print(Hex((-2., 1., 1.)) == Hex((-2., 1., 1.)))
+    print(Hex((-2.0, 1.0, 1.0)) == Hex((-2.0, 1.0, 1.0)))
     b = TwistedTorusHexTiling(board_radius=6, tile_size=1)
     print(b)
     print([i for i in b])

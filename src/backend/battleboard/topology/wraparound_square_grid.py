@@ -24,7 +24,9 @@ class SquareTopology(Tiling):
         self.width = width
         self.height = height
         self.square_size = square_size
-        self.spaces = {Square((i, j)) for i in range(self.width) for j in range(self.height)}
+        self.spaces = {
+            Square((i, j)) for i in range(self.width) for j in range(self.height)
+        }
 
     def __iter__(self):
         return (i for i in self.spaces)
@@ -50,7 +52,9 @@ class SquareTopology(Tiling):
         ]
 
     def neighbors(self, space, diagonal=False):
-        return [self.modulo(space + direction) for direction in self.cardinal_directions]
+        return [
+            self.modulo(space + direction) for direction in self.cardinal_directions
+        ]
 
     def distance(self, start, end, metric):
         distance = min(
@@ -77,7 +81,6 @@ class SquareTopology(Tiling):
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.width}, {self.height})"
-
 
 
 if __name__ == "__main__":

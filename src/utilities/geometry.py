@@ -69,7 +69,9 @@ class Rectangle:
         self.width = self.x_max - self.x_min
         self.height = self.y_max - self.y_min
 
-        self.center = Vector2((self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2)
+        self.center = Vector2(
+            (self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2
+        )
 
     # def pad(self, aspect_ratio: float = None, fraction: float = 0) -> Self:
     #     if aspect_ratio:

@@ -33,11 +33,11 @@ class SettingsManager:
             return self.dict[item]["current"]
 
     def load(self):
-        with open(filename_settings, 'r') as f:
+        with open(filename_settings, "r") as f:
             self.dict = json.load(f)
 
     def save(self):
-        with open(filename_settings, 'w') as f:
+        with open(filename_settings, "w") as f:
             json.dump(self.dict, f)
 
     def restore_defaults(self):

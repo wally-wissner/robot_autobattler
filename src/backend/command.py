@@ -74,7 +74,7 @@ class CommandAttack(CommandBattle):
 
 
 class CommandMove(CommandBattle):
-    def __init__(self, team, unit, target:Tile):
+    def __init__(self, team, unit, target: Tile):
         super().__init__(team=team, unit=unit)
         self.unit = unit
         self.target = target

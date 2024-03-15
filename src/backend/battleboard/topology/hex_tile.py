@@ -7,7 +7,9 @@ from src.backend.battleboard import Tile
 class Hex(Tile):
     def __init__(self, coordinates):
         self.q, self.r, self.s = coordinates
-        assert self.q + self.r + self.s == 0, "Invalid hex coordinates. q + r + s must equal zero."
+        assert (
+            self.q + self.r + self.s == 0
+        ), "Invalid hex coordinates. q + r + s must equal zero."
         super().__init__(coordinates)
 
     def as_array(self):
@@ -32,17 +34,28 @@ class Hex(Tile):
         return (other - self) / self.distance(other)
 
     def cardinal_direction(self):
-        distances = {direction: self.distance(direction) for direction in self.directions(include_zero=False)}
+        distances = {
+            direction: self.distance(direction)
+            for direction in self.directions(include_zero=False)
+        }
         print(distances)
         min_distance = min(distances.values())
-        return tuple(sorted([distance for distance in distances if distances[distance] == min_distance]))
+        return tuple(
+            sorted(
+                [
+                    distance
+                    for distance in distances
+                    if distances[distance] == min_distance
+                ]
+            )
+        )
 
     def magnitude(self):
         return self.distance(self.zero())
 
     def disk(self, radius):
         return {
-            self + Hex((q, r, -q-r))
+            self + Hex((q, r, -q - r))
             for q in range(-radius, radius + 1)
             for r in range(max(-radius, -q - radius), min(radius, -q + radius) + 1)
         }
@@ -93,9 +106,9 @@ class Hex(Tile):
 
     def to_cartesian(self, tile_size, flat_top) -> Vector2:
         if flat_top:
-            transformation = np.array([[3/2, 0], [np.sqrt(3)/2, np.sqrt(3)]])
+            transformation = np.array([[3 / 2, 0], [np.sqrt(3) / 2, np.sqrt(3)]])
         else:
-            transformation = np.array([[np.sqrt(3), np.sqrt(3)/2], [0, 3/2]])
+            transformation = np.array([[np.sqrt(3), np.sqrt(3) / 2], [0, 3 / 2]])
         qr = np.array([[self.q], [self.r]])
         point = Vector2((transformation @ qr * tile_size).reshape(-1).tolist())
         return point

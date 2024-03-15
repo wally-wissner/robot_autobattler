@@ -6,7 +6,9 @@ from src.backend.battleboard import Tiling
 
 
 class ProceduralGenerator(dict):
-    def __init__(self, tiling: Tiling, polygon_vertices, polygon_orientation, *args, **kwargs):
+    def __init__(
+        self, tiling: Tiling, polygon_vertices, polygon_orientation, *args, **kwargs
+    ):
         self.tiling = tiling
         self.polygon_vertices = polygon_vertices
         self.polygon_orientation = polygon_orientation
@@ -23,33 +25,40 @@ class ProceduralGenerator(dict):
     def plot(self):
         # https://stackoverflow.com/questions/26935701/ploting-filled-polygons-in-python
         fig = plt.figure(dpi=150)
-        ax = fig.add_subplot(111, aspect='equal')
+        ax = fig.add_subplot(111, aspect="equal")
         patches = []
         for tile in self.tiling:
-            color = .75 * self[tile]
+            color = 0.75 * self[tile]
             polygon = RegularPolygon(
                 xy=self.tiling.to_cartesian(tile),
                 numVertices=self.polygon_vertices,
                 radius=self.tiling.tile_size,
                 orientation=self.polygon_orientation,
-                fc=(color, color, color, .5),
+                fc=(color, color, color, 0.5),
                 ec=(0, 0, 0, 1),
                 lw=1,
             )
             ax.add_artist(polygon)
             patches.append(polygon)
         # ax.add_collection(PatchCollection(patches))
-        plt.xlim(1.1 * min(patch.xy[0] for patch in patches), 1.1 * max(patch.xy[0] for patch in patches))
-        plt.ylim(1.1 * min(patch.xy[1] for patch in patches), 1.1 * max(patch.xy[1] for patch in patches))
+        plt.xlim(
+            1.1 * min(patch.xy[0] for patch in patches),
+            1.1 * max(patch.xy[0] for patch in patches),
+        )
+        plt.ylim(
+            1.1 * min(patch.xy[1] for patch in patches),
+            1.1 * max(patch.xy[1] for patch in patches),
+        )
         plt.show()
 
 
 if __name__ == "__main__":
     from src.backend.battleboard import TwistedTorusHexTiling
+
     m = ProceduralGenerator(
         tiling=TwistedTorusHexTiling(board_radius=20, tile_size=1),
         polygon_vertices=6,
-        polygon_orientation=2*np.pi/12,
+        polygon_orientation=2 * np.pi / 12,
     )
     m.generate(0)
     m.plot()

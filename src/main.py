@@ -30,7 +30,9 @@ class Application(object):
         self.settings = SettingsManager(application=self)
         self.settings.load()
 
-        self.window = arcade.Window(*self.settings.resolution, title=self.title, resizable=True)
+        self.window = arcade.Window(
+            *self.settings.resolution, title=self.title, resizable=True
+        )
         self.window.on_draw = self.on_draw
         self.window.on_update = self.on_update
 
@@ -70,12 +72,18 @@ class Application(object):
     def run(self) -> None:
         arcade.run()
 
-    def _transform(self, f, vec: Vector2 = None, x: float = None, y: float = None) -> Vector2 | float:
+    def _transform(
+        self, f, vec: Vector2 = None, x: float = None, y: float = None
+    ) -> Vector2 | float:
         if x and y:
             vec = Vector2(x, y, relative=True)
         if vec:
             vec = Vector2(*vec, relative=True)
-            return Vector2(f(vec.x, self.window.width), f(vec.y, self.window.height), relative=False)
+            return Vector2(
+                f(vec.x, self.window.width),
+                f(vec.y, self.window.height),
+                relative=False,
+            )
         elif x:
             return x * self.window.width
         elif y:
@@ -83,10 +91,14 @@ class Application(object):
         else:
             raise ValueError("Must supply relative or x or y.")
 
-    def rel2abs(self, relative: Vector2 = None, x: float = None, y: float = None) -> Vector2 | float:
+    def rel2abs(
+        self, relative: Vector2 = None, x: float = None, y: float = None
+    ) -> Vector2 | float:
         return self._transform(lambda a, b: a * b, relative, x, y)
 
-    def abs2rel(self, pixel: Vector2 = None, x: float = None, y: float = None) -> Vector2 | float:
+    def abs2rel(
+        self, pixel: Vector2 = None, x: float = None, y: float = None
+    ) -> Vector2 | float:
         return self._transform(lambda a, b: a / b, pixel, x, y)
 
     # def relative_to_rect(self, top_left: Vector2, bottom_right: Vector2) -> pygame.Rect:

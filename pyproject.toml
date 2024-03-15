@@ -10,6 +10,7 @@ maintainers = [
 requires-python = ">= 3.11"
 dependencies = [
     "arcade >= 2.6.17",
+    "black >= 24.2.0",
     "dill >= 0.3.6",
     "numpy >= 1.18.2",
     "pandas >= 1.5.0",

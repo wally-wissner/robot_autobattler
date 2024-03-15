@@ -2,7 +2,13 @@ import json
 from xml.etree.ElementTree import fromstring
 
 from src.backend.badges import Badge
-from src.backend.cards import AdvancedCard, SimpleCard, CardAbility, CardAbilityCondition, CardAbilityEffect
+from src.backend.cards import (
+    AdvancedCard,
+    SimpleCard,
+    CardAbility,
+    CardAbilityCondition,
+    CardAbilityEffect,
+)
 from src.backend.unitstat import StatModifier
 from src.utilities import enums
 from config import absolute_path, _ROOT_DIRECTORY
@@ -70,21 +76,35 @@ def _load_simple_cards() -> list[SimpleCard]:
             for json_ability in json_card["abilities"]:
                 conditions = [
                     CardAbilityCondition(
-                        variable=_convert(condition["variable"], [enums.EResource, enums.EVariable]),
-                        comparison=_convert(condition["comparison"], [enums.EComparison]),
-                        threshold=_convert(condition["threshold"], [enums.EVariable, float]),
+                        variable=_convert(
+                            condition["variable"], [enums.EResource, enums.EVariable]
+                        ),
+                        comparison=_convert(
+                            condition["comparison"], [enums.EComparison]
+                        ),
+                        threshold=_convert(
+                            condition["threshold"], [enums.EVariable, float]
+                        ),
                         consume_resource=_convert(condition["consume_resource"], bool),
                     )
                     for condition in json_ability["conditions"]
                 ]
                 success_effects = [
                     CardAbilityEffect(
-                        actor_category=_convert(effect["actor_category"], enums.EUnitCategory),
-                        actor_quantity=_convert(effect["actor_quantity"], [enums.EUnitQuantity, int]),
+                        actor_category=_convert(
+                            effect["actor_category"], enums.EUnitCategory
+                        ),
+                        actor_quantity=_convert(
+                            effect["actor_quantity"], [enums.EUnitQuantity, int]
+                        ),
                         action=_convert(effect["action"], enums.EUnitAction),
                         value=_convert(effect["value"], list),
-                        target_category=_convert(effect["actor_category"], enums.EUnitCategory),
-                        target_quantity=_convert(effect["target_quantity"], [enums.EUnitQuantity, int]),
+                        target_category=_convert(
+                            effect["actor_category"], enums.EUnitCategory
+                        ),
+                        target_quantity=_convert(
+                            effect["target_quantity"], [enums.EUnitQuantity, int]
+                        ),
                         dispersion=_convert(effect["dispersion"], float),
                         weapon=_convert(effect["weapon"], enums.EWeapon),
                         repetitions=_convert(effect["repetitions"], int),
@@ -93,12 +113,20 @@ def _load_simple_cards() -> list[SimpleCard]:
                 ]
                 failure_effects = [
                     CardAbilityEffect(
-                        actor_category=_convert(effect["actor_category"], enums.EUnitCategory),
-                        actor_quantity=_convert(effect["actor_quantity"], [enums.EUnitQuantity, int]),
+                        actor_category=_convert(
+                            effect["actor_category"], enums.EUnitCategory
+                        ),
+                        actor_quantity=_convert(
+                            effect["actor_quantity"], [enums.EUnitQuantity, int]
+                        ),
                         action=_convert(effect["action"], enums.EUnitAction),
                         value=_convert(effect["value"], list),
-                        target_category=_convert(effect["actor_category"], enums.EUnitCategory),
-                        target_quantity=_convert(effect["target_quantity"], [enums.EUnitQuantity, int]),
+                        target_category=_convert(
+                            effect["actor_category"], enums.EUnitCategory
+                        ),
+                        target_quantity=_convert(
+                            effect["target_quantity"], [enums.EUnitQuantity, int]
+                        ),
                         dispersion=_convert(effect["dispersion"], float),
                         weapon=_convert(effect["weapon"], enums.EWeapon),
                         repetitions=_convert(effect["repetitions"], int),

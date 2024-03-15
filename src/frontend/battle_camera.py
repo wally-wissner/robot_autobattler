@@ -13,6 +13,7 @@ class BattleCamera(object):
         self.zoom = zoom
 
     def draw(self):
-
+        raise NotImplemented()
 
     def update_bounds(self, padding: float) -> None:
+        raise NotImplemented()

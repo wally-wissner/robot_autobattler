@@ -17,7 +17,7 @@ debug_colors = {
 
 
 class BattleTile(object):
-    def __init__(self, position:Tile, terrain:ETerrain):
+    def __init__(self, position: Tile, terrain: ETerrain):
         self.position = position
         self.terrain = terrain
         self.units = []

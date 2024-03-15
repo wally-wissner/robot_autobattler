@@ -13,7 +13,9 @@ class FlatHexTiling(Tiling):
         self.flat_top = flat_top
 
         self.tiles = Hex.zero().disk(radius=self.board_radius)
-        self._mirror_centers = Hex((2 * self.board_radius + 1, -self.board_radius, -self.board_radius - 1)).rotations()
+        self._mirror_centers = Hex(
+            (2 * self.board_radius + 1, -self.board_radius, -self.board_radius - 1)
+        ).rotations()
 
     def neighbors(self, tile: Hex) -> set[Hex]:
         return {tile + direction for direction in Hex.directions(include_zero=False)}
@@ -26,7 +28,6 @@ class FlatHexTiling(Tiling):
 
     def lerp(self, start, end, t) -> Hex:
         return start * (1 - t) + end * t
-
 
     # def line(self, start, end, modulo=True):
     #     start_center = self.nearest_center(start)
@@ -68,14 +69,14 @@ class FlatHexTiling(Tiling):
 
     def from_cartesian(self, point: Vector2) -> Hex:
         if self.flat_top:
-            transformation = np.array([[2/3, 0], [-1/3, np.sqrt(3)/3]])
+            transformation = np.array([[2 / 3, 0], [-1 / 3, np.sqrt(3) / 3]])
         else:
-            transformation = np.array([[np.sqrt(3)/3, -1/3], [0, 2/3]])
+            transformation = np.array([[np.sqrt(3) / 3, -1 / 3], [0, 2 / 3]])
 
         point = np.array(point).reshape(-1)
         q, r = transformation @ point / self.tile_size
 
-        return Hex((q, r, -q-r))
+        return Hex((q, r, -q - r))
 
     def to_cartesian(self, tile) -> Vector2:
         return tile.to_cartesian(self.tile_size, self.flat_top)
@@ -84,7 +85,7 @@ class FlatHexTiling(Tiling):
 if __name__ == "__main__":
     print(Hex((-2, 1, 1)))
     print(Hex((-2, 1, 1)) == Hex((-2, 1, 1)))
-    print(Hex((-2., 1., 1.)) == Hex((-2., 1., 1.)))
+    print(Hex((-2.0, 1.0, 1.0)) == Hex((-2.0, 1.0, 1.0)))
     b = FlatHexTiling(board_radius=6, tile_size=1)
     print(b)
     print([i for i in b])

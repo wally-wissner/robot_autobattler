@@ -8,6 +8,7 @@ from src.backend.upgrades import Upgrade
 from src.frontend import colors
 from src.frontend.ui import UITextButton, UITextureButton
 from src.frontend.upgrades import UIUnitUpgrade
+
 # from src.frontend.fonts import get_font
 from src.utilities.enums import EScene, EStat
 from src.utilities.geometry import Rectangle, Vector2
@@ -54,7 +55,9 @@ class MainMenuScene(Scene):
         button_continue = UITextButton(self.app.load_game, text="Continue", width=width)
         self.v_box.add(button_continue.with_space_around(bottom=gap))
 
-        settings_button = UITextButton(self.app.change_scene, scene=EScene.SETTINGS, text="Settings", width=width)
+        settings_button = UITextButton(
+            self.app.change_scene, scene=EScene.SETTINGS, text="Settings", width=width
+        )
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
         exit_game_button = UITextButton(self.app.quit, text="Exit Game", width=width)
@@ -83,8 +86,8 @@ class MainMenuScene(Scene):
         # Title
         arcade.draw_text(
             text=self.app.title,
-            start_x=self.app.rel2abs(x=.5),
-            start_y=self.app.rel2abs(y=.8),
+            start_x=self.app.rel2abs(x=0.5),
+            start_y=self.app.rel2abs(y=0.8),
             color=colors.NEON_GREEN,
             font_name=self.app.default_font,
             font_size=48,
@@ -95,8 +98,8 @@ class MainMenuScene(Scene):
         # Version
         arcade.draw_text(
             text=f"Version {self.app.version}",
-            start_x=self.app.rel2abs(x=.95),
-            start_y=self.app.rel2abs(y=.05),
+            start_x=self.app.rel2abs(x=0.95),
+            start_y=self.app.rel2abs(y=0.05),
             color=colors.NEON_GREEN,
             font_name=self.app.default_font,
             font_size=20,
@@ -124,9 +127,13 @@ class SettingsScene(Scene):
         self.h_box = arcade.gui.UIBoxLayout(vertical=False)
 
         # Create the buttons
-        back_button = UITextButton(self.app.return_to_previous_scene, text="Back", width=width)
+        back_button = UITextButton(
+            self.app.return_to_previous_scene, text="Back", width=width
+        )
         self.h_box.add(back_button.with_space_around(right=gap))
-        main_menu_button = UITextButton(self.app.change_scene, scene=EScene.MAIN_MENU, text="Main Menu", width=width)
+        main_menu_button = UITextButton(
+            self.app.change_scene, scene=EScene.MAIN_MENU, text="Main Menu", width=width
+        )
         self.h_box.add(main_menu_button.with_space_around(right=gap))
         exit_game_button = UITextButton(self.app.quit, text="Exit Game", width=width)
         self.h_box.add(exit_game_button)
@@ -153,12 +160,14 @@ class BattleScene(Scene):
     def __init__(self, app):
         super().__init__(app)
 
-        self.menu_rect = Rectangle([
-            self.app.rel2abs(Vector2(0, .925)),
-            self.app.rel2abs(Vector2(1, 1)),
-        ])
+        self.menu_rect = Rectangle(
+            [
+                self.app.rel2abs(Vector2(0, 0.925)),
+                self.app.rel2abs(Vector2(1, 1)),
+            ]
+        )
 
-        self.icon_height = .8 * self.menu_rect.height
+        self.icon_height = 0.8 * self.menu_rect.height
 
         # self.camera = arcade.Camera(window=self.application.window)
         # self.camera.move(Vec2())
@@ -167,15 +176,24 @@ class BattleScene(Scene):
 
         for unit in self.app.game.units():
             for upgrade in unit.upgrades:
-                uu = UIUnitUpgrade(upgrade=upgrade, x=300, y=300, width=200, height=200, description=False)
+                uu = UIUnitUpgrade(
+                    upgrade=upgrade,
+                    x=300,
+                    y=300,
+                    width=200,
+                    height=200,
+                    description=False,
+                )
         self.ui_manager.add(uu)
 
         settings_button = UITextureButton(
-            x=self.app.rel2abs(x=.975) - self.icon_height / 2,
+            x=self.app.rel2abs(x=0.975) - self.icon_height / 2,
             y=self.menu_rect.center.y - self.icon_height / 2,
             width=self.icon_height,
             height=self.icon_height,
-            texture=arcade.load_texture(absolute_path("assets/images/ui/settings-icon.png")),
+            texture=arcade.load_texture(
+                absolute_path("assets/images/ui/settings-icon.png")
+            ),
             on_click=self.app.change_scene,
             scene=EScene.SETTINGS,
         )
@@ -241,4 +259,3 @@ class UpgradeScene(Scene):
 
     def draw(self):
         self.ui_manager.draw()
-

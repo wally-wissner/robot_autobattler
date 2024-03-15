@@ -6,14 +6,14 @@ from src.utilities.geometry import Vector2
 
 class PhysicsBody(object):
     def __init__(
-            self,
-            shape: Polygon,
-            mass: float = 0,
-            position: Vector2 = Vector2(),
-            velocity: Vector2 = Vector2(),
-            acceleration: Vector2 = Vector2(),
-            friction: float = 0,
-            team=None,
+        self,
+        shape: Polygon,
+        mass: float = 0,
+        position: Vector2 = Vector2(),
+        velocity: Vector2 = Vector2(),
+        acceleration: Vector2 = Vector2(),
+        friction: float = 0,
+        team=None,
     ):
         self.shape = shape
         self.mass = mass
@@ -26,7 +26,9 @@ class PhysicsBody(object):
         self.objects_touched: list[PhysicsBody] = []
 
     def update(self, dt):
-        self.velocity = (self.acceleration - self.friction * self.velocity) * dt + self.velocity
+        self.velocity = (
+            self.acceleration - self.friction * self.velocity
+        ) * dt + self.velocity
         self.position = self.velocity * dt + self.position
 
         if not self.is_moving():
@@ -35,7 +37,9 @@ class PhysicsBody(object):
 
     def is_moving(self):
         velocity_near_zero = math.isclose(self.velocity.magnitude(), 0, abs_tol=1e-8)
-        acceleration_near_zero = math.isclose(self.acceleration.magnitude(), 0, abs_tol=1e-8)
+        acceleration_near_zero = math.isclose(
+            self.acceleration.magnitude(), 0, abs_tol=1e-8
+        )
         return not (velocity_near_zero and acceleration_near_zero)
 
 

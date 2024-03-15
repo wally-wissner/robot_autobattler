@@ -25,10 +25,10 @@ class Unit(DiscBody):
         stats = {}
         for stat in EStat:
             stats[stat] = Stat(base_value=0)
-        # Non-zero default stats.
+            # Non-zero default stats.
             stats[EStat.MASS] = Stat(base_value=10)
             stats[EStat.SIZE] = Stat(base_value=10)
-        # Consumable stats.
+            # Consumable stats.
             stats[EStat.HP] = ConsumableStat(refill_on_encounter_start=True)
             stats[EStat.AP] = ConsumableStat(refill_on_turn_start=True)
         return stats
