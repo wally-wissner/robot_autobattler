@@ -1,27 +1,14 @@
-# Using snake_case for decorators.
-# pylint: disable=invalid-name
-
-
-from itertools import count
 from uuid import uuid4
 
 
-class sequential_identifier:
-    def __init__(self, cls):
-        self.cls = cls
-        self.cls.count = count()
+class SequentialIdentifier:
+    count = 0
 
-    def __call__(self, *args, **kwargs):
-        obj = self.cls(*args, **kwargs)
-        obj.id = next(self.cls.count)
-        return obj
+    def __init__(self):
+        self.__class__.count += 1
+        self.id = self.count
 
 
-class uuid_identifier:
-    def __init__(self, cls):
-        self.cls = cls
-
-    def __call__(self, *args, **kwargs):
-        obj = self.cls(*args, **kwargs)
-        obj.id = uuid4()
-        return obj
+class UUIDIdentifier:
+    def __init__(self):
+        self.id = uuid4()

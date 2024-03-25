@@ -3,12 +3,11 @@ from dataclasses import dataclass
 import pandas as pd
 
 from utils.enums import EEventType
-from utils.identifiers import uuid_identifier
+from utils.identifiers import UUIDIdentifier
 
 
-@uuid_identifier
 @dataclass
-class Event:
+class Event(UUIDIdentifier):
     level: int
     round: int
     turn: int

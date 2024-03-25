@@ -2,12 +2,11 @@ from dataclasses import dataclass
 
 from backend.badges import Badge
 from backend.cards import Card
-from utils.identifiers import uuid_identifier
+from utils.identifiers import UUIDIdentifier
 
 
-@uuid_identifier
 @dataclass
-class Upgrade:
+class Upgrade(UUIDIdentifier):
     badge: Badge
     card: Card
     removable: bool = True

@@ -6,11 +6,10 @@ from backend.unitstat import Stat, ConsumableStat
 from backend.upgrades import Upgrade
 from frontend.colors import ColorRGB
 from utils.enums import EStat
-from utils.identifiers import uuid_identifier
+from utils.identifiers import UUIDIdentifier
 
 
-@uuid_identifier
-class Unit(DiscBody):
+class Unit(DiscBody, UUIDIdentifier):
     def __init__(self, team, level):
         self.level = level
 
@@ -19,7 +18,8 @@ class Unit(DiscBody):
         self.status_effects = Inventory()
         self.stats = self._init_stats()
 
-        super().__init__(team=team)
+        DiscBody.__init__(self, team=team)
+        UUIDIdentifier.__init__(self)
 
     def _init_stats(self) -> dict[EStat, Stat]:
         stats = {}
