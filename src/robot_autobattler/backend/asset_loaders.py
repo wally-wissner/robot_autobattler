@@ -3,6 +3,7 @@ Utility functions to load game asset files into their respective data structures
 """
 
 import json
+from typing import Any
 from xml.etree.ElementTree import fromstring
 
 from backend.badges import Badge
@@ -18,18 +19,17 @@ from utils import enums
 from config import absolute_path
 
 
-def _convert(value, enum_options):
+def _convert(value, enum_options) -> Any:
     if not isinstance(enum_options, list):
         enum_options = [enum_options]
-    if value:
-        if isinstance(value, str):
-            for option in enum_options:
-                try:
-                    return option[value]
-                except KeyError:
-                    pass
-        else:
-            return value
+    if isinstance(value, str):
+        for option in enum_options:
+            try:
+                return option[value]
+            except KeyError:
+                pass
+    else:
+        return value
 
 
 def _load_badges() -> list[Badge]:

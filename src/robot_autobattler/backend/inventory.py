@@ -16,10 +16,9 @@ class Inventory(defaultdict):
     def remove(self, item, quantity: int = 1):
         if quantity > self[item]:
             raise ValueError("Cannot remove more items than exist in Inventory.")
-        else:
-            self[item] -= quantity
-            if self[item] == 0:
-                del self[item]
+        self[item] -= quantity
+        if self[item] == 0:
+            del self[item]
 
     def __or__(self, other):
         for i in other:

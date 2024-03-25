@@ -100,8 +100,7 @@ class Application:
             return x * self.window.width
         if y:
             return y * self.window.height
-        else:
-            raise ValueError("Must supply relative or x or y.")
+        raise ValueError("Must supply relative or x or y.")
 
     def rel2abs(
         self, relative: Vector2 = None, x: float = None, y: float = None

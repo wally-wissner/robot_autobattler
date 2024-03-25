@@ -34,9 +34,10 @@ class CardAbilityCondition:
 
     def description(self) -> str:
         if self.consume_resource:
-            return f"CONSUME {self.threshold} {self.variable}"
+            text = f"CONSUME {self.threshold} {self.variable}"
         else:
-            return f"IF {self.variable} {self.comparison.value} {self.threshold}"
+            text = f"IF {self.variable} {self.comparison.value} {self.threshold}"
+        return text
 
 
 @dataclass
@@ -54,10 +55,11 @@ class CardAbilityEffect:
     def get_text(self) -> str:
         if self.action == enums.EUnitAction.ATTACK:
             # TODO
-            return ""
+            text = ""
         if self.action == enums.EUnitAction.PRODUCE:
             # TODO
-            return ""
+            text = ""
+        return text
 
 
 @dataclass
@@ -71,11 +73,12 @@ class CardAbility:
         effect_texts = [effect.get_text() for effect in self.success_effects]
         # TODO
         if self.conditions:
-            return (
+            text = (
                 " and ".join(condition_texts) + ":" + "\n\t" + "\n\t".join(effect_texts)
             )
         else:
-            return "\n".join(effect_texts)
+            text = "\n".join(effect_texts)
+        return text
 
 
 @dataclass
