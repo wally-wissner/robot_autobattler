@@ -25,6 +25,8 @@ mapping_weapon_accuracy = {
 
 
 class Game:
+    # pylint: disable=unused-argument
+
     def __init__(self, version: str, seed: int) -> None:
         self.version = version
 

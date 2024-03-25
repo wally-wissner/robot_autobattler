@@ -35,6 +35,7 @@ def random_rarity(
 
 
 def random_bp(min_bp: int = -np.inf, max_bp: int = np.inf) -> int:
+    # pylint: disable=unused-argument
     # TODO
     return 1
 

@@ -31,7 +31,9 @@ class EventHistory:
                 "damage_dealt": pd.Series(dtype=int),
             }
         )
-        # self.df = pd.DataFrame({key: value for key, value in Event.__dict__.items() if key != "id"})
+        # self.df = pd.DataFrame(
+        #     {key: value for key, value in Event.__dict__.items() if key != "id"}
+        # )
         # self.df = pd.DataFrame(dataclasses.fields(Event))
 
     def append(self, event: Event):

@@ -66,7 +66,9 @@ class Application:
         # pyglet.font.load("JETBRAINS_MONO_REGULAR")
 
         # self.default_font = str(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        # self.default_font = pyglet.font.load(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pyglet.font.load(
+        #     absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
+        # )
 
         # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
         # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
@@ -94,9 +96,9 @@ class Application:
                 f(vec.y, self.window.height),
                 relative=False,
             )
-        elif x:
+        if x:
             return x * self.window.width
-        elif y:
+        if y:
             return y * self.window.height
         else:
             raise ValueError("Must supply relative or x or y.")
