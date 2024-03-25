@@ -33,9 +33,9 @@ def _convert(value, enum_options):
 
 
 def _load_badges() -> list[Badge]:
-    with open(absolute_path("assets/item_data/badges.json")) as f:
+    with open(absolute_path("assets/item_data/badges.json"), encoding="utf-8") as f:
         json_badges = json.load(f)
-        badges = [
+        _badges = [
             Badge(
                 name=json_badge["name"],
                 description_text=json_badge["description"],
@@ -52,13 +52,13 @@ def _load_badges() -> list[Badge]:
             )
             for json_badge in json_badges
         ]
-    return badges
+    return _badges
 
 
 def _load_cards() -> list[AdvancedCard]:
-    with open(absolute_path("assets/item_data/cards.xml")) as f:
+    with open(absolute_path("assets/item_data/cards.xml"), encoding="utf-8") as f:
         tree = fromstring(f.read())
-        cards = [
+        _cards = [
             AdvancedCard(
                 name=element.get("name"),
                 rarity=enums.ERarity[element.get("rarity")],
@@ -68,13 +68,15 @@ def _load_cards() -> list[AdvancedCard]:
             )
             for element in tree
         ]
-    return cards
+    return _cards
 
 
 def _load_simple_cards() -> list[SimpleCard]:
-    with open(absolute_path("assets/item_data/simple_cards.json")) as f:
+    with open(
+        absolute_path("assets/item_data/simple_cards.json"), encoding="utf-8"
+    ) as f:
         json_cards = json.load(f)
-        cards = []
+        _cards = []
         for json_card in json_cards:
             abilities = []
             for json_ability in json_card["abilities"]:
@@ -150,8 +152,8 @@ def _load_simple_cards() -> list[SimpleCard]:
                 abilities=abilities,
                 cooldown=json_card["cooldown"],
             )
-            cards.append(card)
-    return cards
+            _cards.append(card)
+    return _cards
 
 
 badges = _load_badges()

@@ -29,16 +29,17 @@ class SettingsManager:
 
     def __getattr__(self, item):
         if item in self.__dict__:
-            return self.__dict__[item]
+            attr = self.__dict__[item]
         else:
-            return self.dict[item]["current"]
+            attr = self.dict[item]["current"]
+        return attr
 
     def load(self):
-        with open(filename_settings, "r") as f:
+        with open(filename_settings, "r", encoding="utf-8") as f:
             self.dict = json.load(f)
 
     def save(self):
-        with open(filename_settings, "w") as f:
+        with open(filename_settings, "w", encoding="utf-8") as f:
             json.dump(self.dict, f)
 
     def restore_defaults(self):
