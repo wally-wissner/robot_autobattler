@@ -77,7 +77,7 @@ class Game:
 
     def place_units(self) -> None:
         deviation = 50
-        team_distance = 50
+        # team_distance = 50
         for team in self.teams:
             for unit in team.units:
                 # team_center = Vector2(.25, .5) if team.is_player else Vector2(.75, .5)

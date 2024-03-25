@@ -75,9 +75,10 @@ class UIUpgradeComponent(arcade.gui.UITexturePane):
 
     def _get_color(self) -> colors.ColorRGB:
         if isinstance(self.upgrade_component, Badge):
-            return colors.RETRO_BLUE
+            color = colors.RETRO_BLUE
         if isinstance(self.upgrade_component, Card):
-            return colors.RETRO_RED
+            color = colors.RETRO_RED
+        return color
 
     def _get_texture(self) -> arcade.Texture:
         if self.texture_params not in self.textures:
