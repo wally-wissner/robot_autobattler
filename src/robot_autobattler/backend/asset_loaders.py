@@ -28,8 +28,8 @@ def _convert(value, enum_options) -> Any:
                 return option[value]
             except KeyError:
                 pass
-    else:
-        return value
+        raise ValueError("Could not parse type of value.")
+    return value
 
 
 def _load_badges() -> list[Badge]:

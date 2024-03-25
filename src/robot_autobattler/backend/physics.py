@@ -45,7 +45,7 @@ class PhysicsBody:
 
 
 class DiscBody(PhysicsBody):
-    def __init__(self, radius: float = 0, *args, **kwargs):
+    def __init__(self, *args, radius: float = 0, **kwargs):
         self._radius = radius
         super().__init__(shape=Point().buffer(distance=radius), *args, **kwargs)
 
