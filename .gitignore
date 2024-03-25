@@ -5,5 +5,5 @@ __pycache__/
 *.pyc
 venv/
 
-assets/fonts/
-notes/
+**/assets/fonts/
+**/notes/

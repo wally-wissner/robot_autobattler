@@ -1,6 +1,6 @@
 import unittest
 
-from src.backend.asset_loaders import badges, cards, simple_cards
+from backend.asset_loaders import badges, cards, simple_cards
 
 
 class TestAssetLoaders(unittest.TestCase):

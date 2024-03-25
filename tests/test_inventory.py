@@ -1,5 +1,6 @@
 import unittest
-from src.backend.inventory import Inventory
+
+from backend.inventory import Inventory
 
 
 class TestInventory(unittest.TestCase):

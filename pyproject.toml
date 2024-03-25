@@ -1,11 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "Robot Autobattler"
 version = "0.0.1"
 authors = [
-    {name = "Wally Wissner", email = "wally.wissner@gmail.com"}
-]
-maintainers = [
-    {name = "Wally Wissner", email = "wally.wissner@gmail.com"}
+    {name = "Wally Wissner", email = "wally.wissner@gmail.com"},
 ]
 requires-python = ">= 3.11"
 dependencies = [
@@ -14,9 +15,19 @@ dependencies = [
     "dill >= 0.3.6",
     "numpy >= 1.18.2",
     "pandas >= 1.5.0",
-    "Pillow >= 10.0.0",
-    "pyglet >= 2.0.5",
+    "Pillow == 9.3.0",
+    "pygame-ce >= 2.4.1",
+    "pygame-gui >= 0.6.9",
+    "pyglet >= 2.0.dev23",
+    "pylint >= 3.1.0",
     "scipy >= 1.5.4",
     "shapely >= 1.8.0",
 ]
 readme = {file = "README.md", content-type = "text/markdown"}
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Topic :: Games/Entertainment",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

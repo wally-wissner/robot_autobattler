@@ -1,7 +1,8 @@
-import numpy as np
 import unittest
 
-from src.backend.factories import generate_team
+import numpy as np
+
+from backend.factories import generate_team
 
 
 class TestTeam(unittest.TestCase):
