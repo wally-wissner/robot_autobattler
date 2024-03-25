@@ -1,3 +1,7 @@
+# Using snake_case for decorators.
+# pylint: disable=invalid-name
+
+
 from itertools import count
 from uuid import uuid4
 

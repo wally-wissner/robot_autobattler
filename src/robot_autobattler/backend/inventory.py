@@ -19,7 +19,7 @@ class Inventory(defaultdict):
         else:
             self[item] -= quantity
             if self[item] == 0:
-                self.__delitem__(item)
+                del self[item]
 
     def __or__(self, other):
         for i in other:

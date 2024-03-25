@@ -2,6 +2,10 @@
 Run this script to begin playing the game.
 """
 
+# *args and **kwargs needed for button interface compatibility.
+# pylint: disable=unused-argument
+
+
 import arcade
 import arcade.gui
 import dill
