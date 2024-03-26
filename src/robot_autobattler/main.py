@@ -2,6 +2,8 @@
 Run this script to begin playing the game.
 """
 
+# Ignore warning for Singleton decorator.
+# pylint: disable=no-member
 # *args and **kwargs needed for button interface compatibility.
 # pylint: disable=unused-argument
 
@@ -17,8 +19,10 @@ from backend.game import Game
 from backend.settings import SettingsManager
 from utils.enums import EScene
 from utils.geometry import Vector2
+from utils.singleton import Singleton
 
 
+@Singleton
 class Application:
     """
     Application that allows player to interact with the game's frontend interface.
@@ -150,5 +154,5 @@ class Application:
 
 
 if __name__ == "__main__":
-    application = Application()
+    application = Application.instance()
     application.run()
