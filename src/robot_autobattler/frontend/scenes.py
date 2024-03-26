@@ -2,9 +2,6 @@
 Each of the application's scenes is its own class.
 """
 
-# Ignore warning for Singleton decorator.
-# pylint: disable=no-member
-
 from abc import ABC, abstractmethod
 
 import arcade
@@ -14,7 +11,7 @@ from config import absolute_path
 from backend.unit import Unit
 from backend.upgrades import Upgrade
 from frontend import colors
-from frontend.application import Application
+from frontend.application import application
 from frontend.ui import UITextButton, UITextureButton
 from frontend.upgrades import UIUnitUpgrade
 
@@ -44,7 +41,7 @@ class Scene(ABC):
 
     def disable(self) -> None:
         self.ui_manager.disable()
-        Application.instance().window.clear()
+        application.window.clear()
 
 
 class MainMenuScene(Scene):
@@ -62,26 +59,24 @@ class MainMenuScene(Scene):
 
         # Create the buttons
         button_new_game = UITextButton(
-            Application.instance().new_game, text="New Game", width=width
+            application.new_game, text="New Game", width=width
         )
         self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
         button_continue = UITextButton(
-            Application.instance().load_game, text="Continue", width=width
+            application.load_game, text="Continue", width=width
         )
         self.v_box.add(button_continue.with_space_around(bottom=gap))
 
         settings_button = UITextButton(
-            Application.instance().change_scene,
+            application.change_scene,
             scene=EScene.SETTINGS,
             text="Settings",
             width=width,
         )
         self.v_box.add(settings_button.with_space_around(bottom=gap))
 
-        exit_game_button = UITextButton(
-            Application.instance().quit, text="Exit Game", width=width
-        )
+        exit_game_button = UITextButton(application.quit, text="Exit Game", width=width)
         self.v_box.add(exit_game_button)
 
         self.ui_manager.add(
@@ -97,20 +92,20 @@ class MainMenuScene(Scene):
         # for event in events:
         #     if event.type == pygame_gui.UI_BUTTON_PRESSED:
         #         if event.ui_element == self.button_new_game:
-        #             Application.instance()lication.new_game()
-        #             Application.instance()lication.change_scene(EScene.BATTLE)
+        #             application.new_game()
+        #             application.change_scene(EScene.BATTLE)
         #         if event.ui_element == self.button_continue:
-        #             Application.instance()lication.load_game()
-        #             Application.instance()lication.change_scene(EScene.BATTLE)
+        #             application.load_game()
+        #             application.change_scene(EScene.BATTLE)
 
     def draw(self):
         # Title
         arcade.draw_text(
-            text=Application.instance().title,
-            start_x=Application.instance().rel2abs(x=0.5),
-            start_y=Application.instance().rel2abs(y=0.8),
+            text=application.title,
+            start_x=application.rel2abs(x=0.5),
+            start_y=application.rel2abs(y=0.8),
             color=colors.NEON_GREEN,
-            font_name=Application.instance().default_font,
+            font_name=application.default_font,
             font_size=48,
             # bold=True,
             anchor_x="center",
@@ -118,11 +113,11 @@ class MainMenuScene(Scene):
         )
         # Version
         arcade.draw_text(
-            text=f"Version {Application.instance().version}",
-            start_x=Application.instance().rel2abs(x=0.95),
-            start_y=Application.instance().rel2abs(y=0.05),
+            text=f"Version {application.version}",
+            start_x=application.rel2abs(x=0.95),
+            start_y=application.rel2abs(y=0.05),
             color=colors.NEON_GREEN,
-            font_name=Application.instance().default_font,
+            font_name=application.default_font,
             font_size=20,
             # bold=True,
             anchor_x="right",
@@ -149,19 +144,17 @@ class SettingsScene(Scene):
 
         # Create the buttons
         back_button = UITextButton(
-            Application.instance().return_to_previous_scene, text="Back", width=width
+            application.return_to_previous_scene, text="Back", width=width
         )
         self.h_box.add(back_button.with_space_around(right=gap))
         main_menu_button = UITextButton(
-            Application.instance().change_scene,
+            application.change_scene,
             scene=EScene.MAIN_MENU,
             text="Main Menu",
             width=width,
         )
         self.h_box.add(main_menu_button.with_space_around(right=gap))
-        exit_game_button = UITextButton(
-            Application.instance().quit, text="Exit Game", width=width
-        )
+        exit_game_button = UITextButton(application.quit, text="Exit Game", width=width)
         self.h_box.add(exit_game_button)
 
         self.v_box.add(self.h_box)
@@ -188,19 +181,19 @@ class BattleScene(Scene):
 
         self.menu_rect = Rectangle(
             [
-                Application.instance().rel2abs(Vector2(0, 0.925)),
-                Application.instance().rel2abs(Vector2(1, 1)),
+                application.rel2abs(Vector2(0, 0.925)),
+                application.rel2abs(Vector2(1, 1)),
             ]
         )
 
         self.icon_height = 0.8 * self.menu_rect.height
 
-        # self.camera = arcade.Camera(window=Application.instance()lication.window)
+        # self.camera = arcade.Camera(window=applicationlication.window)
         # self.camera.move(Vec2())
         # self.camera.update()
         # self.camera.use()
 
-        for unit in Application.instance().game.units():
+        for unit in application.game.units():
             for upgrade in unit.upgrades:
                 uu = UIUnitUpgrade(
                     upgrade=upgrade,
@@ -213,23 +206,23 @@ class BattleScene(Scene):
         self.ui_manager.add(uu)
 
         settings_button = UITextureButton(
-            x=Application.instance().rel2abs(x=0.975) - self.icon_height / 2,
+            x=application.rel2abs(x=0.975) - self.icon_height / 2,
             y=self.menu_rect.center.y - self.icon_height / 2,
             width=self.icon_height,
             height=self.icon_height,
             texture=arcade.load_texture(
                 absolute_path("assets/images/ui/settings-icon.png")
             ),
-            on_click=Application.instance().change_scene,
+            on_click=application.change_scene,
             scene=EScene.SETTINGS,
         )
         self.ui_manager.add(settings_button)
 
         # anchored_settings_button = arcade.gui.UIAnchorWidget(
         #     child=settings_button,
-        #     align_x=Application.instance().rel2abs(x=-.0125),
+        #     align_x=application.rel2abs(x=-.0125),
         #     align_y=-self.menu_rect.height / 2,
-        #     # align_y=Application.instance().rel2abs(y=-self.menu_rect.height / 4),
+        #     # align_y=application.rel2abs(y=-self.menu_rect.height / 4),
         #     anchor_x='right',
         #     anchor_y='top',
         # )
@@ -240,12 +233,12 @@ class BattleScene(Scene):
         pass
 
     def draw(self):
-        Application.instance().game.update_physics(Application.instance().delta_time)
-        for unit in Application.instance().game.units():
+        application.game.update_physics(application.delta_time)
+        for unit in application.game.units():
             arcade.draw_circle_filled(
                 center_x=unit.position.x,
                 center_y=unit.position.y,
-                radius=Application.instance().game.stat_value(unit, EStat.SIZE),
+                radius=application.game.stat_value(unit, EStat.SIZE),
                 color=unit.color(),
             )
 
@@ -287,7 +280,7 @@ class UpgradeScene(Scene):
         self.ui_manager.draw()
 
 
-Application.instance().scene_map = {
+scene_map = {
     EScene.MAIN_MENU: MainMenuScene,
     EScene.SETTINGS: SettingsScene,
     EScene.BATTLE: BattleScene,

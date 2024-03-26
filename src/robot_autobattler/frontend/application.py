@@ -1,5 +1,3 @@
-# Ignore warning for Singleton decorator.
-# pylint: disable=no-member
 # *args and **kwargs needed for button interface compatibility.
 # pylint: disable=unused-argument
 
@@ -17,13 +15,14 @@ from utils.geometry import Vector2
 from utils.singleton import Singleton
 
 
-@Singleton
-class Application:
+class Application(Singleton):
     """
     Application that allows player to interact with the game's frontend interface.
     """
 
     def __init__(self) -> None:
+        super().__init__()
+
         self.title = __title__
         self.version = __version__
 
@@ -46,9 +45,9 @@ class Application:
         self.window.on_update = self.on_update
 
         # Scene setup.
-        self.scene_map: dict = {}
+        self._scene_map: dict = {}
         self._active_scene = None
-        self._scene_stack: list[EScene] = []
+        self._active_scene_stack: list[EScene] = []
 
     def load_assets(self) -> None:
         self.default_font = "Courier New"
@@ -129,15 +128,21 @@ class Application:
         dill.dump(self.game, self.game_save_path)
 
     def change_scene(self, scene: EScene, *args, **kwargs) -> None:
-        self._scene_stack.append(scene)
+        self._active_scene_stack.append(scene)
         if self._active_scene:
             self._active_scene.disable()
-        self._active_scene = self.scene_map[scene]()
+        self._active_scene = self._scene_map[scene]()
         self._active_scene.enable()
 
     def return_to_previous_scene(self, *args, **kwargs) -> None:
         try:
-            self._scene_stack.pop()
-            self.change_scene(self._scene_stack[-1])
+            self._active_scene_stack.pop()
+            self.change_scene(self._active_scene_stack[-1])
         except IndexError:
             pass
+
+    def load_scene_map(self, scene_map):
+        self._scene_map = scene_map
+
+
+application = Application()
