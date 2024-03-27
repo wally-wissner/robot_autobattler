@@ -16,6 +16,9 @@ class Event(UUIDIdentifier):
     # card: Card
     damage_dealt: int
 
+    def __post_init__(self):
+        super().__init__()
+
 
 class EventHistory:
     def __init__(self):
