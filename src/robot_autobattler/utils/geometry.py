@@ -96,14 +96,18 @@ class Rectangle(BaseModel):
     def __sub__(self, other: Vector2) -> Self:
         return Rectangle.from_points((point - other for point in self.points()))
 
-    # def __mul__(self, other: float) -> Self:
-    #     return Vector2(self.x * other, self.y * other)
-    #
-    # def __rmul__(self, other: float) -> Self:
-    #     return self * other
-    #
-    # def __truediv__(self, other: float) -> Self:
-    #     return Vector2(self.x / other, self.y / other)
+    def __mul__(self, other: float) -> Self:
+        return Rectangle.from_points(
+            ((point - self.center()) * other + self.center() for point in self.points())
+        )
+
+    def __rmul__(self, other: float) -> Self:
+        return self * other
+
+    def __truediv__(self, other: float) -> Self:
+        return Rectangle.from_points(
+            ((point - self.center()) / other + self.center() for point in self.points())
+        )
 
     # def to_pygame(self) -> tuple[pg.Vector2, tuple]:
     #     return pg.Vector2(self.x_min, self.y_max), (self.width, self.height)
