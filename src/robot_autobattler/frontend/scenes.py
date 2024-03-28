@@ -12,10 +12,9 @@ from backend.unit import Unit
 from backend.upgrades import Upgrade
 from frontend import colors
 from frontend.application import application
-from frontend.ui import UITextButton, UITextureButton
+from frontend.ui_elements import UITextButton, UITextureButton
+from frontend.ui_panes import InventoryPane, TeamPane, UnitPane, UpgradePane
 from frontend.upgrades import UIUnitUpgrade
-
-# from frontend.fonts import get_font
 from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
 
@@ -253,43 +252,20 @@ class BattleScene(Scene):
         self.ui_manager.draw()
 
 
-class TeamPane:
-    """UI pane that shows all the units on the player's team."""
-    pass
-
-
-class UnitPane:
-    """UI pane that shows the upgrades attached to the currently selected unit."""
-    pass
-
-
-class UpgradePane:
-    """UI pane that shows the text of the currently selected upgrade."""
-    def __init__(self, app, width: float, height: float):
-        self.width = width
-        self.height = height
-        self.upgrade = None
-
-    def set_upgrade(self, upgrade):
-        self.upgrade = upgrade
-        # UIUnitUpgrade(upgrade)
-
-
-class InventoryPane:
-    """UI pane that shows all the upgrades the player has the ability to equip."""
-    pass
-
-
 class UpgradeScene(Scene):
     def __init__(self):
         super().__init__()
-        self.active_unit: Unit = None
-        self.active_upgrade: Upgrade = None
+        self.active_unit: Unit | None = None
+        self.active_upgrade: Upgrade | None = None
 
-        self.team_pane = TeamPane()
-        self.unit_pane = UnitPane()
-        self.upgrade_pane = UpgradePane(app, 200, 200)
-        self.inventory_pane = InventoryPane()
+        self.team_pane = TeamPane(Rectangle([Vector2(0, 0), Vector2(0.25, 1)]))
+        self.upgrade_pane = UpgradePane(
+            Rectangle([Vector2(0.25, 0.5), Vector2(0.75, 1)])
+        )
+        self.unit_pane = UnitPane(Rectangle([Vector2(0.25, 0), Vector2(0.75, 0.5)]))
+        self.inventory_pane = InventoryPane(
+            Rectangle([Vector2(0.75, 0), Vector2(1, 1)])
+        )
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
