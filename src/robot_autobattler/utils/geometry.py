@@ -76,10 +76,15 @@ class Rectangle:
             (self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2
         )
 
-    # def pad(self, aspect_ratio: float = None, fraction: float = 0) -> Self:
-    #     if aspect_ratio:
-    #
-    #     return self
+    def pad(
+        self, padding: float = 0, x_padding: float = 0, y_padding: float = 0
+    ) -> Self:
+        if padding:
+            x_padding = y_padding = padding
+        padding_vector = Vector2(x_padding, y_padding)
+        return Rectangle(
+            [self.bottom_left - padding_vector, self.top_right + padding_vector]
+        )
 
     # def to_pygame(self) -> tuple[pg.Vector2, tuple]:
     #     return pg.Vector2(self.x_min, self.y_max), (self.width, self.height)
