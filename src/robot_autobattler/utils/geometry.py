@@ -31,24 +31,24 @@ class Vector2(Vec2):
         other = Vector2(other)
         return self.x, self.y == other.x, other.y
 
-    def __add__(self, other: Self):
+    def __add__(self, other: Self) -> Self:
         other = Vector2(other)
         return Vector2(self.x + other.x, self.y + other.y)
 
-    def __sub__(self, other: Self):
+    def __sub__(self, other: Self) -> Self:
         other = Vector2(other)
         return Vector2(self.x - other.x, self.y - other.y)
 
-    def __mul__(self, other: float):
+    def __mul__(self, other: float) -> Self:
         return Vector2(self.x * other, self.y * other)
 
-    def __rmul__(self, other: float):
+    def __rmul__(self, other: float) -> Self:
         return self * other
 
-    def __truediv__(self, other: float):
+    def __truediv__(self, other: float) -> Self:
         return Vector2(self.x / other, self.y / other)
 
-    def __round__(self, n: int = None):
+    def __round__(self, n: int = None) -> Self:
         return Vector2(round(self.x, n), round(self.y, n))
 
     def __repr__(self):
@@ -76,6 +76,9 @@ class Rectangle:
             (self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2
         )
 
+    def _points(self) -> tuple[Vector2, Vector2]:
+        return self.bottom_left, self.top_right
+
     def pad(
         self, padding: float = 0, x_padding: float = 0, y_padding: float = 0
     ) -> Self:
@@ -85,6 +88,21 @@ class Rectangle:
         return Rectangle(
             [self.bottom_left - padding_vector, self.top_right + padding_vector]
         )
+
+    def __add__(self, other: Vector2) -> Self:
+        return Rectangle((point + other for point in self._points()))
+
+    def __sub__(self, other: Vector2) -> Self:
+        return Rectangle((point - other for point in self._points()))
+
+    # def __mul__(self, other: float) -> Self:
+    #     return Vector2(self.x * other, self.y * other)
+    #
+    # def __rmul__(self, other: float) -> Self:
+    #     return self * other
+    #
+    # def __truediv__(self, other: float) -> Self:
+    #     return Vector2(self.x / other, self.y / other)
 
     # def to_pygame(self) -> tuple[pg.Vector2, tuple]:
     #     return pg.Vector2(self.x_min, self.y_max), (self.width, self.height)
