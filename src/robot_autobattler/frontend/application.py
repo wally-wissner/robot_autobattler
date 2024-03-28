@@ -78,16 +78,15 @@ class Application(Singleton):
         arcade.run()
 
     def _transform(
-        self, f, vec: Vector2 = None, x: float = None, y: float = None
+        self, f, vector: Vector2 = None, x: float = None, y: float = None
     ) -> Vector2 | float:
         if x and y:
-            vec = Vector2(x, y, relative=True)
-        if vec:
-            vec = Vector2(*vec, relative=True)
+            vector = Vector2(x=x, y=y)
+        if vector:
+            x, y = vector
+            vector = Vector2(x=x, y=y)
             return Vector2(
-                f(vec.x, self.window.width),
-                f(vec.y, self.window.height),
-                relative=False,
+                x=f(vector.x, self.window.width), y=f(vector.y, self.window.height)
             )
         if x:
             return x * self.window.width

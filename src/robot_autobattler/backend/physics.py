@@ -18,9 +18,9 @@ class PhysicsBody:
     ):
         self.shape = shape
         self.mass = mass
-        self.position = Vector2(position)
-        self.velocity = Vector2(velocity)
-        self.acceleration = Vector2(acceleration)
+        self.position = position
+        self.velocity = velocity
+        self.acceleration = acceleration
         self.friction = friction
         self.team = team
 
@@ -28,7 +28,7 @@ class PhysicsBody:
 
     def update(self, dt):
         self.velocity = (
-            self.acceleration - self.friction * self.velocity
+            self.acceleration - (self.velocity * self.friction)
         ) * dt + self.velocity
         self.position = self.velocity * dt + self.position
 

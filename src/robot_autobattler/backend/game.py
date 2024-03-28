@@ -82,12 +82,11 @@ class Game:
             for unit in team.units:
                 # team_center = Vector2(.25, .5) if team.is_player else Vector2(.75, .5)
                 team_center = (
-                    Vector2(400, 450) if team.is_player else Vector2(1200, 450)
+                    Vector2(x=400, y=450) if team.is_player else Vector2(x=1200, y=450)
                 )
-                unit_relative_position = np.random.randn(2)
-                unit.position = Vector2(
-                    deviation * unit_relative_position + team_center
-                )
+                random_vector = np.random.randn(2)
+                unit_relative_position = Vector2(x=random_vector[0], y=random_vector[1])
+                unit.position = deviation * unit_relative_position + team_center
 
     def evaluate_active_cards(self) -> None:
         for team in self.teams:
