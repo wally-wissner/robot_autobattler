@@ -6,7 +6,7 @@ from pyglet.math import Vec2
 
 
 class Vector2(Vec2):
-    def __init__(self, *args, relative=False):
+    def __init__(self, *args, relative=False) -> None:
         self.relative = relative
         if len(args) == 0:
             x, y = 0, 0
@@ -58,21 +58,21 @@ class Vector2(Vec2):
 class Rectangle:
     # pylint: disable=too-many-instance-attributes
 
-    def __init__(self, points: Iterable[Vector2]):
-        self.x_min = min(point.x for point in points)
-        self.x_max = max(point.x for point in points)
-        self.y_min = min(point.y for point in points)
-        self.y_max = max(point.y for point in points)
+    def __init__(self, points: Iterable[Vector2]) -> None:
+        self.x_min: float = min(point.x for point in points)
+        self.x_max: float = max(point.x for point in points)
+        self.y_min: float = min(point.y for point in points)
+        self.y_max: float = max(point.y for point in points)
 
-        self.bottom_left = Vector2(self.x_min, self.y_min)
-        self.top_left = Vector2(self.x_min, self.y_max)
-        self.bottom_right = Vector2(self.x_max, self.y_min)
-        self.top_right = Vector2(self.x_max, self.y_max)
+        self.bottom_left: Vector2 = Vector2(self.x_min, self.y_min)
+        self.top_left: Vector2 = Vector2(self.x_min, self.y_max)
+        self.bottom_right: Vector2 = Vector2(self.x_max, self.y_min)
+        self.top_right: Vector2 = Vector2(self.x_max, self.y_max)
 
-        self.width = self.x_max - self.x_min
-        self.height = self.y_max - self.y_min
+        self.width: float = self.x_max - self.x_min
+        self.height: float = self.y_max - self.y_min
 
-        self.center = Vector2(
+        self.center: Vector2 = Vector2(
             (self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2
         )
 
