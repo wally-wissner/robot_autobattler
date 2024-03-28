@@ -56,28 +56,34 @@ class Vector2(Vec2):
 
 
 class Rectangle:
-    # pylint: disable=too-many-instance-attributes
-
     def __init__(self, points: Iterable[Vector2]) -> None:
         self.x_min: float = min(point.x for point in points)
         self.x_max: float = max(point.x for point in points)
         self.y_min: float = min(point.y for point in points)
         self.y_max: float = max(point.y for point in points)
 
-        self.bottom_left: Vector2 = Vector2(self.x_min, self.y_min)
         self.top_left: Vector2 = Vector2(self.x_min, self.y_max)
         self.bottom_right: Vector2 = Vector2(self.x_max, self.y_min)
-        self.top_right: Vector2 = Vector2(self.x_max, self.y_max)
 
-        self.width: float = self.x_max - self.x_min
-        self.height: float = self.y_max - self.y_min
+    @property
+    def bottom_left(self) -> Vector2:
+        return Vector2(self.x_min, self.y_min)
 
-        self.center: Vector2 = Vector2(
-            (self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2
-        )
+    @property
+    def top_right(self) -> Vector2:
+        return Vector2(self.x_max, self.y_max)
 
-    def _points(self) -> tuple[Vector2, Vector2]:
+    def center(self) -> Vector2:
+        return Vector2((self.x_min + self.x_max) / 2, (self.y_min + self.y_max) / 2)
+
+    def points(self) -> tuple[Vector2, Vector2]:
         return self.bottom_left, self.top_right
+
+    def width(self) -> float:
+        return self.x_max - self.x_min
+
+    def height(self) -> float:
+        return self.y_max - self.y_min
 
     def pad(
         self, padding: float = 0, x_padding: float = 0, y_padding: float = 0
@@ -90,10 +96,10 @@ class Rectangle:
         )
 
     def __add__(self, other: Vector2) -> Self:
-        return Rectangle((point + other for point in self._points()))
+        return Rectangle((point + other for point in self.points()))
 
     def __sub__(self, other: Vector2) -> Self:
-        return Rectangle((point - other for point in self._points()))
+        return Rectangle((point - other for point in self.points()))
 
     # def __mul__(self, other: float) -> Self:
     #     return Vector2(self.x * other, self.y * other)

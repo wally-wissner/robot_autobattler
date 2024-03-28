@@ -185,7 +185,7 @@ class BattleScene(Scene):
             ]
         )
 
-        self.icon_height = 0.8 * self.menu_rect.height
+        self.icon_height = 0.8 * self.menu_rect.height()
 
         # self.camera = arcade.Camera(window=applicationlication.window)
         # self.camera.move(Vec2())
@@ -206,7 +206,7 @@ class BattleScene(Scene):
 
         settings_button = UITextureButton(
             x=application.rel2abs(x=0.975) - self.icon_height / 2,
-            y=self.menu_rect.center.y - self.icon_height / 2,
+            y=self.menu_rect.center().y - self.icon_height / 2,
             width=self.icon_height,
             height=self.icon_height,
             texture=arcade.load_texture(
@@ -242,10 +242,10 @@ class BattleScene(Scene):
             )
 
         arcade.draw_rectangle_filled(
-            center_x=self.menu_rect.center.x,
-            center_y=self.menu_rect.center.y,
-            width=self.menu_rect.width,
-            height=self.menu_rect.height,
+            center_x=self.menu_rect.center().x,
+            center_y=self.menu_rect.center().y,
+            width=self.menu_rect.width(),
+            height=self.menu_rect.height(),
             color=colors.LIGHT_GRAY,
         )
 
