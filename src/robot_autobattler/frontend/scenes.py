@@ -178,7 +178,7 @@ class BattleScene(Scene):
     def __init__(self):
         super().__init__()
 
-        self.menu_rect = Rectangle(
+        self.menu_rect = Rectangle.from_points(
             [
                 application.rel2abs(Vector2(x=0, y=0.925)),
                 application.rel2abs(Vector2(x=1, y=1)),
@@ -258,15 +258,13 @@ class UpgradeScene(Scene):
         self.active_unit: Unit | None = None
         self.active_upgrade: Upgrade | None = None
 
-        self.team_pane = TeamPane(Rectangle([Vector2(x=0, y=0), Vector2(x=0.25, y=1)]))
+        self.team_pane = TeamPane(Rectangle(x_min=0, x_max=0.25, y_min=0, y_max=1))
         self.upgrade_pane = UpgradePane(
-            Rectangle([Vector2(x=0.25, y=0.5), Vector2(x=0.75, y=1)])
+            Rectangle(x_min=0.25, x_max=0.75, y_min=0.5, y_max=1)
         )
-        self.unit_pane = UnitPane(
-            Rectangle([Vector2(x=0.25, y=0), Vector2(x=0.75, y=0.5)])
-        )
+        self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
         self.inventory_pane = InventoryPane(
-            Rectangle([Vector2(x=0.75, y=0), Vector2(x=1, y=1)])
+            Rectangle(x_min=0.75, x_max=1, y_min=0, y_max=1)
         )
 
     def set_active_unit(self, unit: Unit) -> None:

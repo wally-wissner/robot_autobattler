@@ -47,15 +47,20 @@ class Vector2(BaseModel):
         return Vec2(self.x, self.y)
 
 
-class Rectangle:
-    def __init__(self, points: Iterable[Vector2]) -> None:
-        self.x_min: float = min(point.x for point in points)
-        self.x_max: float = max(point.x for point in points)
-        self.y_min: float = min(point.y for point in points)
-        self.y_max: float = max(point.y for point in points)
+class Rectangle(BaseModel):
+    x_min: float = 0
+    x_max: float = 0
+    y_min: float = 0
+    y_max: float = 0
 
-        self.top_left: Vector2 = Vector2(x=self.x_min, y=self.y_max)
-        self.bottom_right: Vector2 = Vector2(x=self.x_max, y=self.y_min)
+    @classmethod
+    def from_points(cls, points: Iterable[Vector2]) -> Self:
+        return Rectangle(
+            x_min=min(point.x for point in points),
+            x_max=max(point.x for point in points),
+            y_min=min(point.y for point in points),
+            y_max=max(point.y for point in points),
+        )
 
     @property
     def bottom_left(self) -> Vector2:
@@ -77,21 +82,19 @@ class Rectangle:
     def height(self) -> float:
         return self.y_max - self.y_min
 
-    def pad(
-        self, padding: float = 0, x_padding: float = 0, y_padding: float = 0
-    ) -> Self:
-        if padding:
-            x_padding = y_padding = padding
-        padding_vector = Vector2(x=x_padding, y=y_padding)
+    def pad(self, x_padding: float = 0, y_padding: float = 0) -> Self:
         return Rectangle(
-            [self.bottom_left - padding_vector, self.top_right + padding_vector]
+            x_min=self.x_min - x_padding,
+            x_max=self.x_max + x_padding,
+            y_min=self.y_min - y_padding,
+            y_max=self.y_max + y_padding,
         )
 
     def __add__(self, other: Vector2) -> Self:
-        return Rectangle((point + other for point in self.points()))
+        return Rectangle.from_points((point + other for point in self.points()))
 
     def __sub__(self, other: Vector2) -> Self:
-        return Rectangle((point - other for point in self.points()))
+        return Rectangle.from_points((point - other for point in self.points()))
 
     # def __mul__(self, other: float) -> Self:
     #     return Vector2(self.x * other, self.y * other)
