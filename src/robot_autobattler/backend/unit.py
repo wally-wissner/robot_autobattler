@@ -2,7 +2,7 @@ import math
 
 from backend.inventory import Inventory
 from backend.physics import DiscBody
-from backend.unitstat import Stat, ConsumableStat
+from backend.unitstat import ConsumableStat, Stat, StatModifier
 from backend.upgrades import Upgrade
 from frontend.colors import ColorRGB
 from utils.enums import EStat
@@ -33,7 +33,7 @@ class Unit(DiscBody, UUIDIdentifier):
             stats[EStat.AP] = ConsumableStat(refill_on_turn_start=True)
         return stats
 
-    def stat_modifiers(self, stat: EStat):
+    def stat_modifiers(self, stat: EStat) -> list[StatModifier]:
         stat_modifiers = []
         for upgrade in self.upgrades:
             for stat_modifier in upgrade.badge.stat_modifiers:
@@ -41,24 +41,24 @@ class Unit(DiscBody, UUIDIdentifier):
                     stat_modifiers.append(stat_modifier)
         return stat_modifiers
 
-    def bp_used(self):
+    def bp_used(self) -> int:
         return sum(upgrade.bp for upgrade in self.upgrades)
 
-    def bp_available(self):
+    def bp_available(self) -> int:
         return self.level - self.bp_used()
 
-    def take_damage(self, damage):
+    def take_damage(self, damage) -> None:
         self.stats[EStat.HP] -= damage
         if self.stats[EStat.HP].current_value <= 0:
             self.die()
 
-    def die(self):
+    def die(self) -> None:
         self.alive = False
 
-    def level_up_cost(self):
+    def level_up_cost(self) -> int:
         return int(math.sqrt(self.level))
 
-    def add_upgrade(self, upgrade: Upgrade):
+    def add_upgrade(self, upgrade: Upgrade) -> None:
         self.upgrades.append(upgrade)
 
     def color(self) -> ColorRGB:
