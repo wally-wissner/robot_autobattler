@@ -10,7 +10,7 @@ from utils.identifiers import UUIDIdentifier
 
 
 class Unit(DiscBody, UUIDIdentifier):
-    def __init__(self, team, level):
+    def __init__(self, team, level: int):
         self.level = level
 
         self.alive = True
@@ -21,7 +21,7 @@ class Unit(DiscBody, UUIDIdentifier):
         DiscBody.__init__(self, team=team)
         UUIDIdentifier.__init__(self)
 
-    def _init_stats(self) -> dict[EStat, Stat]:
+    def _init_stats(self) -> dict[EStat, Stat | ConsumableStat]:
         stats = {}
         for stat in EStat:
             stats[stat] = Stat(base_value=0)
@@ -47,7 +47,7 @@ class Unit(DiscBody, UUIDIdentifier):
     def bp_available(self) -> int:
         return self.level - self.bp_used()
 
-    def take_damage(self, damage) -> None:
+    def take_damage(self, damage: int) -> None:
         self.stats[EStat.HP] -= damage
         if self.stats[EStat.HP].current_value <= 0:
             self.die()
