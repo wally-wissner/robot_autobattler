@@ -146,6 +146,6 @@ class Game:
         # Bound value between min value and max value.
         return clamp(value, unit.stats[stat].min_value, unit.stats[stat].max_value)
 
-    def update_physics(self, dt):
+    def update_physics(self, dt) -> None:
         for physics_body in self.physics_bodies():
             physics_body.update(dt)

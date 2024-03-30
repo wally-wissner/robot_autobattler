@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 
-ColorRGB = namedtuple("Color", "r g b")
+ColorRGB = namedtuple("ColorRGB", "r g b")
 
 
 BLACK = ColorRGB(0, 0, 0)
@@ -17,7 +17,7 @@ BLUE = ColorRGB(0, 0, 255)
 NEON_GREEN = ColorRGB(65, 255, 0)
 
 LIGHT_BROWN = ColorRGB(160, 82, 45)
-DARK_BROWN = (139, 69, 19)
+DARK_BROWN = ColorRGB(139, 69, 19)
 
 RETRO_RED = ColorRGB(100, 25, 25)
 RETRO_BLUE = ColorRGB(25, 25, 100)
