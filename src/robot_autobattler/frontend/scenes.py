@@ -40,7 +40,7 @@ class Scene(ABC):
 
     def disable(self) -> None:
         self.ui_manager.disable()
-        application.window.clear()
+        application.display.clear()
 
 
 class MainMenuScene(Scene):

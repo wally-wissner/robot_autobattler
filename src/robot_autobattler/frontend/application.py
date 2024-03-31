@@ -2,9 +2,9 @@
 # pylint: disable=unused-argument
 
 
-import arcade
-import arcade.gui
 import dill
+import pygame
+import pygame_gui
 
 from _version import __title__, __version__
 from config import absolute_path
@@ -38,11 +38,12 @@ class Application(Singleton):
         self.settings = SettingsManager(application=self)
         self.settings.load()
 
-        self.window = arcade.Window(
-            *self.settings.resolution, title=self.title, resizable=True
-        )
-        self.window.on_draw = self.on_draw
-        self.window.on_update = self.on_update
+        pygame.init()
+        pygame.display.set_caption(self.title)
+        self.display = pygame.display.set_mode(self.settings.resolution)
+
+        # self.display.on_draw = self.on_draw
+        # self.display.on_update = self.on_update
 
         # Scene setup.
         self._scene_map: dict = {}
@@ -50,7 +51,10 @@ class Application(Singleton):
         self._active_scene_stack: list[EScene] = []
 
     def load_assets(self) -> None:
-        self.default_font = "Courier New"
+        # self.default_font = "Courier New"
+        pygame.font.init()
+        self.default_font = pygame.font.Font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
+        # self.default_font = pygame.font.Font("fontawesome-webfont.ttf")
 
         # path = absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
         # file_path = arcade.resources.resolve_resource_path(path)
@@ -69,13 +73,31 @@ class Application(Singleton):
         self.delta_time = delta_time
 
     def on_draw(self) -> None:
-        self.window.clear()
+        self.display.clear()
         self._active_scene.draw()
         # self.active_scene.ui_manager.draw()
 
     def run(self) -> None:
-        self.change_scene(EScene.MAIN_MENU)
-        arcade.run()
+        # self.change_scene(EScene.BATTLE)
+        done = False
+        red = (255, 0, 0)
+        green = (0, 255, 0)
+        blue = (0, 0, 255)
+        white = (255, 255, 255)
+        while not done:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    done = True
+            pygame.draw.rect(self.display, red, pygame.Rect(100, 30, 60, 60))
+            pygame.draw.polygon(self.display, blue,
+                                ((25, 75), (76, 125), (275, 200), (350, 25), (60, 280)))
+            pygame.draw.circle(self.display, white, (180, 180), 60)
+            pygame.draw.line(self.display, red, (10, 200), (300, 10), 4)
+            pygame.draw.ellipse(self.display, green, (250, 200, 130, 80))
+
+            text = self.default_font.render("Welcome to My Game", True, (255, 255, 255))
+            self.display.blit(text, (500 // 2 - text.get_width() // 2, 20))
+            pygame.display.update()
 
     def _transform(
         self, f, vector: Vector2 = None, x: float = None, y: float = None
@@ -86,12 +108,12 @@ class Application(Singleton):
             x, y = vector
             vector = Vector2(x=x, y=y)
             return Vector2(
-                x=f(vector.x, self.window.width), y=f(vector.y, self.window.height)
+                x=f(vector.x, self.display.width), y=f(vector.y, self.display.height)
             )
         if x:
-            return x * self.window.width
+            return x * self.display.width
         if y:
-            return y * self.window.height
+            return y * self.display.height
         raise ValueError("Must supply relative or x or y.")
 
     def rel2abs(
@@ -113,7 +135,7 @@ class Application(Singleton):
     #     )
 
     def quit(self, *args, **kwargs) -> None:
-        arcade.exit()
+        pygame.quit()
 
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
