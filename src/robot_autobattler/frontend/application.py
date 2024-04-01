@@ -1,10 +1,11 @@
 # *args and **kwargs needed for button interface compatibility.
+# pylint: disable=no-member
 # pylint: disable=unused-argument
-
 
 import dill
 import pygame
-import pygame_gui
+
+# import pygame_gui
 
 from _version import __title__, __version__
 from config import absolute_path
@@ -51,23 +52,11 @@ class Application(Singleton):
         self._active_scene_stack: list[EScene] = []
 
     def load_assets(self) -> None:
-        # self.default_font = "Courier New"
         pygame.font.init()
-        self.default_font = pygame.font.Font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        # self.default_font = pygame.font.Font("fontawesome-webfont.ttf")
-
-        # path = absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
-        # file_path = arcade.resources.resolve_resource_path(path)
-        # pyglet.font.add_file(str(file_path))
-        # pyglet.font.load("JETBRAINS_MONO_REGULAR")
-
-        # self.default_font = str(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        # self.default_font = pyglet.font.load(
-        #     absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
-        # )
-
-        # resource.add_font(absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"))
-        # self.default_font = pyglet.font.load('JETBRAINS_MONO_REGULAR')
+        self.default_font = pygame.font.Font(
+            absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
+        )
+        # pygame.display.set_icon()
 
     def on_update(self, delta_time) -> None:
         self.delta_time = delta_time
@@ -89,8 +78,11 @@ class Application(Singleton):
                 if event.type == pygame.QUIT:
                     done = True
             pygame.draw.rect(self.display, red, pygame.Rect(100, 30, 60, 60))
-            pygame.draw.polygon(self.display, blue,
-                                ((25, 75), (76, 125), (275, 200), (350, 25), (60, 280)))
+            pygame.draw.polygon(
+                self.display,
+                blue,
+                ((25, 75), (76, 125), (275, 200), (350, 25), (60, 280)),
+            )
             pygame.draw.circle(self.display, white, (180, 180), 60)
             pygame.draw.line(self.display, red, (10, 200), (300, 10), 4)
             pygame.draw.ellipse(self.display, green, (250, 200, 130, 80))
