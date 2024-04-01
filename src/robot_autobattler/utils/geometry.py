@@ -1,8 +1,8 @@
 import math
 from typing import Iterable, Self
 
-# import pygame as pg
 from pydantic import BaseModel
+from pygame import Rect
 from pyglet.math import Vec2
 
 
@@ -109,5 +109,5 @@ class Rectangle(BaseModel):
             ((point - self.center()) / other + self.center() for point in self.points())
         )
 
-    # def to_pygame(self) -> tuple[pg.Vector2, tuple]:
-    #     return pg.Vector2(self.x_min, self.y_max), (self.width, self.height)
+    def to_pygame(self) -> Rect:
+        return Rect((self.x_min, self.y_max), (self.width, self.height))

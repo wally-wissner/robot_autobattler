@@ -2,10 +2,16 @@
 Each of the application's scenes is its own class.
 """
 
+# TODO: Ignore warnings until scenes are updated to pygame.
+# pylint: disable=no-member
+
+
 from abc import ABC, abstractmethod
 
 import arcade
 import arcade.gui
+import pygame
+import pygame_gui
 
 from config import absolute_path
 from backend.unit import Unit
@@ -25,7 +31,7 @@ class Scene(ABC):
     """
 
     def __init__(self) -> None:
-        self.ui_manager = arcade.gui.UIManager()
+        self.ui_manager = application.ui_manager
 
     @abstractmethod
     def handle_events(self, events: list[arcade.gui.UIEvent]) -> None:
@@ -47,44 +53,58 @@ class MainMenuScene(Scene):
     def __init__(self):
         super().__init__()
 
-        width = 200
-        gap = 15
+        # width = 200
+        # gap = 15
 
-        # Set background color
-        arcade.set_background_color(color=colors.DARK_GRAY)
+        self.background = pygame.Surface(application.settings.resolution)
+        self.background.fill(self.ui_manager.get_theme().get_colour("dark_bg"))
 
-        # Create a vertical BoxGroup to align buttons
-        self.v_box = arcade.gui.UIBoxLayout()
-
-        # Create the buttons
-        button_new_game = UITextButton(
-            application.new_game, text="New Game", width=width
+        self.container = pygame_gui.core.UIContainer(
+            pygame.Rect(0, 0, 800, 600), manager=self.ui_manager
         )
-        self.v_box.add(button_new_game.with_space_around(bottom=gap))
 
-        button_continue = UITextButton(
-            application.load_game, text="Continue", width=width
+        pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((500, 500), (100, 100)),
+            text="Hellp World",
+            manager=self.ui_manager,
+            container=self.container,
+            object_id="123",
         )
-        self.v_box.add(button_continue.with_space_around(bottom=gap))
-
-        settings_button = UITextButton(
-            application.change_scene,
-            scene=EScene.SETTINGS,
-            text="Settings",
-            width=width,
-        )
-        self.v_box.add(settings_button.with_space_around(bottom=gap))
-
-        exit_game_button = UITextButton(application.quit, text="Exit Game", width=width)
-        self.v_box.add(exit_game_button)
-
-        self.ui_manager.add(
-            arcade.gui.UIAnchorWidget(
-                anchor_x="center_x",
-                anchor_y="center_y",
-                child=self.v_box,
-            )
-        )
+        # # Set background color
+        # arcade.set_background_color(color=colors.DARK_GRAY)
+        #
+        # # Create a vertical BoxGroup to align buttons
+        # self.v_box = arcade.gui.UIBoxLayout()
+        #
+        # # Create the buttons
+        # button_new_game = UITextButton(
+        #     application.new_game, text="New Game", width=width
+        # )
+        # self.v_box.add(button_new_game.with_space_around(bottom=gap))
+        #
+        # button_continue = UITextButton(
+        #     application.load_game, text="Continue", width=width
+        # )
+        # self.v_box.add(button_continue.with_space_around(bottom=gap))
+        #
+        # settings_button = UITextButton(
+        #     application.change_scene,
+        #     scene=EScene.SETTINGS,
+        #     text="Settings",
+        #     width=width,
+        # )
+        # self.v_box.add(settings_button.with_space_around(bottom=gap))
+        #
+        # exit_game_button = UITextButton(application.quit, text="Exit Game", width=width)
+        # self.v_box.add(exit_game_button)
+        #
+        # self.ui_manager.add(
+        #     arcade.gui.UIAnchorWidget(
+        #         anchor_x="center_x",
+        #         anchor_y="center_y",
+        #         child=self.v_box,
+        #     )
+        # )
 
     def handle_events(self, events):
         pass

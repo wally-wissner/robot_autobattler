@@ -1,11 +1,11 @@
 # *args and **kwargs needed for button interface compatibility.
 # pylint: disable=no-member
+# pylint: disable=too-many-instance-attributes
 # pylint: disable=unused-argument
 
 import dill
 import pygame
-
-# import pygame_gui
+import pygame_gui
 
 from _version import __title__, __version__
 from config import absolute_path
@@ -31,7 +31,6 @@ class Application(Singleton):
 
         # Game setup.
         self.game = Game(version=self.version, seed=0)
-        self.delta_time = 0
 
         self.default_font = None
         self.load_assets()
@@ -39,9 +38,16 @@ class Application(Singleton):
         self.settings = SettingsManager(application=self)
         self.settings.load()
 
+        # pygame setup
+        self.clock = pygame.time.Clock()
+        self.delta_time = 0
         pygame.init()
         pygame.display.set_caption(self.title)
         self.display = pygame.display.set_mode(self.settings.resolution)
+        self.ui_manager = pygame_gui.UIManager(
+            self.settings.resolution,
+            # theme_path=None,
+        )
 
         # self.display.on_draw = self.on_draw
         # self.display.on_update = self.on_update
@@ -67,28 +73,39 @@ class Application(Singleton):
         # self.active_scene.ui_manager.draw()
 
     def run(self) -> None:
-        # self.change_scene(EScene.BATTLE)
-        done = False
-        red = (255, 0, 0)
-        green = (0, 255, 0)
-        blue = (0, 0, 255)
-        white = (255, 255, 255)
-        while not done:
+        self.change_scene(EScene.MAIN_MENU)
+        running = True
+        while running:
+            self.delta_time = self.clock.tick(60) / 1000.0
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    done = True
-            pygame.draw.rect(self.display, red, pygame.Rect(100, 30, 60, 60))
-            pygame.draw.polygon(
-                self.display,
-                blue,
-                ((25, 75), (76, 125), (275, 200), (350, 25), (60, 280)),
-            )
-            pygame.draw.circle(self.display, white, (180, 180), 60)
-            pygame.draw.line(self.display, red, (10, 200), (300, 10), 4)
-            pygame.draw.ellipse(self.display, green, (250, 200, 130, 80))
+                    running = False
 
-            text = self.default_font.render("Welcome to My Game", True, (255, 255, 255))
-            self.display.blit(text, (500 // 2 - text.get_width() // 2, 20))
+                self.ui_manager.process_events(event)
+
+            self.ui_manager.update(self.delta_time)
+
+            self.display.blit(pygame.Surface((800, 600)), (0, 0))
+            self.ui_manager.draw_ui(self.display)
+
+            # red = (255, 0, 0)
+            # green = (0, 255, 0)
+            # blue = (0, 0, 255)
+            # white = (255, 255, 255)
+            # pygame.draw.rect(self.display, red, pygame.Rect(100, 30, 60, 60))
+            # pygame.draw.polygon(
+            #     self.display,
+            #     blue,
+            #     ((25, 75), (76, 125), (275, 200), (350, 25), (60, 280)),
+            # )
+            # pygame.draw.circle(self.display, white, (180, 180), 60)
+            # pygame.draw.line(self.display, red, (10, 200), (300, 10), 4)
+            # pygame.draw.ellipse(self.display, green, (250, 200, 130, 80))
+            #
+            # text = self.default_font.render("Welcome to My Game", True, (255, 255, 255))
+            # self.display.blit(text, (500 // 2 - text.get_width() // 2, 20))
+
             pygame.display.update()
 
     def _transform(
@@ -145,7 +162,7 @@ class Application(Singleton):
         if self._active_scene:
             self._active_scene.disable()
         self._active_scene = self._scene_map[scene]()
-        self._active_scene.enable()
+        # self._active_scene.enable()
 
     def return_to_previous_scene(self, *args, **kwargs) -> None:
         try:
