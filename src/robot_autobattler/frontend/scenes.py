@@ -32,6 +32,7 @@ class Scene(ABC):
 
     def __init__(self) -> None:
         self.ui_manager = application.ui_manager
+        self.buttons: dict[pygame_gui.elements.UIButton, tuple[callable, dict]] = {}
 
     @abstractmethod
     def handle_events(self, events: list[arcade.gui.UIEvent]) -> None:
@@ -42,18 +43,21 @@ class Scene(ABC):
         raise NotImplementedError()
 
     def enable(self) -> None:
-        self.ui_manager.enable()
+        # self.ui_manager.enable()
+        pass
 
     def disable(self) -> None:
-        self.ui_manager.disable()
-        application.display.clear()
+        # self.ui_manager.disable()
+        # application.display.clear()
+        pass
 
 
 class MainMenuScene(Scene):
     def __init__(self):
         super().__init__()
 
-        # width = 200
+        button_width = 200
+        button_height = 100
         # gap = 15
 
         self.background = pygame.Surface(application.settings.resolution)
@@ -63,13 +67,16 @@ class MainMenuScene(Scene):
             pygame.Rect(0, 0, 800, 600), manager=self.ui_manager
         )
 
-        pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((500, 500), (100, 100)),
-            text="Hellp World",
+        new_game_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((500, 500), (button_width, button_height)),
+            text="New Game",
             manager=self.ui_manager,
             container=self.container,
             object_id="123",
         )
+
+        self.buttons = {new_game_button: (application.new_game, {})}
+
         # # Set background color
         # arcade.set_background_color(color=colors.DARK_GRAY)
         #

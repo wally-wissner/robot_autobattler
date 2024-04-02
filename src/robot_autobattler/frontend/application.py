@@ -82,6 +82,10 @@ class Application(Singleton):
                 if event.type == pygame.QUIT:
                     running = False
 
+                if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                    func, kwargs = self._active_scene.buttons[event.ui_element]
+                    func(**kwargs)
+
                 self.ui_manager.process_events(event)
 
             self.ui_manager.update(self.delta_time)
