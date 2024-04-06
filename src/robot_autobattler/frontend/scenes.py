@@ -58,7 +58,7 @@ class MainMenuScene(Scene):
 
         button_width = 200
         button_height = 100
-        # gap = 15
+        button_vspace = 50
 
         self.background = pygame.Surface(application.settings_manager.resolution)
         self.background.fill(self.ui_manager.get_theme().get_colour("dark_bg"))
@@ -68,14 +68,49 @@ class MainMenuScene(Scene):
         )
 
         new_game_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((500, 500), (button_width, button_height)),
+            relative_rect=pygame.Rect((0, 0), (button_width, button_height)),
             text="New Game",
             manager=self.ui_manager,
             container=self.container,
-            object_id="123",
+            object_id="main_menu__new_game",
         )
 
-        self.buttons = {new_game_button: (application.new_game, {})}
+        continue_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(
+                (0, button_height + button_vspace), (button_width, button_height)
+            ),
+            text="Continue",
+            manager=self.ui_manager,
+            container=self.container,
+            object_id="main_menu__continue",
+        )
+
+        settings_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(
+                (0, 2 * (button_height + button_vspace)), (button_width, button_height)
+            ),
+            text="Settings",
+            manager=self.ui_manager,
+            container=self.container,
+            object_id="main_menu__settings",
+        )
+
+        exit_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(
+                (0, 3 * (button_height + button_vspace)), (button_width, button_height)
+            ),
+            text="Exit",
+            manager=self.ui_manager,
+            container=self.container,
+            object_id="main_menu__exit",
+        )
+
+        self.buttons = {
+            new_game_button: (application.new_game, {}),
+            continue_button: (application.continue_game, {}),
+            settings_button: (application.change_scene, {"scene": EScene.SETTINGS}),
+            exit_button: (application.quit, {}),
+        }
 
         # # Set background color
         # arcade.set_background_color(color=colors.DARK_GRAY)

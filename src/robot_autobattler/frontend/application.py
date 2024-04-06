@@ -156,6 +156,10 @@ class Application(Singleton):
         self.game.start_encounter()
         self.change_scene(scene=EScene.BATTLE)
 
+    def continue_game(self, *args, **kwargs) -> None:
+        # TODO
+        pass
+
     def load_game(self, *args, **kwargs) -> None:
         self.game = dill.load(self.game_save_path)
 
