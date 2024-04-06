@@ -32,6 +32,15 @@ class Scene(ABC):
 
     def __init__(self) -> None:
         self.ui_manager = application.ui_manager
+        self.display_container = pygame_gui.core.UIContainer(
+            pygame.Rect(
+                0,
+                0,
+                application.settings_manager.width,
+                application.settings_manager.height,
+            ),
+            manager=self.ui_manager,
+        )
         self.buttons: dict[pygame_gui.elements.UIButton, tuple[callable, dict]] = {}
 
     @abstractmethod
@@ -58,20 +67,31 @@ class MainMenuScene(Scene):
 
         button_width = 200
         button_height = 100
-        button_vspace = 50
+        button_vspace = 25
 
         self.background = pygame.Surface(application.settings_manager.resolution)
         self.background.fill(self.ui_manager.get_theme().get_colour("dark_bg"))
 
-        self.container = pygame_gui.core.UIContainer(
-            pygame.Rect(0, 0, 800, 600), manager=self.ui_manager
+        n_buttons = 4
+
+        buttons_container = pygame_gui.core.UIContainer(
+            relative_rect=pygame.Rect(
+                0,
+                0,
+                button_width,
+                n_buttons * button_height + (n_buttons - 1) * button_vspace,
+            ),
+            anchors={"centerx": "centerx", "centery": "centery"},
+            manager=self.ui_manager,
+            container=self.display_container,
         )
 
         new_game_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((0, 0), (button_width, button_height)),
+            anchors={"centerx": "centerx", "centery": "top"},
             text="New Game",
             manager=self.ui_manager,
-            container=self.container,
+            container=buttons_container,
             object_id="main_menu__new_game",
         )
 
@@ -79,9 +99,10 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, button_height + button_vspace), (button_width, button_height)
             ),
+            anchors={"centerx": "centerx", "centery": "top"},
             text="Continue",
             manager=self.ui_manager,
-            container=self.container,
+            container=buttons_container,
             object_id="main_menu__continue",
         )
 
@@ -89,9 +110,10 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, 2 * (button_height + button_vspace)), (button_width, button_height)
             ),
+            anchors={"centerx": "centerx", "centery": "top"},
             text="Settings",
             manager=self.ui_manager,
-            container=self.container,
+            container=buttons_container,
             object_id="main_menu__settings",
         )
 
@@ -99,9 +121,10 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, 3 * (button_height + button_vspace)), (button_width, button_height)
             ),
+            anchors={"centerx": "centerx", "centery": "top"},
             text="Exit",
             manager=self.ui_manager,
-            container=self.container,
+            container=buttons_container,
             object_id="main_menu__exit",
         )
 
