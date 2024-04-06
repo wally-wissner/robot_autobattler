@@ -3,6 +3,8 @@
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=unused-argument
 
+import sys
+
 import dill
 import pygame
 import pygame_gui
@@ -67,12 +69,11 @@ class Application(Singleton):
 
     def run(self) -> None:
         self.change_scene(EScene.MAIN_MENU)
-        running = True
-        while running:
+        while True:
             # Event handling.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    self.quit()
 
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     func, kwargs = self._active_scene.buttons[event.ui_element]
@@ -145,6 +146,7 @@ class Application(Singleton):
 
     def quit(self, *args, **kwargs) -> None:
         pygame.quit()
+        sys.exit()
 
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)

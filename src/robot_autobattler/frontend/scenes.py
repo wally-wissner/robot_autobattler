@@ -52,13 +52,12 @@ class Scene(ABC):
         raise NotImplementedError()
 
     def enable(self) -> None:
-        # self.ui_manager.enable()
-        pass
+        for button in self.buttons:
+            button.visible = True
 
     def disable(self) -> None:
-        # self.ui_manager.disable()
-        # application.display.clear()
-        pass
+        for button in self.buttons:
+            button.visible = False
 
 
 class MainMenuScene(Scene):
