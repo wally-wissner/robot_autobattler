@@ -32,7 +32,7 @@ class Application(Singleton):
         # Game setup.
         self.game = Game(version=self.version, seed=0)
 
-        self.default_font = None
+        self.title_font = None
         self.load_assets()
 
         self.settings_manager = SettingsManager()
@@ -59,8 +59,9 @@ class Application(Singleton):
 
     def load_assets(self) -> None:
         pygame.font.init()
-        self.default_font = pygame.font.Font(
-            absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf")
+        self.title_font = pygame.font.Font(
+            absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"),
+            size=70,
         )
         # pygame.display.set_icon()
 
@@ -68,8 +69,7 @@ class Application(Singleton):
         self.change_scene(EScene.MAIN_MENU)
         running = True
         while running:
-            self._active_scene.draw()
-
+            # Event handling.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -80,9 +80,11 @@ class Application(Singleton):
 
                 self.ui_manager.process_events(event)
 
-            self.ui_manager.update(self.delta_time)
-
+            # Drawing.
             self.display.blit(pygame.Surface(self.settings_manager.resolution), (0, 0))
+            self._active_scene.draw()
+
+            self.ui_manager.update(self.delta_time)
             self.ui_manager.draw_ui(self.display)
 
             # red = (255, 0, 0)

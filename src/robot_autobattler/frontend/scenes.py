@@ -135,13 +135,10 @@ class MainMenuScene(Scene):
         pass
 
     def draw(self):
-        # TODO: Fix title.
-        title = application.default_font.render(
-            application.title, True, (150, 150, 150)
-        )
+        title = application.title_font.render(application.title, True, (150, 150, 150))
         application.display.blit(
             title,
-            (application.settings_manager.width // 2 - title.get_width() // 2, 20),
+            (application.settings_manager.width // 2 - title.get_width() // 2, 50),
         )
 
 
