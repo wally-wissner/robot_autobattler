@@ -68,7 +68,7 @@ class Application(Singleton):
         self.change_scene(EScene.MAIN_MENU)
         running = True
         while running:
-            self.delta_time = self.clock.tick(60) / 1000.0
+            self._active_scene.draw()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -103,6 +103,7 @@ class Application(Singleton):
             # self.display.blit(text, (500 // 2 - text.get_width() // 2, 20))
 
             pygame.display.update()
+            self.delta_time = self.clock.tick(60) / 1000.0
 
     def _transform(
         self, f, vector: Vector2 = None, x: float = None, y: float = None

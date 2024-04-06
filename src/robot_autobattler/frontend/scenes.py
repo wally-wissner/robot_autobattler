@@ -81,14 +81,14 @@ class MainMenuScene(Scene):
                 button_width,
                 n_buttons * button_height + (n_buttons - 1) * button_vspace,
             ),
-            anchors={"centerx": "centerx", "centery": "centery"},
+            anchors={"center": "center"},
             manager=self.ui_manager,
             container=self.display_container,
         )
 
         new_game_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((0, 0), (button_width, button_height)),
-            anchors={"centerx": "centerx", "centery": "top"},
+            anchors={"center": "top"},
             text="New Game",
             manager=self.ui_manager,
             container=buttons_container,
@@ -99,7 +99,7 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, button_height + button_vspace), (button_width, button_height)
             ),
-            anchors={"centerx": "centerx", "centery": "top"},
+            anchors={"center": "top"},
             text="Continue",
             manager=self.ui_manager,
             container=buttons_container,
@@ -110,7 +110,7 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, 2 * (button_height + button_vspace)), (button_width, button_height)
             ),
-            anchors={"centerx": "centerx", "centery": "top"},
+            anchors={"center": "top"},
             text="Settings",
             manager=self.ui_manager,
             container=buttons_container,
@@ -121,7 +121,7 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, 3 * (button_height + button_vspace)), (button_width, button_height)
             ),
-            anchors={"centerx": "centerx", "centery": "top"},
+            anchors={"center": "top"},
             text="Exit",
             manager=self.ui_manager,
             container=buttons_container,
@@ -139,7 +139,14 @@ class MainMenuScene(Scene):
         pass
 
     def draw(self):
-        pass
+        # TODO: Fix title.
+        title = application.default_font.render(
+            application.title, True, (150, 150, 150)
+        )
+        application.display.blit(
+            title,
+            (application.settings_manager.width // 2 - title.get_width() // 2, 20),
+        )
 
 
 class SettingsScene(Scene):
