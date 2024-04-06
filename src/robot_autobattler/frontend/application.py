@@ -88,23 +88,6 @@ class Application(Singleton):
             self.ui_manager.update(self.delta_time)
             self.ui_manager.draw_ui(self.display)
 
-            # red = (255, 0, 0)
-            # green = (0, 255, 0)
-            # blue = (0, 0, 255)
-            # white = (255, 255, 255)
-            # pygame.draw.rect(self.display, red, pygame.Rect(100, 30, 60, 60))
-            # pygame.draw.polygon(
-            #     self.display,
-            #     blue,
-            #     ((25, 75), (76, 125), (275, 200), (350, 25), (60, 280)),
-            # )
-            # pygame.draw.circle(self.display, white, (180, 180), 60)
-            # pygame.draw.line(self.display, red, (10, 200), (300, 10), 4)
-            # pygame.draw.ellipse(self.display, green, (250, 200, 130, 80))
-            #
-            # text = self.default_font.render("Welcome to My Game", True, (255, 255, 255))
-            # self.display.blit(text, (500 // 2 - text.get_width() // 2, 20))
-
             pygame.display.update()
             self.delta_time = self.clock.tick(60) / 1000.0
 
@@ -177,7 +160,7 @@ class Application(Singleton):
         except IndexError:
             pass
 
-    def load_scene_map(self, scene_map):
+    def load_scene_map(self, scene_map: dict) -> None:
         self._scene_map = scene_map
 
 

@@ -65,11 +65,10 @@ class MainMenuScene(Scene):
         super().__init__()
 
         button_width = 200
-        button_height = 100
+        button_height = 80
         button_vspace = 25
 
         self.background = pygame.Surface(application.settings_manager.resolution)
-        self.background.fill(self.ui_manager.get_theme().get_colour("dark_bg"))
 
         n_buttons = 4
 
@@ -134,10 +133,11 @@ class MainMenuScene(Scene):
         pass
 
     def draw(self):
+        self.background.fill(color=colors.DARK_GRAY)
         title = application.title_font.render(application.title, True, (150, 150, 150))
         application.display.blit(
             title,
-            (application.settings_manager.width // 2 - title.get_width() // 2, 50),
+            (application.settings_manager.width // 2 - title.get_width() // 2, 100),
         )
 
 
