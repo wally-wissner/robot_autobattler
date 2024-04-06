@@ -64,14 +64,6 @@ class Application(Singleton):
         )
         # pygame.display.set_icon()
 
-    def on_update(self, delta_time) -> None:
-        self.delta_time = delta_time
-
-    def on_draw(self) -> None:
-        self.display.clear()
-        self._active_scene.draw()
-        # self.active_scene.ui_manager.draw()
-
     def run(self) -> None:
         self.change_scene(EScene.MAIN_MENU)
         running = True
@@ -90,7 +82,7 @@ class Application(Singleton):
 
             self.ui_manager.update(self.delta_time)
 
-            self.display.blit(pygame.Surface((800, 600)), (0, 0))
+            self.display.blit(pygame.Surface(self.settings_manager.resolution), (0, 0))
             self.ui_manager.draw_ui(self.display)
 
             # red = (255, 0, 0)

@@ -135,79 +135,11 @@ class MainMenuScene(Scene):
             exit_button: (application.quit, {}),
         }
 
-        # # Set background color
-        # arcade.set_background_color(color=colors.DARK_GRAY)
-        #
-        # # Create a vertical BoxGroup to align buttons
-        # self.v_box = arcade.gui.UIBoxLayout()
-        #
-        # # Create the buttons
-        # button_new_game = UITextButton(
-        #     application.new_game, text="New Game", width=width
-        # )
-        # self.v_box.add(button_new_game.with_space_around(bottom=gap))
-        #
-        # button_continue = UITextButton(
-        #     application.load_game, text="Continue", width=width
-        # )
-        # self.v_box.add(button_continue.with_space_around(bottom=gap))
-        #
-        # settings_button = UITextButton(
-        #     application.change_scene,
-        #     scene=EScene.SETTINGS,
-        #     text="Settings",
-        #     width=width,
-        # )
-        # self.v_box.add(settings_button.with_space_around(bottom=gap))
-        #
-        # exit_game_button = UITextButton(application.quit, text="Exit Game", width=width)
-        # self.v_box.add(exit_game_button)
-        #
-        # self.ui_manager.add(
-        #     arcade.gui.UIAnchorWidget(
-        #         anchor_x="center_x",
-        #         anchor_y="center_y",
-        #         child=self.v_box,
-        #     )
-        # )
-
     def handle_events(self, events):
         pass
-        # for event in events:
-        #     if event.type == pygame_gui.UI_BUTTON_PRESSED:
-        #         if event.ui_element == self.button_new_game:
-        #             application.new_game()
-        #             application.change_scene(EScene.BATTLE)
-        #         if event.ui_element == self.button_continue:
-        #             application.load_game()
-        #             application.change_scene(EScene.BATTLE)
 
     def draw(self):
-        # Title
-        arcade.draw_text(
-            text=application.title,
-            start_x=application.rel2abs(x=0.5),
-            start_y=application.rel2abs(y=0.8),
-            color=colors.NEON_GREEN,
-            font_name=application.default_font,
-            font_size=48,
-            # bold=True,
-            anchor_x="center",
-            anchor_y="baseline",
-        )
-        # Version
-        arcade.draw_text(
-            text=f"Version {application.version}",
-            start_x=application.rel2abs(x=0.95),
-            start_y=application.rel2abs(y=0.05),
-            color=colors.NEON_GREEN,
-            font_name=application.default_font,
-            font_size=20,
-            # bold=True,
-            anchor_x="right",
-            anchor_y="bottom",
-        )
-        self.ui_manager.draw()
+        pass
 
 
 class SettingsScene(Scene):
