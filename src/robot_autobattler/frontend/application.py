@@ -35,17 +35,17 @@ class Application(Singleton):
         self.default_font = None
         self.load_assets()
 
-        self.settings = SettingsManager(application=self)
-        self.settings.load()
+        self.settings_manager = SettingsManager()
+        self.settings_manager.load()
 
         # pygame setup
         self.clock = pygame.time.Clock()
         self.delta_time = 0
         pygame.init()
         pygame.display.set_caption(self.title)
-        self.display = pygame.display.set_mode(self.settings.resolution)
+        self.display = pygame.display.set_mode(self.settings_manager.resolution)
         self.ui_manager = pygame_gui.UIManager(
-            self.settings.resolution,
+            self.settings_manager.resolution,
             # theme_path=None,
         )
 
@@ -121,12 +121,13 @@ class Application(Singleton):
             x, y = vector
             vector = Vector2(x=x, y=y)
             return Vector2(
-                x=f(vector.x, self.display.width), y=f(vector.y, self.display.height)
+                x=f(vector.x, self.settings_manager.width),
+                y=f(vector.y, self.settings_manager.height),
             )
         if x:
-            return x * self.display.width
+            return x * self.settings_manager.width
         if y:
-            return y * self.display.height
+            return y * self.settings_manager.height
         raise ValueError("Must supply relative or x or y.")
 
     def rel2abs(

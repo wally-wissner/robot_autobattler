@@ -60,7 +60,7 @@ class MainMenuScene(Scene):
         button_height = 100
         # gap = 15
 
-        self.background = pygame.Surface(application.settings.resolution)
+        self.background = pygame.Surface(application.settings_manager.resolution)
         self.background.fill(self.ui_manager.get_theme().get_colour("dark_bg"))
 
         self.container = pygame_gui.core.UIContainer(
