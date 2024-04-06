@@ -88,7 +88,6 @@ class MainMenuScene(Scene):
 
         new_game_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((0, 0), (button_width, button_height)),
-            anchors={"center": "top"},
             text="New Game",
             manager=self.ui_manager,
             container=buttons_container,
@@ -99,7 +98,6 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, button_height + button_vspace), (button_width, button_height)
             ),
-            anchors={"center": "top"},
             text="Continue",
             manager=self.ui_manager,
             container=buttons_container,
@@ -110,7 +108,6 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, 2 * (button_height + button_vspace)), (button_width, button_height)
             ),
-            anchors={"center": "top"},
             text="Settings",
             manager=self.ui_manager,
             container=buttons_container,
@@ -121,7 +118,6 @@ class MainMenuScene(Scene):
             relative_rect=pygame.Rect(
                 (0, 3 * (button_height + button_vspace)), (button_width, button_height)
             ),
-            anchors={"center": "top"},
             text="Exit",
             manager=self.ui_manager,
             container=buttons_container,
