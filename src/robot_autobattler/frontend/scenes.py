@@ -45,10 +45,6 @@ class Scene(ABC):
         self.buttons: dict[pygame_gui.elements.UIButton, tuple[callable, dict]] = {}
 
     @abstractmethod
-    def handle_events(self, events: list[pygame.event.Event]) -> None:
-        raise NotImplementedError()
-
-    @abstractmethod
     def draw(self) -> None:
         raise NotImplementedError()
 
@@ -130,9 +126,6 @@ class MainMenuScene(Scene):
             exit_button: (application.quit, {}),
         }
 
-    def handle_events(self, events):
-        pass
-
     def draw(self):
         application.display.fill(color=colors.DARK_GRAY)
         title = application.title_font.render(
@@ -187,10 +180,6 @@ class SettingsScene(Scene):
                 child=self.v_box,
             )
         )
-
-    def handle_events(self, events):
-        # todo
-        pass
 
     def draw(self):
         self.ui_manager.draw()
@@ -249,10 +238,6 @@ class BattleScene(Scene):
         # )
         # self.ui_manager.add(anchored_settings_button)
 
-    def handle_events(self, events):
-        # todo
-        pass
-
     def draw(self):
         application.game.update_physics(application.delta_time)
         for unit in application.game.units():
@@ -296,10 +281,6 @@ class UpgradeScene(Scene):
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
         self.active_upgrade = upgrade
         self.upgrade_pane.set_upgrade(upgrade)
-
-    def handle_events(self, events):
-        # todo
-        pass
 
     def draw(self):
         self.ui_manager.draw()
