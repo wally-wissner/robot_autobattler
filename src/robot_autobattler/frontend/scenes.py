@@ -44,7 +44,7 @@ class Scene(ABC):
         self.buttons: dict[pygame_gui.elements.UIButton, tuple[callable, dict]] = {}
 
     @abstractmethod
-    def handle_events(self, events: list[arcade.gui.UIEvent]) -> None:
+    def handle_events(self, events: list[pygame.event.Event]) -> None:
         raise NotImplementedError()
 
     @abstractmethod
@@ -133,7 +133,7 @@ class MainMenuScene(Scene):
         pass
 
     def draw(self):
-        self.background.fill(color=colors.DARK_GRAY)
+        application.display.fill(color=colors.DARK_GRAY)
         title = application.title_font.render(application.title, True, (150, 150, 150))
         application.display.blit(
             title,
