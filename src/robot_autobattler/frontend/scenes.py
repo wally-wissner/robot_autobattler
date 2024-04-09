@@ -7,6 +7,7 @@ Each of the application's scenes is its own class.
 
 
 from abc import ABC, abstractmethod
+from datetime import datetime
 
 import arcade
 import arcade.gui
@@ -134,7 +135,12 @@ class MainMenuScene(Scene):
 
     def draw(self):
         application.display.fill(color=colors.DARK_GRAY)
-        title = application.title_font.render(application.title, True, (150, 150, 150))
+        title = application.title_font.render(
+            # Flicker "cursor" every second.
+            application.title + ("|" if datetime.now().second % 2 else " "),
+            True,
+            colors.NEON_GREEN,
+        )
         application.display.blit(
             title,
             (application.settings_manager.width // 2 - title.get_width() // 2, 100),

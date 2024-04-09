@@ -7,14 +7,14 @@ ColorRGB = namedtuple("ColorRGB", "r g b")
 BLACK = ColorRGB(0, 0, 0)
 WHITE = ColorRGB(255, 255, 255)
 
-DARK_GRAY = ColorRGB(40, 40, 40)
+DARK_GRAY = ColorRGB(3, 24, 15)
 LIGHT_GRAY = ColorRGB(80, 80, 80)
 
 RED = ColorRGB(255, 0, 0)
 GREEN = ColorRGB(0, 255, 0)
 BLUE = ColorRGB(0, 0, 255)
 
-NEON_GREEN = ColorRGB(65, 255, 0)
+NEON_GREEN = ColorRGB(0, 243, 154)
 
 LIGHT_BROWN = ColorRGB(160, 82, 45)
 DARK_BROWN = ColorRGB(139, 69, 19)
