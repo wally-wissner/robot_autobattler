@@ -4,6 +4,7 @@ Each of the application's scenes is its own class.
 
 # TODO: Ignore warnings until scenes are updated to pygame.
 # pylint: disable=no-member
+# pylint: disable=unused-import
 
 
 from abc import ABC, abstractmethod
@@ -14,12 +15,11 @@ import arcade.gui
 import pygame
 import pygame_gui
 
-from config import absolute_path
 from backend.unit import Unit
 from backend.upgrades import Upgrade
 from frontend import colors
 from frontend.application import application
-from frontend.ui_elements import UITextButton, UITextureButton
+from frontend.ui_elements import UITextButton
 from frontend.ui_panes import InventoryPane, TeamPane, UnitPane, UpgradePane
 from frontend.upgrades import UIUnitUpgrade
 from utils.enums import EScene, EStat
@@ -42,6 +42,7 @@ class Scene(ABC):
             ),
             manager=self.ui_manager,
         )
+
         self.buttons: dict[pygame_gui.elements.UIButton, tuple[callable, dict]] = {}
 
     @abstractmethod
@@ -64,8 +65,6 @@ class MainMenuScene(Scene):
         button_width = 200
         button_height = 80
         button_vspace = 25
-
-        self.background = pygame.Surface(application.settings_manager.resolution)
 
         n_buttons = 4
 
@@ -203,30 +202,30 @@ class BattleScene(Scene):
         # self.camera.update()
         # self.camera.use()
 
-        for unit in application.game.units():
-            for upgrade in unit.upgrades:
-                uu = UIUnitUpgrade(
-                    upgrade=upgrade,
-                    x=300,
-                    y=300,
-                    width=200,
-                    height=200,
-                    description=False,
-                )
-        self.ui_manager.add(uu)
+        # for unit in application.game.units():
+        #     for upgrade in unit.upgrades:
+        #         uu = UIUnitUpgrade(
+        #             upgrade=upgrade,
+        #             x=300,
+        #             y=300,
+        #             width=200,
+        #             height=200,
+        #             description=False,
+        #         )
+        # self.ui_manager.add(uu)
 
-        settings_button = UITextureButton(
-            x=application.rel2abs(x=0.975) - self.icon_height / 2,
-            y=self.menu_rect.center().y - self.icon_height / 2,
-            width=self.icon_height,
-            height=self.icon_height,
-            texture=arcade.load_texture(
-                absolute_path("assets/images/ui/settings-icon.png")
-            ),
-            on_click=application.change_scene,
-            scene=EScene.SETTINGS,
-        )
-        self.ui_manager.add(settings_button)
+        # settings_button = UITextureButton(
+        #     x=application.rel2abs(x=0.975) - self.icon_height / 2,
+        #     y=self.menu_rect.center().y - self.icon_height / 2,
+        #     width=self.icon_height,
+        #     height=self.icon_height,
+        #     texture=arcade.load_texture(
+        #         absolute_path("assets/images/ui/settings-icon.png")
+        #     ),
+        #     on_click=application.change_scene,
+        #     scene=EScene.SETTINGS,
+        # )
+        # self.ui_manager.add(settings_button)
 
         # anchored_settings_button = arcade.gui.UIAnchorWidget(
         #     child=settings_button,
@@ -239,24 +238,17 @@ class BattleScene(Scene):
         # self.ui_manager.add(anchored_settings_button)
 
     def draw(self):
+        application.display.fill(color=colors.DARK_GRAY)
+
         application.game.update_physics(application.delta_time)
+
         for unit in application.game.units():
-            arcade.draw_circle_filled(
-                center_x=unit.position.x,
-                center_y=unit.position.y,
-                radius=application.game.stat_value(unit, EStat.SIZE),
+            pygame.draw.circle(
+                surface=application.display,
                 color=unit.color(),
+                center=unit.position.as_tuple(),
+                radius=application.game.stat_value(unit, EStat.SIZE),
             )
-
-        arcade.draw_rectangle_filled(
-            center_x=self.menu_rect.center().x,
-            center_y=self.menu_rect.center().y,
-            width=self.menu_rect.width(),
-            height=self.menu_rect.height(),
-            color=colors.LIGHT_GRAY,
-        )
-
-        self.ui_manager.draw()
 
 
 class UpgradeScene(Scene):

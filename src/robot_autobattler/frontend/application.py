@@ -46,6 +46,7 @@ class Application(Singleton):
         pygame.init()
         pygame.display.set_caption(self.title)
         self.display = pygame.display.set_mode(self.settings_manager.resolution)
+        self.surface = pygame.Surface(self.settings_manager.resolution)
         self.ui_manager = pygame_gui.UIManager(
             self.settings_manager.resolution,
             # theme_path=None,
@@ -70,6 +71,8 @@ class Application(Singleton):
     def run(self) -> None:
         self.change_scene(EScene.MAIN_MENU)
         while True:
+            self.delta_time = self.clock.tick(60) / 1000.0
+
             # Event handling.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -89,7 +92,6 @@ class Application(Singleton):
             self.ui_manager.draw_ui(self.display)
 
             pygame.display.update()
-            self.delta_time = self.clock.tick(60) / 1000.0
 
     def _transform(
         self, f, vector: Vector2 = None, x: float = None, y: float = None
