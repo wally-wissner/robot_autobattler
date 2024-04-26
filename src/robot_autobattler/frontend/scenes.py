@@ -216,31 +216,14 @@ class BattleScene(Scene):
             container=self.display_container,
         )
 
-        # buttons_container = pygame_gui.core.UIContainer(
-        #     relative_rect=pygame.Rect(
-        #         0,
-        #         0,
-        #         button_width,
-        #         n_buttons * button_height + (n_buttons - 1) * button_vspace,
-        #     ),
-        #     anchors={"center": "center"},
-        #     manager=self.ui_manager,
-        #     container=self.display_container,
-        # )
-
-        # button_layout_rect = pygame.Rect(30, 20, 100, 20)
-        button_layout_rect = pygame.Rect(30, 20, 100, 20)
-
-        pygame_gui.elements.UIButton(
-            relative_rect=button_layout_rect,
-            text="Hello",
+        settings_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(-100, 0, 100, 50),
+            text="Settings",
             manager=self.ui_manager,
-            container=self.display_container,
+            container=self.menu_bar_container,
             anchors={
-                "left": "left",
                 "right": "right",
-                "top": "top",
-                "bottom": "bottom",
+                "centery": "centery",
             },
         )
 
@@ -278,6 +261,10 @@ class BattleScene(Scene):
         #     anchor_y='top',
         # )
         # self.ui_manager.add(anchored_settings_button)
+
+        self.buttons = {
+            settings_button: (application.change_scene, {"scene": EScene.SETTINGS}),
+        }
 
     def draw(self):
         application.display.fill(color=colors.LIGHT_GRAY)
