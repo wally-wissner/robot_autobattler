@@ -34,7 +34,7 @@ class Scene(ABC):
     def __init__(self) -> None:
         self.ui_manager = application.ui_manager
         self.display_container = pygame_gui.core.UIContainer(
-            pygame.Rect(
+            relative_rect=pygame.Rect(
                 0,
                 0,
                 application.settings_manager.width,
@@ -188,19 +188,61 @@ class BattleScene(Scene):
     def __init__(self):
         super().__init__()
 
-        self.menu_rect = Rectangle.from_points(
-            [
-                application.rel2abs(Vector2(x=0, y=0.925)),
-                application.rel2abs(Vector2(x=1, y=1)),
-            ]
+        # menu_bar_height = .075
+        #
+        # self.menu_bar_rect = Rectangle.from_points(
+        #     [
+        #         application.rel2abs(Vector2(x=0, y=1 - menu_bar_height)),
+        #         application.rel2abs(Vector2(x=1, y=1)),
+        #     ]
+        # )
+        #
+        # self.icon_height = 0.8 * self.menu_bar_rect.height()
+        #
+
+        self.menu_bar_rect = pygame.Rect(
+            0,
+            0,
+            application.settings_manager.width,
+            0.075 * application.settings_manager.height,
         )
 
-        self.icon_height = 0.8 * self.menu_rect.height()
+        self.menu_bar_surface = pygame.Surface(self.menu_bar_rect.size)
 
-        # self.camera = arcade.Camera(window=applicationlication.window)
-        # self.camera.move(Vec2())
-        # self.camera.update()
-        # self.camera.use()
+        self.menu_bar_container = pygame_gui.core.UIContainer(
+            relative_rect=self.menu_bar_rect,
+            anchors={"left": "left", "right": "right", "top": "top", "bottom": "top"},
+            manager=self.ui_manager,
+            container=self.display_container,
+        )
+
+        # buttons_container = pygame_gui.core.UIContainer(
+        #     relative_rect=pygame.Rect(
+        #         0,
+        #         0,
+        #         button_width,
+        #         n_buttons * button_height + (n_buttons - 1) * button_vspace,
+        #     ),
+        #     anchors={"center": "center"},
+        #     manager=self.ui_manager,
+        #     container=self.display_container,
+        # )
+
+        # button_layout_rect = pygame.Rect(30, 20, 100, 20)
+        button_layout_rect = pygame.Rect(30, 20, 100, 20)
+
+        pygame_gui.elements.UIButton(
+            relative_rect=button_layout_rect,
+            text="Hello",
+            manager=self.ui_manager,
+            container=self.display_container,
+            anchors={
+                "left": "left",
+                "right": "right",
+                "top": "top",
+                "bottom": "bottom",
+            },
+        )
 
         # for unit in application.game.units():
         #     for upgrade in unit.upgrades:
@@ -238,7 +280,7 @@ class BattleScene(Scene):
         # self.ui_manager.add(anchored_settings_button)
 
     def draw(self):
-        application.display.fill(color=colors.DARK_GRAY)
+        application.display.fill(color=colors.LIGHT_GRAY)
 
         application.game.update_physics(application.delta_time)
 
@@ -249,6 +291,9 @@ class BattleScene(Scene):
                 center=unit.position.as_tuple(),
                 radius=application.game.stat_value(unit, EStat.SIZE),
             )
+
+        self.menu_bar_surface.fill(color=colors.DARK_GRAY)
+        application.display.blit(self.menu_bar_surface, (0, 0))
 
 
 class UpgradeScene(Scene):
