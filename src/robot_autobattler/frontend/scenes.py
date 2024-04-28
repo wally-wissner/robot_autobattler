@@ -10,8 +10,6 @@ Each of the application's scenes is its own class.
 from abc import ABC, abstractmethod
 from datetime import datetime
 
-import arcade
-import arcade.gui
 import pygame
 import pygame_gui
 
@@ -127,6 +125,8 @@ class MainMenuScene(Scene):
 
     def draw(self):
         application.display.fill(color=colors.DARK_GRAY)
+
+        # Game title.
         title = application.title_font.render(
             # Flicker "cursor" every second.
             application.title + ("|" if datetime.now().second % 2 else " "),
@@ -143,45 +143,60 @@ class SettingsScene(Scene):
     def __init__(self):
         super().__init__()
 
-        width = 200
-        gap = 15
+        button_width = 200
+        button_height = 80
+        button_vspace = 25
 
-        # Set background color
-        arcade.set_background_color(color=colors.DARK_GRAY)
+        n_buttons = 3
 
-        # Create a vertical BoxGroup to align settings
-        self.v_box = arcade.gui.UIBoxLayout(vertical=True)
-
-        # Create a horizontal BoxGroup to align buttons
-        self.h_box = arcade.gui.UIBoxLayout(vertical=False)
-
-        # Create the buttons
-        back_button = UITextButton(
-            application.return_to_previous_scene, text="Back", width=width
+        buttons_container = pygame_gui.core.UIContainer(
+            relative_rect=pygame.Rect(
+                0,
+                0,
+                button_width,
+                n_buttons * button_height + (n_buttons - 1) * button_vspace,
+            ),
+            anchors={"center": "center"},
+            manager=self.ui_manager,
+            container=self.display_container,
         )
-        self.h_box.add(back_button.with_space_around(right=gap))
-        main_menu_button = UITextButton(
-            application.change_scene,
-            scene=EScene.MAIN_MENU,
+
+        back_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((0, 0), (button_width, button_height)),
+            text="Back",
+            manager=self.ui_manager,
+            container=buttons_container,
+            object_id="settings__back",
+        )
+
+        main_menu_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(
+                (0, button_height + button_vspace), (button_width, button_height)
+            ),
             text="Main Menu",
-            width=width,
+            manager=self.ui_manager,
+            container=buttons_container,
+            object_id="settings__main_menu",
         )
-        self.h_box.add(main_menu_button.with_space_around(right=gap))
-        exit_game_button = UITextButton(application.quit, text="Exit Game", width=width)
-        self.h_box.add(exit_game_button)
 
-        self.v_box.add(self.h_box)
-
-        self.ui_manager.add(
-            arcade.gui.UIAnchorWidget(
-                anchor_x="center_x",
-                anchor_y="center_y",
-                child=self.v_box,
-            )
+        exit_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect(
+                (0, 2 * (button_height + button_vspace)), (button_width, button_height)
+            ),
+            text="Exit Game",
+            manager=self.ui_manager,
+            container=buttons_container,
+            object_id="settings__exit",
         )
+
+        self.buttons = {
+            back_button: (application.return_to_previous_scene, {}),
+            main_menu_button: (application.change_scene, {"scene": EScene.MAIN_MENU}),
+            exit_button: (application.quit, {}),
+        }
 
     def draw(self):
-        self.ui_manager.draw()
+        application.display.fill(color=colors.DARK_GRAY)
 
 
 class BattleScene(Scene):
@@ -217,7 +232,7 @@ class BattleScene(Scene):
         )
 
         settings_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect(-100, 0, 100, 50),
+            relative_rect=pygame.Rect(-110, 0, 100, 50),
             text="Settings",
             manager=self.ui_manager,
             container=self.menu_bar_container,
