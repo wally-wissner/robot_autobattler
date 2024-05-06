@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
+from frontend.colors import ColorRGB
 from utils import enums
 
 
@@ -11,5 +12,9 @@ class UpgradeComponent(ABC):
     bp: int
 
     @abstractmethod
-    def description(self):
+    def description(self) -> str:
+        raise NotImplementedError()
+
+    @abstractmethod
+    def color(self) -> ColorRGB:
         raise NotImplementedError()

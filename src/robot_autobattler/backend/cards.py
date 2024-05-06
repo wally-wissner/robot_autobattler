@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from xml.etree import ElementTree
 
+from frontend import colors
 from utils import enums
 from backend.upgrade_components import UpgradeComponent
 
@@ -15,6 +16,9 @@ class Card(UpgradeComponent):
     def description(self):
         return self.name
 
+    def color(self) -> colors.ColorRGB:
+        return colors.BLUE
+
 
 @dataclass
 class AdvancedCard(Card):
@@ -23,6 +27,9 @@ class AdvancedCard(Card):
     def description(self) -> str:
         # TODO
         return self.name
+
+    def color(self) -> colors.ColorRGB:
+        return colors.BLUE
 
 
 @dataclass
@@ -87,3 +94,6 @@ class SimpleCard(Card):
 
     def get_text(self) -> str:
         return "\n".join(ability.get_text() for ability in self.abilities)
+
+    def color(self) -> colors.ColorRGB:
+        return colors.BLUE

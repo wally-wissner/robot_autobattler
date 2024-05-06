@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from backend.upgrade_components import UpgradeComponent
 from backend.unitstat import StatModifier
+from frontend import colors
 from utils import enums
 
 
@@ -13,5 +14,8 @@ class Badge(UpgradeComponent):
     description_text: str
     stat_modifiers: set[StatModifier]
 
-    def description(self):
+    def description(self) -> str:
         return self.description_text
+
+    def color(self) -> colors.ColorRGB:
+        return colors.RED
