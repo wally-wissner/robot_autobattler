@@ -29,12 +29,7 @@ class UIUpgradeComponent:
         display_description: bool,
     ):
         component_surface = pygame.Surface(size=size)
-
-        pygame.draw.rect(
-            surface=component_surface,
-            color=self.upgrade_component.color(),
-            rect=pygame.Rect(size, (0, 0)),
-        )
+        component_surface.fill(color=self.upgrade_component.color())
 
         surface.blit(source=component_surface, dest=position)
 
