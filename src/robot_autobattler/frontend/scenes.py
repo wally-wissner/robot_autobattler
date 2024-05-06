@@ -19,7 +19,7 @@ from frontend import colors
 from frontend.application import application
 from frontend.ui_elements import UITextButton
 from frontend.ui_panes import InventoryPane, TeamPane, UnitPane, UpgradePane
-from frontend.upgrades import UIUnitUpgrade
+from frontend.upgrades import UIUpgrade
 from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
 

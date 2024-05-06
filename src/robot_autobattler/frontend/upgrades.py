@@ -2,122 +2,54 @@
 UI elements for upgrades.
 """
 
-from dataclasses import dataclass
-from math import ceil
+import pygame
 
-import arcade
-import arcade.gui
-from PIL import Image
-
-from backend.badges import Badge
-from backend.cards import Card
 from backend.upgrades import Upgrade
 from backend.upgrade_components import UpgradeComponent
 from frontend import colors
-
-# from frontend.fonts import get_font
-
-
-@dataclass(eq=True, frozen=True)
-class TextureParams:
-    color: colors.ColorRGB
-    width: int
-    height: int
+from frontend.fonts import get_font
+from utils.enums import EFont
+from utils.geometry import Vector2
 
 
-class UIUpgradeComponent(arcade.gui.UITexturePane):
-    textures: dict[(TextureParams, arcade.Texture)] = {}
+class UIUpgradeComponent:
+    vertical_proportions = (0.175, 0.025, 0.8)
 
-    def __init__(
-        self, upgrade_component: UpgradeComponent, width: int, description: bool
-    ):
+    def __init__(self, upgrade_component: UpgradeComponent):
         self.upgrade_component = upgrade_component
-        self.w = width
-        self.h = width // 2
-        self.description = description
-        self.texture_params = TextureParams(self._get_color(), self.h, self.w)
 
-        v_proportions = (0.175, 0.025, 0.8)
-        if description:
-            name_label = arcade.gui.UILabel(
-                text=self.upgrade_component.name,
-                width=self.w,
-                height=v_proportions[0] * self.h,
-                align="left",
-                font_size=self.w / 20,
-            )
-            description_label = arcade.gui.UILabel(
-                text=self.upgrade_component.description(),
-                width=self.w,
-                height=v_proportions[2] * self.h,
-                align="left",
-                font_size=self.w / 25,
-            )
-            body = arcade.gui.widgets.UIBoxLayout()
-            body.add(name_label.with_space_around(bottom=v_proportions[1] * self.h))
-            body.add(description_label)
-        else:
-            body = arcade.gui.UILabel(
-                text=self.upgrade_component.name,
-                width=self.w,
-                height=self.h,
-                align="center",
-                font_size=self.w / 15,
-            )
+    def draw(self, surface: pygame.Surface, size: Vector2, display_description: bool):
+        component_surface = pygame.Surface(size=size)
 
-        super().__init__(
-            tex=self._get_texture(),
-            child=body,
-            size_hint=1,
-            width=self.w,
-            height=self.h,
+        pygame.draw.rect(
+            surface=surface,
+            color=self.upgrade_component.color(),
+            rect=pygame.Rect(size, (0, 0)),
         )
 
-    def _get_color(self) -> colors.ColorRGB:
-        if isinstance(self.upgrade_component, Badge):
-            color = colors.RETRO_BLUE
-        if isinstance(self.upgrade_component, Card):
-            color = colors.RETRO_RED
-        return color
-
-    def _get_texture(self) -> arcade.Texture:
-        if self.texture_params not in self.textures:
-            self.textures[self.texture_params] = arcade.Texture(
-                name=str(self.texture_params),
-                image=Image.new(
-                    mode="RGB", size=(self.w, self.h), color=self._get_color()
-                ),
-            )
-        return self.textures[self.texture_params]
+        if display_description:
+            pass
 
 
-class UIUnitUpgrade(arcade.gui.UIPadding, arcade.gui.UIDraggableMixin):
-    def __init__(
-        self,
-        upgrade: Upgrade,
-        width: int,
-        height: int,
-        x: int,
-        y: int,
-        description: bool,
-    ):
-        padding = tuple(ceil(width / 100) for _ in range(4))
+class UIUpgrade:
+    border_width = 0.025
+
+    def __init__(self, upgrade: Upgrade):
         self.upgrade = upgrade
-        self.box = arcade.gui.UIBoxLayout(x=x, y=y, vertical=True, space_between=0)
-        self.box.add(
-            UIUpgradeComponent(
-                upgrade_component=upgrade.badge, width=width, description=description
-            )
+        self.badge_ui = UIUpgradeComponent(upgrade.badge)
+        self.card_ui = UIUpgradeComponent(upgrade.card)
+
+    def draw(self, surface: pygame.Surface, size: Vector2, display_description: bool):
+        upgrade_surface = pygame.Surface(size=size)
+
+        self.badge_ui.draw(
+            surface=upgrade_surface, display_description=display_description
         )
-        self.box.add(
-            UIUpgradeComponent(
-                upgrade_component=upgrade.card, width=width, description=description
-            )
+        self.card_ui.draw(
+            surface=upgrade_surface, display_description=display_description
         )
-        super().__init__(
-            child=self.box,
-            bg_color=colors.RARE,
-            width=width,
-            height=height,
-            padding=padding,
+
+        pygame.draw.rect(
+            surface=surface,
+            # color=
         )
