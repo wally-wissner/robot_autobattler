@@ -1,5 +1,6 @@
-import pygame
 from functools import cache
+
+import pygame
 
 from config import absolute_path
 from utils.enums import EFont
