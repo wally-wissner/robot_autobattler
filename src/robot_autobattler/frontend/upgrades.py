@@ -31,10 +31,16 @@ class UIUpgradeComponent:
         component_surface = pygame.Surface(size=size)
         component_surface.fill(color=self.upgrade_component.color())
 
-        surface.blit(source=component_surface, dest=position)
-
         if display_description:
-            pass
+            title = get_font(EFont.JETBRAINS_MONO_REGULAR, 12).render(
+                # Flicker "cursor" every second.
+                text=self.upgrade_component.name,
+                antialias=True,
+                color=colors.BLACK,
+            )
+            component_surface.blit(source=title, dest=(10, 10))
+
+        surface.blit(source=component_surface, dest=position)
 
 
 class UIUpgrade:

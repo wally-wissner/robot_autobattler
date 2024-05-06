@@ -61,10 +61,6 @@ class Application(Singleton):
 
     def load_assets(self) -> None:
         pygame.font.init()
-        self.title_font = pygame.font.Font(
-            absolute_path("assets/fonts/JETBRAINS_MONO_REGULAR.ttf"),
-            size=70,
-        )
         # pygame.display.set_icon()
 
     def run(self) -> None:
