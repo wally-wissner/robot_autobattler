@@ -242,41 +242,6 @@ class BattleScene(Scene):
             },
         )
 
-        # for unit in application.game.units():
-        #     for upgrade in unit.upgrades:
-        #         uu = UIUnitUpgrade(
-        #             upgrade=upgrade,
-        #             x=300,
-        #             y=300,
-        #             width=200,
-        #             height=200,
-        #             description=False,
-        #         )
-        # self.ui_manager.add(uu)
-
-        # settings_button = UITextureButton(
-        #     x=application.rel2abs(x=0.975) - self.icon_height / 2,
-        #     y=self.menu_rect.center().y - self.icon_height / 2,
-        #     width=self.icon_height,
-        #     height=self.icon_height,
-        #     texture=arcade.load_texture(
-        #         absolute_path("assets/images/ui/settings-icon.png")
-        #     ),
-        #     on_click=application.change_scene,
-        #     scene=EScene.SETTINGS,
-        # )
-        # self.ui_manager.add(settings_button)
-
-        # anchored_settings_button = arcade.gui.UIAnchorWidget(
-        #     child=settings_button,
-        #     align_x=application.rel2abs(x=-.0125),
-        #     align_y=-self.menu_rect.height / 2,
-        #     # align_y=application.rel2abs(y=-self.menu_rect.height / 4),
-        #     anchor_x='right',
-        #     anchor_y='top',
-        # )
-        # self.ui_manager.add(anchored_settings_button)
-
         self.buttons = {
             settings_button: (application.change_scene, {"scene": EScene.SETTINGS}),
         }
@@ -296,6 +261,18 @@ class BattleScene(Scene):
 
         self.menu_bar_surface.fill(color=colors.DARK_GRAY)
         application.display.blit(self.menu_bar_surface, (0, 0))
+
+        for unit in application.game.units():
+            for upgrade in unit.upgrades:
+                uu = UIUpgrade(upgrade=upgrade)
+                uu.draw(
+                    surface=application.surface,
+                    size=Vector2(x=300, y=300).as_tuple(),
+                    position=Vector2(x=300, y=300).as_tuple(),
+                    display_description=False,
+                )
+                break
+            break
 
 
 class UpgradeScene(Scene):

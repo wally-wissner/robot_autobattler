@@ -2,6 +2,9 @@
 UI elements for upgrades.
 """
 
+# pylint: disable=no-member
+# pylint: disable=unused-import
+
 import pygame
 
 from backend.upgrades import Upgrade
@@ -18,14 +21,22 @@ class UIUpgradeComponent:
     def __init__(self, upgrade_component: UpgradeComponent):
         self.upgrade_component = upgrade_component
 
-    def draw(self, surface: pygame.Surface, size: Vector2, display_description: bool):
+    def draw(
+        self,
+        surface: pygame.Surface,
+        size: tuple,
+        position: tuple,
+        display_description: bool,
+    ):
         component_surface = pygame.Surface(size=size)
 
         pygame.draw.rect(
-            surface=surface,
+            surface=component_surface,
             color=self.upgrade_component.color(),
             rect=pygame.Rect(size, (0, 0)),
         )
+
+        surface.blit(source=component_surface, dest=position)
 
         if display_description:
             pass
@@ -39,17 +50,31 @@ class UIUpgrade:
         self.badge_ui = UIUpgradeComponent(upgrade.badge)
         self.card_ui = UIUpgradeComponent(upgrade.card)
 
-    def draw(self, surface: pygame.Surface, size: Vector2, display_description: bool):
+    def draw(
+        self,
+        surface: pygame.Surface,
+        size: tuple,
+        position: tuple,
+        display_description: bool,
+    ):
         upgrade_surface = pygame.Surface(size=size)
 
         self.badge_ui.draw(
-            surface=upgrade_surface, display_description=display_description
+            surface=upgrade_surface,
+            size=(size[0], size[1] / 2),
+            position=(0, 0),
+            display_description=display_description,
         )
         self.card_ui.draw(
-            surface=upgrade_surface, display_description=display_description
+            surface=upgrade_surface,
+            size=(size[0], size[1] / 2),
+            position=(0, size[1] / 2),
+            display_description=display_description,
         )
 
-        pygame.draw.rect(
-            surface=surface,
-            # color=
-        )
+        surface.blit(source=upgrade_surface, dest=position)
+
+        # pygame.draw.rect(
+        #     surface=surface,
+        #     # color=
+        # )
