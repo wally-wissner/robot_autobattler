@@ -46,7 +46,6 @@ class Application(Singleton):
         pygame.init()
         pygame.display.set_caption(self.title)
         self.display = pygame.display.set_mode(self.settings_manager.resolution)
-        self.surface = pygame.Surface(self.settings_manager.resolution)
         self.ui_manager = pygame_gui.UIManager(
             window_resolution=self.settings_manager.resolution,
             # theme_path=None,

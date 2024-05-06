@@ -266,7 +266,7 @@ class BattleScene(Scene):
             for upgrade in unit.upgrades:
                 uu = UIUpgrade(upgrade=upgrade)
                 uu.draw(
-                    surface=application.surface,
+                    surface=application.display,
                     size=Vector2(x=300, y=300).as_tuple(),
                     position=Vector2(x=300, y=300).as_tuple(),
                     display_description=False,
