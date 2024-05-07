@@ -2,11 +2,6 @@
 Each of the application's scenes is its own class.
 """
 
-# TODO: Ignore warnings until scenes are updated to pygame.
-# pylint: disable=no-member
-# pylint: disable=unused-import
-
-
 from abc import ABC, abstractmethod
 from datetime import datetime
 
@@ -299,7 +294,7 @@ class UpgradeScene(Scene):
         self.upgrade_pane.set_upgrade(upgrade)
 
     def draw(self):
-        self.ui_manager.draw()
+        pass
 
 
 scene_map = {
