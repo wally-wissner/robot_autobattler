@@ -18,7 +18,6 @@ from backend.upgrades import Upgrade
 from frontend import colors
 from frontend.application import application
 from frontend.fonts import get_font
-from frontend.ui_elements import UITextButton
 from frontend.ui_panes import InventoryPane, TeamPane, UnitPane, UpgradePane
 from frontend.upgrades import UIUpgrade
 from utils.enums import EFont, EScene, EStat

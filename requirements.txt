@@ -1,4 +1,3 @@
-arcade >= 2.6.17
 black >= 24.2.0
 dill >= 0.3.6
 numpy >= 1.18.2
