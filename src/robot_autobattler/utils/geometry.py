@@ -10,14 +10,11 @@ class Vector2(BaseModel):
     x: float = 0
     y: float = 0
 
-    def as_tuple(self) -> tuple:
-        return self.x, self.y
-
     def magnitude(self) -> float:
         return math.sqrt(self.x**2 + self.y**2)
 
     def __iter__(self):
-        return iter(self.as_tuple())
+        return iter((self.x, self.y))
 
     def __eq__(self, other: Self):
         return self.x, self.y == other.x, other.y

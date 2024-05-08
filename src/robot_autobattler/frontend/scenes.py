@@ -250,7 +250,7 @@ class BattleScene(Scene):
             pygame.draw.circle(
                 surface=application.display,
                 color=unit.color(),
-                center=unit.position.as_tuple(),
+                center=tuple(unit.position),
                 radius=application.game.stat_value(unit, EStat.SIZE),
             )
 
@@ -262,8 +262,8 @@ class BattleScene(Scene):
                 uu = UIUpgrade(upgrade=upgrade)
                 uu.draw(
                     surface=application.display,
-                    size=Vector2(x=200, y=200).as_tuple(),
-                    position=Vector2(x=300, y=300).as_tuple(),
+                    size=tuple(Vector2(x=200, y=200)),
+                    position=tuple(Vector2(x=300, y=300)),
                     display_description=True,
                 )
                 break
