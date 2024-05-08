@@ -13,62 +13,65 @@ from frontend import fonts
 class UIUpgradeComponent:
     vertical_proportions = (0.175, 0.025, 0.8)
 
-    def __init__(self, upgrade_component: UpgradeComponent):
+    def __init__(self, upgrade_component: UpgradeComponent, size: tuple):
         self.upgrade_component = upgrade_component
+        self.surface = pygame.Surface(size=size)
 
     def draw(
         self,
         surface: pygame.Surface,
-        size: tuple,
         position: tuple,
         display_description: bool,
     ):
-        component_surface = pygame.Surface(size=size)
-        component_surface.fill(color=self.upgrade_component.color())
+        self.surface.fill(color=self.upgrade_component.color())
 
         if display_description:
-            title = fonts.get_font(fonts.card_font, 12).render(
-                # Flicker "cursor" every second.
+            component_name = fonts.get_font(fonts.card_font, 12).render(
                 text=self.upgrade_component.name,
                 antialias=True,
                 color=colors.BLACK,
             )
-            component_surface.blit(source=title, dest=(10, 10))
+            self.surface.blit(source=component_name, dest=(10, 10))
 
-        surface.blit(source=component_surface, dest=position)
+        surface.blit(source=self.surface, dest=position)
 
 
 class UIUpgrade:
     border_width = 0.025
 
-    def __init__(self, upgrade: Upgrade):
+    def __init__(self, upgrade: Upgrade, size: tuple):
         self.upgrade = upgrade
-        self.badge_ui = UIUpgradeComponent(upgrade.badge)
-        self.card_ui = UIUpgradeComponent(upgrade.card)
+        self.badge_ui = UIUpgradeComponent(
+            upgrade_component=upgrade.badge,
+            size=(size[0], size[1] / 2),
+        )
+        self.card_ui = UIUpgradeComponent(
+            upgrade_component=upgrade.card,
+            size=(size[0], size[1] / 2),
+        )
+
+        self.size = size
+        self.surface = pygame.Surface(size=size)
 
     def draw(
         self,
         surface: pygame.Surface,
-        size: tuple,
         position: tuple,
         display_description: bool,
     ):
-        upgrade_surface = pygame.Surface(size=size)
 
         self.badge_ui.draw(
-            surface=upgrade_surface,
-            size=(size[0], size[1] / 2),
+            surface=self.surface,
             position=(0, 0),
             display_description=display_description,
         )
         self.card_ui.draw(
-            surface=upgrade_surface,
-            size=(size[0], size[1] / 2),
-            position=(0, size[1] / 2),
+            surface=self.surface,
+            position=(0, self.size[1] / 2),
             display_description=display_description,
         )
 
-        surface.blit(source=upgrade_surface, dest=position)
+        surface.blit(source=self.surface, dest=position)
 
         # pygame.draw.rect(
         #     surface=surface,
