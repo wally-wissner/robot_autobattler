@@ -2,17 +2,12 @@
 UI elements for upgrades.
 """
 
-# pylint: disable=no-member
-# pylint: disable=unused-import
-
 import pygame
 
 from backend.upgrades import Upgrade
 from backend.upgrade_components import UpgradeComponent
 from frontend import colors
-from frontend.fonts import get_font
-from utils.enums import EFont
-from utils.geometry import Vector2
+from frontend import fonts
 
 
 class UIUpgradeComponent:
@@ -32,7 +27,7 @@ class UIUpgradeComponent:
         component_surface.fill(color=self.upgrade_component.color())
 
         if display_description:
-            title = get_font(EFont.JETBRAINS_MONO_REGULAR, 12).render(
+            title = fonts.get_font(fonts.card_font, 12).render(
                 # Flicker "cursor" every second.
                 text=self.upgrade_component.name,
                 antialias=True,

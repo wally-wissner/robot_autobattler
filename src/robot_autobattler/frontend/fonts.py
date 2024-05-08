@@ -9,3 +9,7 @@ from utils.enums import EFont
 @cache
 def get_font(font: EFont, size: int):
     return pygame.font.Font(absolute_path(f"assets/fonts/{font.value}.ttf"), size)
+
+
+title_font = EFont.JETBRAINS_MONO_REGULAR
+card_font = EFont.JETBRAINS_MONO_REGULAR

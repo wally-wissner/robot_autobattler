@@ -11,11 +11,11 @@ import pygame_gui
 from backend.unit import Unit
 from backend.upgrades import Upgrade
 from frontend import colors
+from frontend import fonts
 from frontend.application import application
-from frontend.fonts import get_font
 from frontend.ui_panes import InventoryPane, TeamPane, UnitPane, UpgradePane
 from frontend.upgrades import UIUpgrade
-from utils.enums import EFont, EScene, EStat
+from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
 
 
@@ -122,7 +122,7 @@ class MainMenuScene(Scene):
         application.display.fill(color=colors.DARK_GRAY)
 
         # Game title.
-        title = get_font(EFont.JETBRAINS_MONO_REGULAR, 70).render(
+        title = fonts.get_font(fonts.title_font, 70).render(
             # Flicker "cursor" every second.
             text=application.title + ("|" if datetime.now().second % 2 else " "),
             antialias=True,
