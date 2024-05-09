@@ -40,6 +40,9 @@ class Vector2(BaseModel):
     def __repr__(self):
         return f"Vector2({self.x}, {self.y})"
 
+    def at_resolution(self, resolution: tuple[int, int]) -> Self:
+        return Vector2(x=self.x * resolution[0], y=self.y * resolution[1])
+
     def to_vec2(self):
         return Vec2(self.x, self.y)
 
@@ -79,6 +82,12 @@ class Rectangle(BaseModel):
     def height(self) -> float:
         return self.y_max - self.y_min
 
+    def size(self) -> tuple[float, float]:
+        return self.width(), self.height()
+
+    def position(self) -> tuple[float, float]:
+        return self.x_min, self.y_max
+
     def pad(self, x_padding: float = 0, y_padding: float = 0) -> Self:
         return Rectangle(
             x_min=self.x_min - x_padding,
@@ -106,5 +115,10 @@ class Rectangle(BaseModel):
             ((point - self.center()) / other + self.center() for point in self.points())
         )
 
+    def at_resolution(self, resolution: tuple[int, int]) -> Self:
+        return Rectangle.from_points(
+            [point.at_resolution(resolution) for point in self.points()]
+        )
+
     def to_pygame(self) -> Rect:
-        return Rect((self.x_min, self.y_max), (self.width, self.height))
+        return Rect(self.position(), self.size())

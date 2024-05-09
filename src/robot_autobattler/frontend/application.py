@@ -14,7 +14,6 @@ from config import absolute_path
 from backend.game import Game
 from backend.settings import SettingsManager
 from utils.enums import EScene
-from utils.geometry import Vector2
 from utils.singleton import Singleton
 
 
@@ -88,42 +87,6 @@ class Application(Singleton):
 
             pygame.display.update()
 
-    def _transform(
-        self, f, vector: Vector2 = None, x: float = None, y: float = None
-    ) -> Vector2 | float:
-        if x and y:
-            vector = Vector2(x=x, y=y)
-        if vector:
-            x, y = vector
-            vector = Vector2(x=x, y=y)
-            return Vector2(
-                x=f(vector.x, self.settings_manager.width),
-                y=f(vector.y, self.settings_manager.height),
-            )
-        if x:
-            return x * self.settings_manager.width
-        if y:
-            return y * self.settings_manager.height
-        raise ValueError("Must supply relative or x or y.")
-
-    def rel2abs(
-        self, relative: Vector2 = None, x: float = None, y: float = None
-    ) -> Vector2 | float:
-        return self._transform(lambda a, b: a * b, relative, x, y)
-
-    def abs2rel(
-        self, pixel: Vector2 = None, x: float = None, y: float = None
-    ) -> Vector2 | float:
-        return self._transform(lambda a, b: a / b, pixel, x, y)
-
-    # def relative_to_rect(self, top_left: Vector2, bottom_right: Vector2) -> pygame.Rect:
-    #     vector2_top_left = self.relative_to_vector2(top_left)
-    #     vector2_bottom_right = self.relative_to_vector2(bottom_right)
-    #     return pygame.Rect(
-    #         vector2_top_left,
-    #         vector2_bottom_right - vector2_top_left
-    #     )
-
     def quit(self, *args, **kwargs) -> None:
         pygame.quit()
         sys.exit()
@@ -159,6 +122,9 @@ class Application(Singleton):
 
     def load_scene_map(self, scene_map: dict) -> None:
         self._scene_map = scene_map
+
+    def resolution(self) -> tuple[int, int]:
+        return self.settings_manager.resolution
 
 
 application = Application()

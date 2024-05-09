@@ -2,6 +2,8 @@
 Each of the application's scenes is its own class.
 """
 
+# pylint: disable=unused-import
+
 from abc import ABC, abstractmethod
 from datetime import datetime
 
@@ -275,14 +277,20 @@ class UpgradeScene(Scene):
         self.active_unit: Unit | None = None
         self.active_upgrade: Upgrade | None = None
 
-        self.team_pane = TeamPane(Rectangle(x_min=0, x_max=0.25, y_min=0, y_max=1))
+        # self.team_pane = TeamPane(Rectangle(x_min=0, x_max=0.25, y_min=0, y_max=1))
+
         self.upgrade_pane = UpgradePane(
-            Rectangle(x_min=0.25, x_max=0.75, y_min=0.5, y_max=1)
+            rectangle=Rectangle(
+                x_min=0.25, x_max=0.75, y_min=0.5, y_max=1
+            ).at_resolution(application.resolution())
         )
-        self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
-        self.inventory_pane = InventoryPane(
-            Rectangle(x_min=0.75, x_max=1, y_min=0, y_max=1)
-        )
+        self.upgrade_pane.set_upgrade(application.game.units()[0].upgrades[0])
+
+        # self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
+
+        # self.inventory_pane = InventoryPane(
+        #     Rectangle(x_min=0.75, x_max=1, y_min=0, y_max=1)
+        # )
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
@@ -293,7 +301,9 @@ class UpgradeScene(Scene):
         self.upgrade_pane.set_upgrade(upgrade)
 
     def draw(self):
-        pass
+        application.display.fill(color=colors.LIGHT_GRAY)
+
+        self.upgrade_pane.draw(surface=application.display)
 
 
 scene_map = {
