@@ -50,9 +50,6 @@ class Application(Singleton):
             # theme_path=None,
         )
 
-        # self.display.on_draw = self.on_draw
-        # self.display.on_update = self.on_update
-
         # Scene setup.
         self._scene_map: dict = {}
         self._active_scene = None
@@ -111,7 +108,6 @@ class Application(Singleton):
         if self._active_scene:
             self._active_scene.disable()
         self._active_scene = self._scene_map[scene]()
-        # self._active_scene.enable()
 
     def return_to_previous_scene(self, *args, **kwargs) -> None:
         try:
