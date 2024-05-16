@@ -13,9 +13,16 @@ from frontend import fonts
 class UIUpgradeComponent:
     vertical_proportions = (0.175, 0.025, 0.8)
 
-    def __init__(self, upgrade_component: UpgradeComponent, size: tuple):
+    def __init__(self, upgrade_component: UpgradeComponent, size: tuple[int, int]):
+        self.size = size
         self.upgrade_component = upgrade_component
-        self.surface = pygame.Surface(size=size)
+        self.surface = pygame.Surface(size=self.size)
+
+    def title_font_size(self):
+        return int(self.size[0] / 20)
+
+    def body_font_size(self):
+        return int(self.size[0] / 25)
 
     def draw(
         self,
@@ -26,7 +33,9 @@ class UIUpgradeComponent:
         self.surface.fill(color=self.upgrade_component.color())
 
         if display_description:
-            component_name = fonts.get_font(fonts.card_font, 12).render(
+            component_name = fonts.get_font(
+                fonts.card_font, self.title_font_size()
+            ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
                 color=colors.BLACK,
