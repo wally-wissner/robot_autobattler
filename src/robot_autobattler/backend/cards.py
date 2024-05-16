@@ -66,6 +66,7 @@ class CardAbilityEffect:
         if self.action == enums.EUnitAction.PRODUCE:
             # TODO
             text = ""
+        text = "lorem ipsum"
         return text
 
 
