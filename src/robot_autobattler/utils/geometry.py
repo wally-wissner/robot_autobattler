@@ -86,7 +86,7 @@ class Rectangle(BaseModel):
         return self.width(), self.height()
 
     def position(self) -> tuple[float, float]:
-        return self.x_min, self.y_max
+        return self.x_min, self.y_min
 
     def pad(self, x_padding: float = 0, y_padding: float = 0) -> Self:
         return Rectangle(

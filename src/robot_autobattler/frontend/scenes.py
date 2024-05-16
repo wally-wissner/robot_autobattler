@@ -281,10 +281,13 @@ class UpgradeScene(Scene):
 
         self.upgrade_pane = UpgradePane(
             rectangle=Rectangle(
-                x_min=0.25, x_max=0.75, y_min=0.5, y_max=1
+                x_min=0.25,
+                x_max=0.75,
+                y_min=0.0,
+                y_max=0.5,
             ).at_resolution(application.resolution())
         )
-        self.upgrade_pane.set_upgrade(application.game.units()[0].upgrades[0])
+        self.set_active_upgrade(application.game.units()[0].upgrades[0])
 
         # self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
 

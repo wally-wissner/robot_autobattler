@@ -60,7 +60,7 @@ class Application(Singleton):
         # pygame.display.set_icon()
 
     def run(self) -> None:
-        self.change_scene(EScene.MAIN_MENU)
+        self.change_scene(EScene.UPGRADE)
         while True:
             self.delta_time = self.clock.tick(60) / 1000.0
 
