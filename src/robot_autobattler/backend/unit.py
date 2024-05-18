@@ -1,6 +1,6 @@
 import math
 
-from backend.inventory import Inventory
+from backend.data_structures import Inventory
 from backend.physics import DiscBody
 from backend.unitstat import ConsumableStat, Stat, StatModifier
 from backend.upgrades import Upgrade

@@ -281,8 +281,8 @@ class UpgradeScene(Scene):
 
         self.upgrade_pane = UpgradePane(
             rectangle=Rectangle(
-                x_min=0.25,
-                x_max=0.75,
+                x_min=0.33,
+                x_max=0.67,
                 y_min=0.0,
                 y_max=0.5,
             ).at_resolution(application.resolution())

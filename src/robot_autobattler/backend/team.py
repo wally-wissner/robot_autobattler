@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from backend.cards import Card
-from backend.inventory import Inventory
+from backend.data_structures import Inventory
 from backend.unit import Unit
 from backend.upgrades import Upgrade
 from utils.enums import ECollectable
