@@ -284,7 +284,7 @@ class UpgradeScene(Scene):
                 x_min=0.33,
                 x_max=0.67,
                 y_min=0.0,
-                y_max=0.5,
+                y_max=0.4,
             ).at_resolution(application.resolution())
         )
         self.set_active_upgrade(application.game.units()[0].upgrades[0])

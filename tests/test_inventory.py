@@ -1,6 +1,6 @@
 import unittest
 
-from backend.data_structures import Inventory
+from utils.data_structures import Inventory
 
 
 class TestInventory(unittest.TestCase):

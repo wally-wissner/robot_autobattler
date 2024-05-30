@@ -1,10 +1,10 @@
 import math
 
-from backend.data_structures import Inventory
 from backend.physics import DiscBody
 from backend.unitstat import ConsumableStat, Stat, StatModifier
 from backend.upgrades import Upgrade
 from frontend.colors import ColorRGB
+from utils.data_structures import Inventory, ShiftList
 from utils.enums import EStat
 from utils.identifiers import UUIDIdentifier
 
@@ -14,7 +14,7 @@ class Unit(DiscBody, UUIDIdentifier):
         self.level = level
 
         self.alive = True
-        self.upgrades: list[Upgrade] = []
+        self.upgrades: ShiftList[Upgrade] = ShiftList()
         self.status_effects = Inventory()
         self.stats = self._init_stats()
 
