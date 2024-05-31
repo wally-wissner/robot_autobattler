@@ -4,16 +4,16 @@ from functools import total_ordering
 
 @total_ordering
 class Inventory(defaultdict):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(int)
 
-    def add(self, item, quantity: int = 1):
+    def add(self, item, quantity: int = 1) -> None:
         """
         Add a quantity of an item to the inventory.
         """
         self[item] += quantity
 
-    def remove(self, item, quantity: int = 1):
+    def remove(self, item, quantity: int = 1) -> None:
         if quantity > self[item]:
             raise ValueError("Cannot remove more self.list than exist in Inventory.")
         self[item] -= quantity
@@ -35,7 +35,7 @@ class Inventory(defaultdict):
 
 
 class ShiftList(list):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
     def can_shift(self, index: int, shift=1) -> bool:

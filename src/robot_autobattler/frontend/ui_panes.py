@@ -1,10 +1,12 @@
 # pylint: disable=unused-argument
+# pylint: disable=unused-import
 # pylint: disable=unused-variable
 
 import pygame
 
-# from frontend.application import application
 from backend.unit import Unit, Upgrade
+from frontend.application import application
+from frontend.ui_elements import VerticalScrollSurface
 from frontend.upgrades import UIUpgrade
 from utils.geometry import Rectangle
 
