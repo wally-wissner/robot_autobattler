@@ -6,7 +6,7 @@ import pygame
 
 from backend.unit import Unit, Upgrade
 from frontend.application import application
-from frontend.ui_elements import VerticalScrollSurface
+from frontend.ui_elements import UpgradeScroller
 from frontend.upgrades import UIUpgrade
 from utils.geometry import Rectangle
 
@@ -16,7 +16,15 @@ class InventoryPane:
 
     def __init__(self, rectangle: Rectangle):
         self.rectangle: Rectangle = rectangle
-        self.unit: Unit | None = None
+
+        self.upgrade_scroller = UpgradeScroller(
+            upgrades=application.game.player_team().upgrades,
+            size=(400, 800),
+            ui_upgrade_size=(400, 300),
+        )
+
+    def draw(self, surface: pygame.Surface):
+        self.upgrade_scroller.draw(surface=surface)
 
 
 class TeamPane:

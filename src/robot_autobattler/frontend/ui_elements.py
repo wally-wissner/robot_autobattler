@@ -1,33 +1,31 @@
-from numpy import cumsum
-
 import pygame
 
+from backend.upgrades import Upgrade
+from frontend.upgrades import UIUpgrade
 from utils.data_structures import ShiftList
 
 
-class VerticalScrollSurface:
-    def __init__(self, items: ShiftList, size: tuple[int, int]) -> None:
-        self.items = items
+class UpgradeScroller:
+    def __init__(
+        self,
+        upgrades: ShiftList[Upgrade],
+        size: tuple[int, int],
+        ui_upgrade_size: tuple[int, int],
+    ) -> None:
+        self.upgrades = upgrades
         self.size = size
+        self.ui_upgrade_size = ui_upgrade_size
         self.surface = pygame.Surface(size=self.size)
-        self.y_offset = 0
 
-        self._item_heights = {}
+        self.y_scroll = 0
 
-    def _set_item_heights(self):
-        heights = cumsum([item.size[1] for item in self.items]) - self.items[0].size[1]
-        self._item_heights = dict(zip(self.items, heights))
-
-    def height(self) -> float:
-        return sum(item.size[1] for item in self.items)
-
-    def item_height(self, item) -> float:
-        return self._item_heights[item]
-
-    def item_visible(self, item) -> bool:
+    def item_visible(self, i: int) -> bool:
         pass
 
     def draw(self, surface: pygame.Surface) -> None:
-        for item in self.items:
-            self.surface.blit(source=item, dest=(0, self.item_height(item)))
-        surface.blit(source=self.surface, dest=(0, self.y_offset), area=None)
+        for i, upgrade in enumerate(self.upgrades):
+            ui_upgrade = UIUpgrade(upgrade=upgrade, size=self.ui_upgrade_size)
+            ui_upgrade.draw(
+                surface=self.surface, position=(0, i), display_description=True
+            )
+        surface.blit(source=self.surface, dest=(0, self.y_scroll), area=None)
