@@ -1,10 +1,7 @@
 class Singleton:
     _instance = None
 
-    def __init__(self):
-        pass
-
-    def __call__(self):
-        if not self._instance:
-            self._instance = self
-        return self._instance
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+        return cls._instance
