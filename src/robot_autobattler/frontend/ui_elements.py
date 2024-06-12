@@ -26,6 +26,8 @@ class UpgradeScroller:
         for i, upgrade in enumerate(self.upgrades):
             ui_upgrade = UIUpgrade(upgrade=upgrade, size=self.ui_upgrade_size)
             ui_upgrade.draw(
-                surface=self.surface, position=(0, i), display_description=True
+                surface=self.surface,
+                position=(0, i * self.ui_upgrade_size[1]),
+                display_description=True,
             )
         surface.blit(source=self.surface, dest=(0, self.y_scroll), area=None)
