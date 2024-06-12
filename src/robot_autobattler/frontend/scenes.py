@@ -291,9 +291,9 @@ class UpgradeScene(Scene):
 
         # self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
 
-        # self.inventory_pane = InventoryPane(
-        #     Rectangle(x_min=0.75, x_max=1, y_min=0, y_max=1)
-        # )
+        self.inventory_pane = InventoryPane(
+            Rectangle(x_min=0.75, x_max=1, y_min=0, y_max=1)
+        )
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
@@ -307,6 +307,7 @@ class UpgradeScene(Scene):
         application.display.fill(color=colors.LIGHT_GRAY)
 
         self.upgrade_pane.draw(surface=application.display)
+        self.inventory_pane.draw(surface=application.display)
 
 
 scene_map = {

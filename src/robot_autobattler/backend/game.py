@@ -5,7 +5,7 @@ from backend.event import EventHistory
 from backend.physics import PhysicsBody
 from backend.team import Team
 from backend.unit import Unit
-from backend.factories import generate_team
+from backend.factories import generate_team, generate_upgrade
 from utils import enums
 from utils.game_math import clamp
 from utils.geometry import Vector2
@@ -45,6 +45,8 @@ class Game:
             generate_team(is_player=True, total_level=30, n_units=10, quality=0.75),
             generate_team(is_player=False, total_level=10, n_units=5, quality=0.75),
         ]
+        for _ in range(5):
+            teams[0].upgrades.append(generate_upgrade())
         return teams
 
     def player_team(self) -> Team:

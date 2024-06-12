@@ -6,7 +6,7 @@ from frontend import colors
 from utils import enums
 
 
-@dataclass
+@dataclass(frozen=True)
 class Badge(UpgradeComponent):
     name: str
     rarity: enums.ERarity

@@ -5,7 +5,7 @@ from backend.cards import Card
 from utils.identifiers import UUIDIdentifier
 
 
-@dataclass
+@dataclass(frozen=True)
 class Upgrade(UUIDIdentifier):
     badge: Badge
     card: Card

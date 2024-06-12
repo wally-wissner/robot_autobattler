@@ -6,7 +6,7 @@ from utils import enums
 from backend.upgrade_components import UpgradeComponent
 
 
-@dataclass
+@dataclass(frozen=True)
 class Card(UpgradeComponent):
     name: str
     rarity: enums.ERarity
@@ -20,7 +20,7 @@ class Card(UpgradeComponent):
         return colors.BLUE
 
 
-@dataclass
+@dataclass(frozen=True)
 class AdvancedCard(Card):
     abilities: ElementTree
 
@@ -89,7 +89,7 @@ class CardAbility:
         return text
 
 
-@dataclass
+@dataclass(frozen=True)
 class SimpleCard(Card):
     abilities: list[CardAbility]
 

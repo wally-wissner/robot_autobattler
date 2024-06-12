@@ -52,6 +52,7 @@ class Application(Singleton):
 
         # Scene setup.
         self._scene_map: dict = {}
+        self.start_scene_type = EScene.UPGRADE
         self._active_scene = None
         self._active_scene_stack: list[EScene] = []
 
@@ -60,7 +61,7 @@ class Application(Singleton):
         # pygame.display.set_icon()
 
     def run(self) -> None:
-        self.change_scene(EScene.MAIN_MENU)
+        self.change_scene(self.start_scene_type)
         while True:
             self.delta_time = self.clock.tick(60) / 1000.0
 

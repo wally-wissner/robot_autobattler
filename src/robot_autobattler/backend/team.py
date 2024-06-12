@@ -5,9 +5,6 @@ import numpy as np
 
 from backend.cards import Card
 from backend.unit import Unit
-from backend.upgrades import Upgrade
-from utils.data_structures import Inventory
-from utils.enums import ECollectable
 
 
 @dataclass(eq=True, order=True)
@@ -20,8 +17,7 @@ class Team:
     def __init__(self, is_player: bool):
         self.is_player: bool = is_player
         self.units: list[Unit] = []
-        self.upgrades: Inventory[Upgrade, int] = Inventory()
-        self.collectables: Inventory[ECollectable, int] = Inventory()
+        self.upgrades = []
 
         self.library: deque[Card] = deque()
         self.hand: deque[Card] = deque()

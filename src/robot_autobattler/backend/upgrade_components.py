@@ -5,7 +5,7 @@ from frontend.colors import ColorRGB
 from utils import enums
 
 
-@dataclass
+@dataclass(frozen=True)
 class UpgradeComponent(ABC):
     name: str
     rarity: enums.ERarity
