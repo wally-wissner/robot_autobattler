@@ -8,6 +8,14 @@ from backend.upgrades import Upgrade
 from backend.upgrade_components import UpgradeComponent
 from frontend import colors
 from frontend import fonts
+from utils.enums import ERarity
+
+
+rarity_colors = {
+    ERarity.COMMON: colors.COMMON,
+    ERarity.UNCOMMON: colors.UNCOMMON,
+    ERarity.RARE: colors.RARE,
+}
 
 
 class UIUpgradeComponent:
@@ -46,7 +54,7 @@ class UIUpgradeComponent:
 
 
 class UIUpgrade:
-    border_width = 0.025
+    border_width = 0.0125
 
     def __init__(self, upgrade: Upgrade, size: tuple):
         self.upgrade = upgrade
@@ -80,9 +88,12 @@ class UIUpgrade:
             display_description=display_description,
         )
 
-        surface.blit(source=self.surface, dest=position)
+        pygame.draw.rect(
+            rect=((0, 0), self.size),
+            surface=self.surface,
+            # width=20,
+            width=int(self.border_width * self.size[0]),
+            color=rarity_colors[self.upgrade.rarity],
+        )
 
-        # pygame.draw.rect(
-        #     surface=surface,
-        #     # color=
-        # )
+        surface.blit(source=self.surface, dest=position)
