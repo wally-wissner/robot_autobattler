@@ -29,7 +29,9 @@ class UpgradeScroller:
         self.surface.fill(color=colors.TRANSPARENT)
 
         for i, upgrade in enumerate(self.upgrades):
-            ui_upgrade = UIUpgrade(upgrade=upgrade, size=self.ui_upgrade_size)
+            ui_upgrade = UIUpgrade(
+                upgrade=upgrade, size=self.ui_upgrade_size, display_body=True
+            )
             ui_upgrade.draw(
                 surface=self.surface,
                 position=(0, i * self.ui_upgrade_size[1]),

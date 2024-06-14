@@ -261,7 +261,11 @@ class BattleScene(Scene):
 
         for unit in application.game.units():
             for upgrade in unit.upgrades:
-                uu = UIUpgrade(upgrade=upgrade, size=tuple(Vector2(x=200, y=200)))
+                uu = UIUpgrade(
+                    upgrade=upgrade,
+                    size=tuple(Vector2(x=200, y=200)),
+                    display_body=True,
+                )
                 uu.draw(
                     surface=application.display,
                     position=tuple(Vector2(x=300, y=300)),

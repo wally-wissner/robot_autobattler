@@ -62,7 +62,9 @@ class UpgradePane:
 
     def draw(self, surface: pygame.Surface):
         self.surface.fill(color=colors.TRANSPARENT)
-        ui_upgrade = UIUpgrade(upgrade=self.upgrade, size=self.rectangle.size())
+        ui_upgrade = UIUpgrade(
+            upgrade=self.upgrade, size=self.rectangle.size(), display_body=True
+        )
         ui_upgrade.draw(
             surface=self.surface,
             position=(0, 0),

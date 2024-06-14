@@ -25,12 +25,14 @@ class UIUpgradeComponent:
         self,
         upgrade_component: UpgradeComponent,
         size: tuple[int, int],
+        display_body: bool,
         border_radius: float,
         round_top: bool,
         round_bottom: bool,
     ):
         self.upgrade_component = upgrade_component
         self.size = size
+        self.display_body = display_body
         self.border_radius = border_radius
         self.round_top = round_top
         self.round_bottom = round_bottom
@@ -87,9 +89,10 @@ class UIUpgrade:
     border_width = 0.015
     border_radius = 0.025
 
-    def __init__(self, upgrade: Upgrade, size: tuple):
+    def __init__(self, upgrade: Upgrade, size: tuple, display_body: bool):
         self.upgrade = upgrade
         self.size = size
+        self.display_body = display_body
 
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
@@ -97,6 +100,7 @@ class UIUpgrade:
         self.badge_ui = UIUpgradeComponent(
             upgrade_component=upgrade.badge,
             size=(size[0], size[1] / 2),
+            display_body=self.display_body,
             border_radius=self.border_radius,
             round_top=True,
             round_bottom=False,
@@ -104,6 +108,7 @@ class UIUpgrade:
         self.card_ui = UIUpgradeComponent(
             upgrade_component=upgrade.card,
             size=(size[0], size[1] / 2),
+            display_body=self.display_body,
             border_radius=self.border_radius,
             round_top=False,
             round_bottom=True,
