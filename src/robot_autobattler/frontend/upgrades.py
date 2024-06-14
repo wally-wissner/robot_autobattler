@@ -35,8 +35,8 @@ class UIUpgradeComponent:
         self.round_top = round_top
         self.round_bottom = round_bottom
 
-        self.surface = pygame.Surface(size=self.size, flags=pygame.SRCALPHA)
-        self.surface.convert_alpha()
+        self.surface = pygame.Surface(self.size)
+        self.surface.set_colorkey(colors.TRANSPARENT)
 
     def title_font_size(self):
         return int(self.size[0] / 20)
@@ -50,7 +50,7 @@ class UIUpgradeComponent:
         position: tuple,
         display_description: bool,
     ):
-        self.surface.fill(color=colors.LIGHT_GRAY)
+        self.surface.fill(color=colors.TRANSPARENT)
 
         pygame.draw.rect(
             rect=((0, 0), self.size),
@@ -89,6 +89,11 @@ class UIUpgrade:
 
     def __init__(self, upgrade: Upgrade, size: tuple):
         self.upgrade = upgrade
+        self.size = size
+
+        self.surface = pygame.Surface(self.size)
+        self.surface.set_colorkey(colors.TRANSPARENT)
+
         self.badge_ui = UIUpgradeComponent(
             upgrade_component=upgrade.badge,
             size=(size[0], size[1] / 2),
@@ -104,15 +109,13 @@ class UIUpgrade:
             round_bottom=True,
         )
 
-        self.size = size
-        self.surface = pygame.Surface(size=size)
-
     def draw(
         self,
         surface: pygame.Surface,
         position: tuple,
         display_description: bool,
     ):
+        self.surface.fill(color=colors.LIGHT_GRAY)
 
         self.badge_ui.draw(
             surface=self.surface,

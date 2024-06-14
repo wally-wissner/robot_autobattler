@@ -4,6 +4,8 @@ from collections import namedtuple
 ColorRGB = namedtuple("ColorRGB", "r g b")
 
 
+TRANSPARENT = ColorRGB(1, 1, 1)
+
 BLACK = ColorRGB(0, 0, 0)
 WHITE = ColorRGB(255, 255, 255)
 
@@ -23,5 +25,5 @@ RETRO_RED = ColorRGB(100, 25, 25)
 RETRO_BLUE = ColorRGB(25, 25, 100)
 
 COMMON = ColorRGB(0, 0, 0)
-UNCOMMON = ColorRGB(170, 204, 232)
+UNCOMMON = ColorRGB(165, 169, 180)
 RARE = ColorRGB(170, 146, 82)
