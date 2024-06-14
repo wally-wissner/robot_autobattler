@@ -80,7 +80,25 @@ class UIUpgradeComponent:
                 antialias=True,
                 color=colors.BLACK,
             )
-            self.surface.blit(source=component_title, dest=(10, 10))
+            component_body = fonts.get_font(
+                font=fonts.card_font, size=self.body_font_size()
+            ).render(
+                text=self.upgrade_component.description(),
+                antialias=True,
+                color=colors.BLACK,
+            )
+            self.surface.blit(source=component_title, dest=(15, 10))
+            self.surface.blit(source=component_body, dest=(15, 50))
+
+        else:
+            component_title = fonts.get_font(
+                font=fonts.card_font, size=self.title_font_size()
+            ).render(
+                text=self.upgrade_component.name,
+                antialias=True,
+                color=colors.BLACK,
+            )
+            self.surface.blit(source=component_title, dest=(15, 10))
 
         surface.blit(source=self.surface, dest=position)
 
