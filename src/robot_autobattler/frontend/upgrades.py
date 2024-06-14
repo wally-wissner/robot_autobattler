@@ -115,7 +115,7 @@ class UIUpgrade:
         position: tuple,
         display_description: bool,
     ):
-        self.surface.fill(color=colors.LIGHT_GRAY)
+        self.surface.fill(color=colors.TRANSPARENT)
 
         self.badge_ui.draw(
             surface=self.surface,

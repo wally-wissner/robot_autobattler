@@ -1,6 +1,7 @@
 import pygame
 
 from backend.upgrades import Upgrade
+from frontend import colors
 from frontend.upgrades import UIUpgrade
 from utils.data_structures import ShiftList
 
@@ -15,7 +16,9 @@ class UpgradeScroller:
         self.upgrades = upgrades
         self.size = size
         self.ui_upgrade_size = ui_upgrade_size
+
         self.surface = pygame.Surface(size=self.size)
+        self.surface.set_colorkey(colors.TRANSPARENT)
 
         self.y_scroll = 0
 
@@ -23,6 +26,8 @@ class UpgradeScroller:
         pass
 
     def draw(self, surface: pygame.Surface) -> None:
+        self.surface.fill(color=colors.TRANSPARENT)
+
         for i, upgrade in enumerate(self.upgrades):
             ui_upgrade = UIUpgrade(upgrade=upgrade, size=self.ui_upgrade_size)
             ui_upgrade.draw(

@@ -6,6 +6,7 @@ import pygame
 
 from backend.unit import Unit, Upgrade
 from frontend.application import application
+from frontend import colors
 from frontend.ui_elements import UpgradeScroller
 from frontend.upgrades import UIUpgrade
 from utils.geometry import Rectangle
@@ -52,12 +53,15 @@ class UpgradePane:
     def __init__(self, rectangle: Rectangle):
         self.rectangle = rectangle
         self.upgrade: Upgrade | None = None
+
         self.surface = pygame.Surface(self.rectangle.size())
+        self.surface.set_colorkey(colors.TRANSPARENT)
 
     def set_upgrade(self, upgrade: Upgrade):
         self.upgrade = upgrade
 
     def draw(self, surface: pygame.Surface):
+        self.surface.fill(color=colors.TRANSPARENT)
         ui_upgrade = UIUpgrade(upgrade=self.upgrade, size=self.rectangle.size())
         ui_upgrade.draw(
             surface=self.surface,
