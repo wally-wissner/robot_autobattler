@@ -18,33 +18,33 @@ rarity_colors = {
 }
 
 
-class UIUpgradeComponent:
-    vertical_proportions = (0.175, 0.025, 0.8)
+# Upgrade proportion constants.
+TITLE_TEXT_SIZE = 0.05
+BODY_TEXT_SIZE = 0.04
+BORDER_RADIUS = 0.025
+RARITY_BORDER_WIDTH = 0.015
 
+
+class UIUpgradeComponent:
     def __init__(
         self,
         upgrade_component: UpgradeComponent,
         size: tuple[int, int],
         display_body: bool,
-        border_radius: float,
         round_top: bool,
         round_bottom: bool,
     ):
         self.upgrade_component = upgrade_component
         self.size = size
         self.display_body = display_body
-        self.border_radius = border_radius
         self.round_top = round_top
         self.round_bottom = round_bottom
 
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
-    def title_font_size(self):
-        return int(self.size[0] / 20)
-
-    def body_font_size(self):
-        return int(self.size[0] / 25)
+    def scale(self, frac: float) -> int:
+        return int(frac * self.size[0])
 
     def draw(
         self,
@@ -59,29 +59,29 @@ class UIUpgradeComponent:
             surface=self.surface,
             color=self.upgrade_component.color(),
             border_top_left_radius=(
-                int(self.border_radius * self.size[0]) if self.round_top else 0
+                int(BORDER_RADIUS * self.size[0]) if self.round_top else 0
             ),
             border_top_right_radius=(
-                int(self.border_radius * self.size[0]) if self.round_top else 0
+                int(BORDER_RADIUS * self.size[0]) if self.round_top else 0
             ),
             border_bottom_left_radius=(
-                int(self.border_radius * self.size[0]) if self.round_bottom else 0
+                int(BORDER_RADIUS * self.size[0]) if self.round_bottom else 0
             ),
             border_bottom_right_radius=(
-                int(self.border_radius * self.size[0]) if self.round_bottom else 0
+                int(BORDER_RADIUS * self.size[0]) if self.round_bottom else 0
             ),
         )
 
         if display_description:
             component_title = fonts.get_font(
-                font=fonts.card_font, size=self.title_font_size()
+                font=fonts.card_font, size=self.scale(TITLE_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
                 color=colors.BLACK,
             )
             component_body = fonts.get_font(
-                font=fonts.card_font, size=self.body_font_size()
+                font=fonts.card_font, size=self.scale(BODY_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.description(),
                 antialias=True,
@@ -92,7 +92,7 @@ class UIUpgradeComponent:
 
         else:
             component_title = fonts.get_font(
-                font=fonts.card_font, size=self.title_font_size()
+                font=fonts.card_font, size=self.scale(TITLE_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
@@ -104,9 +104,6 @@ class UIUpgradeComponent:
 
 
 class UIUpgrade:
-    border_width = 0.015
-    border_radius = 0.025
-
     def __init__(self, upgrade: Upgrade, size: tuple, display_body: bool):
         self.upgrade = upgrade
         self.size = size
@@ -119,7 +116,6 @@ class UIUpgrade:
             upgrade_component=upgrade.badge,
             size=(size[0], size[1] / 2),
             display_body=self.display_body,
-            border_radius=self.border_radius,
             round_top=True,
             round_bottom=False,
         )
@@ -127,10 +123,12 @@ class UIUpgrade:
             upgrade_component=upgrade.card,
             size=(size[0], size[1] / 2),
             display_body=self.display_body,
-            border_radius=self.border_radius,
             round_top=False,
             round_bottom=True,
         )
+
+    def scale(self, frac: float) -> int:
+        return int(frac * self.size[0])
 
     def draw(
         self,
@@ -154,9 +152,9 @@ class UIUpgrade:
         pygame.draw.rect(
             rect=((0, 0), self.size),
             surface=self.surface,
-            width=int(self.border_width * self.size[0]),
+            width=self.scale(RARITY_BORDER_WIDTH),
             color=rarity_colors[self.upgrade.rarity],
-            border_radius=int(self.border_radius * self.size[0]),
+            border_radius=self.scale(BORDER_RADIUS),
         )
 
         surface.blit(source=self.surface, dest=position)
