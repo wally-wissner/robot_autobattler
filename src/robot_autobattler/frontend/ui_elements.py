@@ -2,7 +2,7 @@ import pygame
 
 from backend.upgrades import Upgrade
 from frontend import colors
-from frontend.upgrades import UIUpgrade
+from frontend.ui_upgrades import UIUpgrade
 from utils.data_structures import ShiftList
 
 

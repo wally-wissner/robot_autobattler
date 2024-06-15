@@ -8,7 +8,7 @@ from backend.unit import Unit, Upgrade
 from frontend.application import application
 from frontend import colors
 from frontend.ui_elements import UpgradeScroller
-from frontend.upgrades import UIUpgrade
+from frontend.ui_upgrades import UIUpgrade
 from utils.geometry import Rectangle
 
 
