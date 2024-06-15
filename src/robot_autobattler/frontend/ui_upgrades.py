@@ -26,6 +26,9 @@ BODY_TEXT_SIZE = 0.04
 BORDER_RADIUS = 0.025
 RARITY_BORDER_WIDTH = 0.020
 BLACK_BORDER_WIDTH = 0.005
+TITLE_Y_OFFSET = 0.025
+BODY_Y_OFFSET = 0.100
+X_OFFSET = 0.05
 
 
 class UIUpgradeComponent:
@@ -61,17 +64,15 @@ class UIUpgradeComponent:
             rect=((0, 0), self.size),
             surface=self.surface,
             color=self.upgrade_component.color(),
-            border_top_left_radius=(
-                int(BORDER_RADIUS * self.size[0]) if self.round_top else 0
-            ),
+            border_top_left_radius=(self.scale(BORDER_RADIUS) if self.round_top else 0),
             border_top_right_radius=(
-                int(BORDER_RADIUS * self.size[0]) if self.round_top else 0
+                self.scale(BORDER_RADIUS) if self.round_top else 0
             ),
             border_bottom_left_radius=(
-                int(BORDER_RADIUS * self.size[0]) if self.round_bottom else 0
+                self.scale(BORDER_RADIUS) if self.round_bottom else 0
             ),
             border_bottom_right_radius=(
-                int(BORDER_RADIUS * self.size[0]) if self.round_bottom else 0
+                self.scale(BORDER_RADIUS) if self.round_bottom else 0
             ),
         )
 
@@ -90,8 +91,14 @@ class UIUpgradeComponent:
                 antialias=True,
                 color=colors.BLACK,
             )
-            self.surface.blit(source=component_title, dest=(15, 10))
-            self.surface.blit(source=component_body, dest=(15, 50))
+            self.surface.blit(
+                source=component_title,
+                dest=(self.scale(X_OFFSET), self.scale(TITLE_Y_OFFSET)),
+            )
+            self.surface.blit(
+                source=component_body,
+                dest=(self.scale(X_OFFSET), self.scale(BODY_Y_OFFSET)),
+            )
 
         else:
             component_title = fonts.get_font(
@@ -101,7 +108,10 @@ class UIUpgradeComponent:
                 antialias=True,
                 color=colors.BLACK,
             )
-            self.surface.blit(source=component_title, dest=(15, 10))
+            self.surface.blit(
+                source=component_title,
+                dest=(self.scale(X_OFFSET), self.scale(TITLE_Y_OFFSET)),
+            )
 
         surface.blit(source=self.surface, dest=position)
 
