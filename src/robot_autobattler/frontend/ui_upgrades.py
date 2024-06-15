@@ -2,6 +2,8 @@
 UI elements for upgrades.
 """
 
+from math import ceil
+
 import pygame
 
 from backend.upgrades import Upgrade
@@ -22,7 +24,8 @@ rarity_colors = {
 TITLE_TEXT_SIZE = 0.05
 BODY_TEXT_SIZE = 0.04
 BORDER_RADIUS = 0.025
-RARITY_BORDER_WIDTH = 0.015
+RARITY_BORDER_WIDTH = 0.020
+BLACK_BORDER_WIDTH = 0.005
 
 
 class UIUpgradeComponent:
@@ -44,7 +47,7 @@ class UIUpgradeComponent:
         self.surface.set_colorkey(colors.TRANSPARENT)
 
     def scale(self, frac: float) -> int:
-        return int(frac * self.size[0])
+        return ceil(frac * self.size[0])
 
     def draw(
         self,
@@ -128,7 +131,7 @@ class UIUpgrade:
         )
 
     def scale(self, frac: float) -> int:
-        return int(frac * self.size[0])
+        return ceil(frac * self.size[0])
 
     def draw(
         self,
@@ -149,11 +152,21 @@ class UIUpgrade:
             display_description=display_description,
         )
 
+        # Rarity border
         pygame.draw.rect(
             rect=((0, 0), self.size),
             surface=self.surface,
             width=self.scale(RARITY_BORDER_WIDTH),
             color=rarity_colors[self.upgrade.rarity],
+            border_radius=self.scale(BORDER_RADIUS),
+        )
+
+        # Black border
+        pygame.draw.rect(
+            rect=((0, 0), self.size),
+            surface=self.surface,
+            width=self.scale(BLACK_BORDER_WIDTH),
+            color=colors.BLACK,
             border_radius=self.scale(BORDER_RADIUS),
         )
 
