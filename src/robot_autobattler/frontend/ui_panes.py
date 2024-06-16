@@ -17,6 +17,7 @@ class InventoryPane:
 
     def __init__(self, rectangle: Rectangle):
         self.rectangle: Rectangle = rectangle
+        self.surface = pygame.Surface(size=self.rectangle.size())
 
         self.upgrade_scroller = UpgradeScroller(
             upgrades=application.game.player_team().upgrades,
@@ -25,7 +26,28 @@ class InventoryPane:
         )
 
     def draw(self, surface: pygame.Surface):
-        self.upgrade_scroller.draw(surface=surface)
+        self.upgrade_scroller.draw(self.surface)
+        surface.blit(source=self.surface, dest=self.rectangle.position())
+
+
+class ActiveUnitUpgradesPane:
+    """UI pane that shows all the upgrades equipped to the active unit."""
+
+    def __init__(self, rectangle: Rectangle):
+        self.rectangle: Rectangle = rectangle
+        self.surface = pygame.Surface(size=self.rectangle.size())
+
+        self.active_unit = application.game.player_team().units[0]
+
+        self.upgrade_scroller = UpgradeScroller(
+            upgrades=self.active_unit.upgrades,
+            size=(400, 800),
+            ui_upgrade_size=(400, 300),
+        )
+
+    def draw(self, surface: pygame.Surface):
+        self.upgrade_scroller.draw(self.surface)
+        surface.blit(source=self.surface, dest=self.rectangle.position())
 
 
 class TeamPane:

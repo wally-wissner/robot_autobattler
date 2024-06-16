@@ -14,8 +14,8 @@ from backend.unit import Unit
 from backend.upgrades import Upgrade
 from frontend import colors
 from frontend import fonts
+from frontend import ui_panes
 from frontend.application import application
-from frontend.ui_panes import InventoryPane, TeamPane, UnitPane, UpgradePane
 from frontend.ui_upgrades import UIUpgrade
 from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
@@ -283,7 +283,7 @@ class UpgradeScene(Scene):
 
         # self.team_pane = TeamPane(Rectangle(x_min=0, x_max=0.25, y_min=0, y_max=1))
 
-        self.upgrade_pane = UpgradePane(
+        self.upgrade_pane = ui_panes.UpgradePane(
             rectangle=Rectangle(
                 x_min=0.33,
                 x_max=0.67,
@@ -295,9 +295,23 @@ class UpgradeScene(Scene):
 
         # self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
 
-        self.inventory_pane = InventoryPane(
-            Rectangle(x_min=0.75, x_max=1, y_min=0, y_max=1)
+        self.inventory_pane = ui_panes.InventoryPane(
+            rectangle=Rectangle(
+                x_min=0,
+                x_max=0.25,
+                y_min=0,
+                y_max=1,
+            ).at_resolution(application.resolution())
         )
+
+        # self.inventory_pane = ui_panes.ActiveUnitUpgradesPane(
+        #     rectangle=Rectangle(
+        #         x_min=0.25,
+        #         x_max=0.5,
+        #         y_min=0,
+        #         y_max=1,
+        #     ).at_resolution(application.resolution())
+        # )
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
