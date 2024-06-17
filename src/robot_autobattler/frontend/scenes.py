@@ -304,14 +304,14 @@ class UpgradeScene(Scene):
             ).at_resolution(application.resolution())
         )
 
-        # self.inventory_pane = ui_panes.ActiveUnitUpgradesPane(
-        #     rectangle=Rectangle(
-        #         x_min=0.25,
-        #         x_max=0.5,
-        #         y_min=0,
-        #         y_max=1,
-        #     ).at_resolution(application.resolution())
-        # )
+        self.active_unit_upgrades_pane = ui_panes.ActiveUnitUpgradesPane(
+            rectangle=Rectangle(
+                x_min=0.25,
+                x_max=0.5,
+                y_min=0,
+                y_max=1,
+            ).at_resolution(application.resolution())
+        )
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
@@ -326,6 +326,7 @@ class UpgradeScene(Scene):
 
         self.upgrade_pane.draw(surface=application.display)
         self.inventory_pane.draw(surface=application.display)
+        self.active_unit_upgrades_pane.draw(surface=application.display)
 
 
 scene_map = {
