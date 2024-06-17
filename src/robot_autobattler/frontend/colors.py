@@ -2,6 +2,11 @@ from collections import namedtuple
 
 
 ColorRGB = namedtuple("ColorRGB", "r g b")
+ColorRGBA = namedtuple("ColorRGBA", "r g b a")
+
+
+def with_alpha(color: ColorRGB, alpha: int) -> ColorRGBA:
+    return ColorRGBA(color.r, color.g, color.b, alpha)
 
 
 TRANSPARENT = ColorRGB(1, 1, 1)

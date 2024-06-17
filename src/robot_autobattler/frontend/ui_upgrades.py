@@ -124,8 +124,12 @@ class UIUpgrade:
         self.size = size
         self.display_body = display_body
 
+        self.highlighted = False
+
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
+
+        self.highlight_surface = pygame.Surface(self.size)
 
         self.badge_ui = UIUpgradeComponent(
             upgrade_component=upgrade.badge,
@@ -181,5 +185,16 @@ class UIUpgrade:
             color=colors.BLACK,
             border_radius=self._scale(BORDER_RADIUS),
         )
+
+        # # Non-highlighted opacity
+        # if not self.highlighted:
+        #     pygame.draw.rect(
+        #         rect=((0, 0), self.size),
+        #         surface=self.highlight_surface,
+        #         color=colors.LIGHT_GRAY,
+        #         border_radius=self._scale(BORDER_RADIUS),
+        #     )
+        #     self.highlight_surface.set_alpha(100)
+        #     self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         surface.blit(source=self.surface, dest=position)
