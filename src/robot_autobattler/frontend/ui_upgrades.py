@@ -35,7 +35,7 @@ class UIUpgradeComponent:
     def __init__(
         self,
         upgrade_component: UpgradeComponent,
-        size: tuple[int, int],
+        size: tuple[float, float],
         display_body: bool,
         round_top: bool,
         round_bottom: bool,
@@ -119,7 +119,7 @@ class UIUpgradeComponent:
 
 
 class UIUpgrade:
-    def __init__(self, upgrade: Upgrade, size: tuple, display_body: bool):
+    def __init__(self, upgrade: Upgrade, size: tuple[float, float], display_body: bool):
         self.upgrade = upgrade
         self.size = size
         self.display_body = display_body

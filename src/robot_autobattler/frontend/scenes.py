@@ -288,7 +288,7 @@ class UpgradeScene(Scene):
         self.inventory_pane = ui_panes.InventoryPane(
             rectangle=Rectangle(
                 x_min=0,
-                x_max=0.25,
+                x_max=1 / 6,
                 y_min=0,
                 y_max=1,
             ).at_resolution(application.resolution())
@@ -296,8 +296,8 @@ class UpgradeScene(Scene):
 
         self.active_unit_upgrades_pane = ui_panes.ActiveUnitUpgradesPane(
             rectangle=Rectangle(
-                x_min=0.25,
-                x_max=0.5,
+                x_min=1 / 6,
+                x_max=2 / 6,
                 y_min=0,
                 y_max=1,
             ).at_resolution(application.resolution())

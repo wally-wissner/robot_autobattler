@@ -40,6 +40,9 @@ class Vector2(BaseModel):
     def __repr__(self):
         return f"Vector2({self.x}, {self.y})"
 
+    def snap(self) -> Self:
+        return Vector2(x=int(self.x), y=int(self.y))
+
     def at_resolution(self, resolution: tuple[int, int]) -> Self:
         return Vector2(x=self.x * resolution[0], y=self.y * resolution[1])
 
