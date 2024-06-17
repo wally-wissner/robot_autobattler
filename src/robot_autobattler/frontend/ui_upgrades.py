@@ -49,7 +49,7 @@ class UIUpgradeComponent:
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
-    def scale(self, frac: float) -> int:
+    def _scale(self, frac: float) -> int:
         return ceil(frac * self.size[0])
 
     def draw(
@@ -64,28 +64,30 @@ class UIUpgradeComponent:
             rect=((0, 0), self.size),
             surface=self.surface,
             color=self.upgrade_component.color(),
-            border_top_left_radius=(self.scale(BORDER_RADIUS) if self.round_top else 0),
+            border_top_left_radius=(
+                self._scale(BORDER_RADIUS) if self.round_top else 0
+            ),
             border_top_right_radius=(
-                self.scale(BORDER_RADIUS) if self.round_top else 0
+                self._scale(BORDER_RADIUS) if self.round_top else 0
             ),
             border_bottom_left_radius=(
-                self.scale(BORDER_RADIUS) if self.round_bottom else 0
+                self._scale(BORDER_RADIUS) if self.round_bottom else 0
             ),
             border_bottom_right_radius=(
-                self.scale(BORDER_RADIUS) if self.round_bottom else 0
+                self._scale(BORDER_RADIUS) if self.round_bottom else 0
             ),
         )
 
         if display_description:
             component_title = fonts.get_font(
-                font=fonts.card_font, size=self.scale(TITLE_TEXT_SIZE)
+                font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
                 color=colors.BLACK,
             )
             component_body = fonts.get_font(
-                font=fonts.card_font, size=self.scale(BODY_TEXT_SIZE)
+                font=fonts.card_font, size=self._scale(BODY_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.description(),
                 antialias=True,
@@ -93,16 +95,16 @@ class UIUpgradeComponent:
             )
             self.surface.blit(
                 source=component_title,
-                dest=(self.scale(X_OFFSET), self.scale(TITLE_Y_OFFSET)),
+                dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
             self.surface.blit(
                 source=component_body,
-                dest=(self.scale(X_OFFSET), self.scale(BODY_Y_OFFSET)),
+                dest=(self._scale(X_OFFSET), self._scale(BODY_Y_OFFSET)),
             )
 
         else:
             component_title = fonts.get_font(
-                font=fonts.card_font, size=self.scale(TITLE_TEXT_SIZE)
+                font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
@@ -110,7 +112,7 @@ class UIUpgradeComponent:
             )
             self.surface.blit(
                 source=component_title,
-                dest=(self.scale(X_OFFSET), self.scale(TITLE_Y_OFFSET)),
+                dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
 
         surface.blit(source=self.surface, dest=position)
@@ -140,7 +142,7 @@ class UIUpgrade:
             round_bottom=True,
         )
 
-    def scale(self, frac: float) -> int:
+    def _scale(self, frac: float) -> int:
         return ceil(frac * self.size[0])
 
     def draw(
@@ -166,18 +168,18 @@ class UIUpgrade:
         pygame.draw.rect(
             rect=((0, 0), self.size),
             surface=self.surface,
-            width=self.scale(RARITY_BORDER_WIDTH),
+            width=self._scale(RARITY_BORDER_WIDTH),
             color=rarity_colors[self.upgrade.rarity],
-            border_radius=self.scale(BORDER_RADIUS),
+            border_radius=self._scale(BORDER_RADIUS),
         )
 
         # Black border
         pygame.draw.rect(
             rect=((0, 0), self.size),
             surface=self.surface,
-            width=self.scale(BLACK_BORDER_WIDTH),
+            width=self._scale(BLACK_BORDER_WIDTH),
             color=colors.BLACK,
-            border_radius=self.scale(BORDER_RADIUS),
+            border_radius=self._scale(BORDER_RADIUS),
         )
 
         surface.blit(source=self.surface, dest=position)

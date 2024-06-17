@@ -306,7 +306,6 @@ class UpgradeScene(Scene):
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
         self.active_unit_upgrades_pane.active_unit = unit
-        # self.unit_pane.
 
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
         self.active_upgrade = upgrade
