@@ -14,14 +14,12 @@ class UpgradeScroller:
     ) -> None:
         self.upgrades = upgrades
         self.size = size
+        self.ui_upgrade_size = (self.size[0], int(0.75 * self.size[0]))
 
         self.surface = pygame.Surface(size=self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
         self.y_scroll = 0
-
-    def ui_upgrade_size(self) -> tuple[int, int]:
-        return self.size[0], int(0.75 * self.size[0])
 
     def item_visible(self, i: int) -> bool:
         pass
@@ -31,11 +29,11 @@ class UpgradeScroller:
 
         for i, upgrade in enumerate(self.upgrades):
             ui_upgrade = UIUpgrade(
-                upgrade=upgrade, size=self.ui_upgrade_size(), display_body=True
+                upgrade=upgrade, size=self.ui_upgrade_size, display_body=True
             )
             ui_upgrade.draw(
                 surface=self.surface,
-                position=(0, i * self.ui_upgrade_size()[1]),
+                position=(0, i * self.ui_upgrade_size[1]),
                 display_description=True,
             )
         surface.blit(source=self.surface, dest=(0, self.y_scroll), area=None)
