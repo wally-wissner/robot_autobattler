@@ -283,16 +283,6 @@ class UpgradeScene(Scene):
 
         # self.team_pane = TeamPane(Rectangle(x_min=0, x_max=0.25, y_min=0, y_max=1))
 
-        self.upgrade_pane = ui_panes.UpgradePane(
-            rectangle=Rectangle(
-                x_min=0.33,
-                x_max=0.67,
-                y_min=0.0,
-                y_max=0.4,
-            ).at_resolution(application.resolution())
-        )
-        self.set_active_upgrade(application.game.units()[0].upgrades[0])
-
         # self.unit_pane = UnitPane(Rectangle(x_min=0.25, x_max=0.75, y_min=0, y_max=0.5))
 
         self.inventory_pane = ui_panes.InventoryPane(
@@ -315,16 +305,15 @@ class UpgradeScene(Scene):
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
+        self.active_unit_upgrades_pane.active_unit = unit
         # self.unit_pane.
 
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
         self.active_upgrade = upgrade
-        self.upgrade_pane.set_upgrade(upgrade)
 
     def draw(self):
         application.display.fill(color=colors.LIGHT_GRAY)
 
-        self.upgrade_pane.draw(surface=application.display)
         self.inventory_pane.draw(surface=application.display)
         self.active_unit_upgrades_pane.draw(surface=application.display)
 
