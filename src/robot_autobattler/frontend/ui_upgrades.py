@@ -49,6 +49,8 @@ class UIUpgradeComponent:
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
+        self.highlight_surface = pygame.Surface(self.size)
+
     def _scale(self, frac: float) -> int:
         return ceil(frac * self.size[0])
 
@@ -57,6 +59,7 @@ class UIUpgradeComponent:
         surface: pygame.Surface,
         position: tuple,
         display_description: bool,
+        highlighted: bool,
     ):
         self.surface.fill(color=colors.TRANSPARENT)
 
@@ -77,6 +80,28 @@ class UIUpgradeComponent:
                 self._scale(BORDER_RADIUS) if self.round_bottom else 0
             ),
         )
+
+        # Non-highlighted opacity
+        if not highlighted:
+            pygame.draw.rect(
+                rect=((0, 0), self.size),
+                surface=self.highlight_surface,
+                color=colors.LIGHT_GRAY,
+                border_top_left_radius=(
+                    self._scale(BORDER_RADIUS) if self.round_top else 0
+                ),
+                border_top_right_radius=(
+                    self._scale(BORDER_RADIUS) if self.round_top else 0
+                ),
+                border_bottom_left_radius=(
+                    self._scale(BORDER_RADIUS) if self.round_bottom else 0
+                ),
+                border_bottom_right_radius=(
+                    self._scale(BORDER_RADIUS) if self.round_bottom else 0
+                ),
+            )
+            self.highlight_surface.set_alpha(100)
+            self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         if display_description:
             component_title = fonts.get_font(
@@ -129,8 +154,6 @@ class UIUpgrade:
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
-        self.highlight_surface = pygame.Surface(self.size)
-
         self.badge_ui = UIUpgradeComponent(
             upgrade_component=upgrade.badge,
             size=(size[0], size[1] / 2),
@@ -161,11 +184,13 @@ class UIUpgrade:
             surface=self.surface,
             position=(0, 0),
             display_description=display_description,
+            highlighted=self.highlighted,
         )
         self.card_ui.draw(
             surface=self.surface,
             position=(0, self.size[1] / 2),
             display_description=display_description,
+            highlighted=self.highlighted,
         )
 
         # Rarity border
@@ -185,16 +210,5 @@ class UIUpgrade:
             color=colors.BLACK,
             border_radius=self._scale(BORDER_RADIUS),
         )
-
-        # # Non-highlighted opacity
-        # if not self.highlighted:
-        #     pygame.draw.rect(
-        #         rect=((0, 0), self.size),
-        #         surface=self.highlight_surface,
-        #         color=colors.LIGHT_GRAY,
-        #         border_radius=self._scale(BORDER_RADIUS),
-        #     )
-        #     self.highlight_surface.set_alpha(100)
-        #     self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         surface.blit(source=self.surface, dest=position)
