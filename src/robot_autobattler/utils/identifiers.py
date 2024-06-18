@@ -11,4 +11,4 @@ class SequentialIdentifier:
 
 class UUIDIdentifier:
     def __init__(self):
-        self.id = uuid4()
+        self.id = uuid4().hex

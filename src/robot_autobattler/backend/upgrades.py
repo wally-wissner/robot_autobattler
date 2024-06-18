@@ -10,7 +10,7 @@ class Upgrade(BaseModel):
     badge: Badge
     card: Card
     removable: bool = True
-    id: str = Field(default_factory=lambda: uuid4)
+    id: str = Field(default_factory=lambda: uuid4().hex)
 
     @property
     def rarity(self):
