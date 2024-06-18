@@ -1,15 +1,16 @@
-from dataclasses import dataclass
+from uuid import uuid4
+
+from pydantic import BaseModel, Field
 
 from backend.badges import Badge
 from backend.cards import Card
-from utils.identifiers import UUIDIdentifier
 
 
-@dataclass(frozen=True)
-class Upgrade(UUIDIdentifier):
+class Upgrade(BaseModel):
     badge: Badge
     card: Card
     removable: bool = True
+    id: str = Field(default_factory=lambda: uuid4)
 
     @property
     def rarity(self):

@@ -68,7 +68,7 @@ def generate_upgrade(
 ) -> Upgrade:
     badge = generate_badge(rarity_range, bp_range)
     card = generate_card(rarity_range, bp_range)
-    upgrade = Upgrade(badge, card)
+    upgrade = Upgrade(badge=badge, card=card)
     return upgrade
 
 
