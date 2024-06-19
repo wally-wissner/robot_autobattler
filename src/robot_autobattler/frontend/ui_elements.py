@@ -26,7 +26,7 @@ class UpgradeScroller:
         self.active_upgrade: Upgrade | None = None
 
     def _is_active_upgrade(self, upgrade: Upgrade) -> bool:
-        return self.active_upgrade is not None and self.active_upgrade == upgrade
+        return self.active_upgrade is not None and self.active_upgrade is upgrade
 
     def set_active_upgrade(self, upgrade: Upgrade | None):
         self.active_upgrade = upgrade

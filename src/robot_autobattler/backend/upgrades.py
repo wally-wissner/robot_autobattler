@@ -21,6 +21,3 @@ class Upgrade(BaseModel):
         min_negative_bp = min(bp for bp in [0, self.badge.bp, self.card.bp] if bp <= 0)
         max_positive_bp = max(bp for bp in [0, self.badge.bp, self.card.bp] if bp >= 0)
         return max_positive_bp + min_negative_bp
-
-    def __eq__(self, other):
-        return self.id == other.id
