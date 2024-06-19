@@ -9,8 +9,10 @@ def with_alpha(color: ColorRGB, alpha: int) -> ColorRGBA:
     return ColorRGBA(color.r, color.g, color.b, alpha)
 
 
+# Utility colors
 TRANSPARENT = ColorRGB(1, 1, 1)
 
+# Chromatic colors
 BLACK = ColorRGB(0, 0, 0)
 WHITE = ColorRGB(255, 255, 255)
 
@@ -29,6 +31,11 @@ DARK_BROWN = ColorRGB(139, 69, 19)
 RETRO_RED = ColorRGB(100, 25, 25)
 RETRO_BLUE = ColorRGB(25, 25, 100)
 
+# Semantic colors
 COMMON = ColorRGB(0, 0, 0)
 UNCOMMON = ColorRGB(165, 169, 180)
 RARE = ColorRGB(170, 146, 82)
+
+BADGE = RETRO_RED
+CARD = RETRO_BLUE
+UPGRADE_TEXT = BLACK

@@ -37,11 +37,19 @@ class ActiveUnitUpgradesPane:
         self.surface = pygame.Surface(size=self.rectangle.size())
 
         self.active_unit = application.game.player_team().units[0]
+        self.active_upgrade: Upgrade | None = None
 
         self.upgrade_scroller = UpgradeScroller(
             upgrades=self.active_unit.upgrades,
             size=self.rectangle.size(),
         )
+
+    def set_active_unit(self, unit: Unit) -> None:
+        self.active_unit = unit
+
+    def set_active_upgrade(self, upgrade: Upgrade | None) -> None:
+        self.active_upgrade = upgrade
+        self.upgrade_scroller.set_active_upgrade(upgrade)
 
     def draw(self, surface: pygame.Surface):
         self.upgrade_scroller.draw(self.surface)
@@ -89,5 +97,6 @@ class UpgradePane:
             surface=self.surface,
             position=(0, 0),
             display_description=True,
+            highlighted=True,
         )
         surface.blit(source=self.surface, dest=self.rectangle.position())

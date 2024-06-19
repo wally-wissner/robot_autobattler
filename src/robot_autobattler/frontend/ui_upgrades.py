@@ -100,7 +100,7 @@ class UIUpgradeComponent:
                     self._scale(BORDER_RADIUS) if self.round_bottom else 0
                 ),
             )
-            self.highlight_surface.set_alpha(100)
+            self.highlight_surface.set_alpha(150)
             self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         if display_description:
@@ -109,14 +109,14 @@ class UIUpgradeComponent:
             ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
-                color=colors.BLACK,
+                color=colors.UPGRADE_TEXT,
             )
             component_body = fonts.get_font(
                 font=fonts.card_font, size=self._scale(BODY_TEXT_SIZE)
             ).render(
                 text=self.upgrade_component.description(),
                 antialias=True,
-                color=colors.BLACK,
+                color=colors.UPGRADE_TEXT,
             )
             self.surface.blit(
                 source=component_title,
@@ -133,7 +133,7 @@ class UIUpgradeComponent:
             ).render(
                 text=self.upgrade_component.name,
                 antialias=True,
-                color=colors.BLACK,
+                color=colors.UPGRADE_TEXT,
             )
             self.surface.blit(
                 source=component_title,
@@ -148,8 +148,6 @@ class UIUpgrade:
         self.upgrade = upgrade
         self.size = size
         self.display_body = display_body
-
-        self.highlighted = False
 
         self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
@@ -177,6 +175,7 @@ class UIUpgrade:
         surface: pygame.Surface,
         position: tuple,
         display_description: bool,
+        highlighted: bool,
     ):
         self.surface.fill(color=colors.TRANSPARENT)
 
@@ -184,13 +183,13 @@ class UIUpgrade:
             surface=self.surface,
             position=(0, 0),
             display_description=display_description,
-            highlighted=self.highlighted,
+            highlighted=highlighted,
         )
         self.card_ui.draw(
             surface=self.surface,
             position=(0, self.size[1] / 2),
             display_description=display_description,
-            highlighted=self.highlighted,
+            highlighted=highlighted,
         )
 
         # Rarity border

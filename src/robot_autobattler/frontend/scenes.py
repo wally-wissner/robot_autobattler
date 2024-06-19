@@ -270,6 +270,7 @@ class BattleScene(Scene):
                     surface=application.display,
                     position=tuple(Vector2(x=300, y=300)),
                     display_description=True,
+                    highlighted=True,
                 )
                 break
             break
@@ -303,12 +304,20 @@ class UpgradeScene(Scene):
             ).at_resolution(application.resolution())
         )
 
+        self.set_active_unit(application.game.player_team().units[0])
+        self.set_active_upgrade(
+            application.game.player_team().upgrades[0]
+            if application.game.player_team().upgrades
+            else application.game.player_team().units[0].upgrade[0]
+        )
+
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
         self.active_unit_upgrades_pane.active_unit = unit
 
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
         self.active_upgrade = upgrade
+        self.active_unit_upgrades_pane.set_active_upgrade(upgrade)
 
     def draw(self):
         application.display.fill(color=colors.LIGHT_GRAY)

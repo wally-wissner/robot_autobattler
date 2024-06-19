@@ -21,6 +21,16 @@ class UpgradeScroller:
 
         self.y_scroll = 0
 
+        self.active_index: int | None = 0
+
+        self.active_upgrade: Upgrade | None = None
+
+    def _is_active_upgrade(self, upgrade: Upgrade) -> bool:
+        return self.active_upgrade is not None and self.active_upgrade == upgrade
+
+    def set_active_upgrade(self, upgrade: Upgrade | None):
+        self.active_upgrade = upgrade
+
     def item_visible(self, i: int) -> bool:
         pass
 
@@ -35,5 +45,6 @@ class UpgradeScroller:
                 surface=self.surface,
                 position=(0, i * self.ui_upgrade_size[1]),
                 display_description=True,
+                highlighted=self.active_index == i,
             )
         surface.blit(source=self.surface, dest=(0, self.y_scroll), area=None)
