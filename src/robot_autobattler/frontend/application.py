@@ -2,6 +2,7 @@
 # pylint: disable=no-member
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=unused-argument
+# pylint: disable=unused-variable
 
 import sys
 
@@ -66,6 +67,8 @@ class Application(Singleton):
             self.delta_time = self.clock.tick(60) / 1000.0
 
             # Event handling.
+            mouse_position = pygame.mouse.get_pos()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
