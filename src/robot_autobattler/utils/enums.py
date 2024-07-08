@@ -48,6 +48,7 @@ class EStat(AutoNameEnum):
     # Consumable stats.
     HP = auto()
     AP = auto()
+    COOLDOWN = auto()
 
     # Non-zero default stats.
     SIZE = auto()

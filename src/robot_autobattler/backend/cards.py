@@ -11,7 +11,7 @@ class Card(UpgradeComponent):
     name: str
     rarity: enums.ERarity
     bp: int
-    cooldown: float
+    cooldown: int
 
     def description(self):
         return self.name
