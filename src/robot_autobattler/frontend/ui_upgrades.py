@@ -51,6 +51,22 @@ class UIUpgradeComponent:
 
         self.highlight_surface = pygame.Surface(self.size)
 
+        self.component_title = fonts.get_font(
+            font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
+        ).render(
+            text=self.upgrade_component.name,
+            antialias=True,
+            color=colors.UPGRADE_TEXT,
+        )
+
+        self.component_body = fonts.get_font(
+            font=fonts.card_font, size=self._scale(BODY_TEXT_SIZE)
+        ).render(
+            text=self.upgrade_component.description(),
+            antialias=True,
+            color=colors.UPGRADE_TEXT,
+        )
+
     def _scale(self, frac: float) -> int:
         return ceil(frac * self.size[0])
 
@@ -97,39 +113,19 @@ class UIUpgradeComponent:
             self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         if display_description:
-            component_title = fonts.get_font(
-                font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
-            ).render(
-                text=self.upgrade_component.name,
-                antialias=True,
-                color=colors.UPGRADE_TEXT,
-            )
-            component_body = fonts.get_font(
-                font=fonts.card_font, size=self._scale(BODY_TEXT_SIZE)
-            ).render(
-                text=self.upgrade_component.description(),
-                antialias=True,
-                color=colors.UPGRADE_TEXT,
-            )
+
             self.surface.blit(
-                source=component_title,
+                source=self.component_title,
                 dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
             self.surface.blit(
-                source=component_body,
+                source=self.component_body,
                 dest=(self._scale(X_OFFSET), self._scale(BODY_Y_OFFSET)),
             )
 
         else:
-            component_title = fonts.get_font(
-                font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
-            ).render(
-                text=self.upgrade_component.name,
-                antialias=True,
-                color=colors.UPGRADE_TEXT,
-            )
             self.surface.blit(
-                source=component_title,
+                source=self.component_title,
                 dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
 
