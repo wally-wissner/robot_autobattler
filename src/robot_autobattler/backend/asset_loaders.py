@@ -64,7 +64,7 @@ def _load_cards() -> list[AdvancedCard]:
                 rarity=enums.ERarity[element.get("rarity")],
                 bp=int(element.get("bp")),
                 abilities=element,
-                cooldown=float(element.get("cooldown")),
+                windup=float(element.get("windup")),
             )
             for element in tree
         ]
@@ -150,7 +150,7 @@ def _load_simple_cards() -> list[SimpleCard]:
                 rarity=enums.ERarity[json_card["rarity"]],
                 bp=json_card["bp"],
                 abilities=abilities,
-                cooldown=json_card["cooldown"],
+                windup=json_card["windup"],
             )
             _cards.append(card)
     return _cards

@@ -31,7 +31,7 @@ class Unit(DiscBody, UUIDIdentifier):
         # Consumable stats.
         stats[EStat.HP] = ConsumableStat(refill_on_encounter_start=True)
         stats[EStat.AP] = ConsumableStat(refill_on_turn_start=True)
-        stats[EStat.COOLDOWN] = ConsumableStat()
+        stats[EStat.WINDUP] = ConsumableStat()
         return stats
 
     def stat_modifiers(self, stat: EStat) -> list[StatModifier]:

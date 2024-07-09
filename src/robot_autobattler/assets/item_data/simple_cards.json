@@ -3,7 +3,7 @@
     "name": "Laser Attack",
     "rarity": "COMMON",
     "bp": 1,
-    "cooldown": 10,
+    "windup": 10,
     "abilities": [
       {
         "conditions": [
@@ -30,7 +30,7 @@
     "name": "Charged Laser Attack",
     "rarity": "UNCOMMON",
     "bp": 1,
-    "cooldown": 10,
+    "windup": 15,
     "abilities": [
       {
         "conditions": [
@@ -63,7 +63,7 @@
     "name": "Big Charged Laser Attack",
     "rarity": "RARE",
     "bp": 1,
-    "cooldown": 15,
+    "windup": 20,
     "abilities": [
       {
         "conditions": [
