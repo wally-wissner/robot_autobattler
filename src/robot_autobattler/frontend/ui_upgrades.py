@@ -63,22 +63,26 @@ class UIUpgradeComponent:
     ):
         self.surface.fill(color=colors.TRANSPARENT)
 
+        radius_kwargs = {
+            "border_top_left_radius": (
+                self._scale(BORDER_RADIUS) if self.round_top else 0
+            ),
+            "border_top_right_radius": (
+                self._scale(BORDER_RADIUS) if self.round_top else 0
+            ),
+            "border_bottom_left_radius": (
+                self._scale(BORDER_RADIUS) if self.round_bottom else 0
+            ),
+            "border_bottom_right_radius": (
+                self._scale(BORDER_RADIUS) if self.round_bottom else 0
+            ),
+        }
+
         pygame.draw.rect(
             rect=((0, 0), self.size),
             surface=self.surface,
             color=self.upgrade_component.color(),
-            border_top_left_radius=(
-                self._scale(BORDER_RADIUS) if self.round_top else 0
-            ),
-            border_top_right_radius=(
-                self._scale(BORDER_RADIUS) if self.round_top else 0
-            ),
-            border_bottom_left_radius=(
-                self._scale(BORDER_RADIUS) if self.round_bottom else 0
-            ),
-            border_bottom_right_radius=(
-                self._scale(BORDER_RADIUS) if self.round_bottom else 0
-            ),
+            **radius_kwargs,
         )
 
         # Non-highlighted opacity
@@ -87,18 +91,7 @@ class UIUpgradeComponent:
                 rect=((0, 0), self.size),
                 surface=self.highlight_surface,
                 color=colors.LIGHT_GRAY,
-                border_top_left_radius=(
-                    self._scale(BORDER_RADIUS) if self.round_top else 0
-                ),
-                border_top_right_radius=(
-                    self._scale(BORDER_RADIUS) if self.round_top else 0
-                ),
-                border_bottom_left_radius=(
-                    self._scale(BORDER_RADIUS) if self.round_bottom else 0
-                ),
-                border_bottom_right_radius=(
-                    self._scale(BORDER_RADIUS) if self.round_bottom else 0
-                ),
+                **radius_kwargs,
             )
             self.highlight_surface.set_alpha(150)
             self.surface.blit(source=self.highlight_surface, dest=(0, 0))
