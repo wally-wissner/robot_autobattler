@@ -6,7 +6,7 @@ from math import ceil
 
 import pygame
 
-from backend.upgrades import Upgrade
+from backend.upgrades import Card, Upgrade
 from backend.upgrade_components import UpgradeComponent
 from frontend import colors
 from frontend import fonts
@@ -29,6 +29,7 @@ BLACK_BORDER_WIDTH = 0.005
 TITLE_Y_OFFSET = 0.025
 BODY_Y_OFFSET = 0.100
 X_OFFSET = 0.05
+NUMBER_X_OFFSET = 0.90
 
 
 class UIUpgradeComponent:
@@ -55,6 +56,18 @@ class UIUpgradeComponent:
             font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
         ).render(
             text=self.upgrade_component.name,
+            antialias=True,
+            color=colors.UPGRADE_TEXT,
+        )
+
+        self.component_number = fonts.get_font(
+            font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
+        ).render(
+            text=str(
+                self.upgrade_component.windup
+                if isinstance(self.upgrade_component, Card)
+                else self.upgrade_component.bp
+            ),
             antialias=True,
             color=colors.UPGRADE_TEXT,
         )
@@ -113,10 +126,13 @@ class UIUpgradeComponent:
             self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         if display_description:
-
             self.surface.blit(
                 source=self.component_title,
                 dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
+            )
+            self.surface.blit(
+                source=self.component_number,
+                dest=(self._scale(NUMBER_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
             self.surface.blit(
                 source=self.component_body,
@@ -127,6 +143,10 @@ class UIUpgradeComponent:
             self.surface.blit(
                 source=self.component_title,
                 dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
+            )
+            self.surface.blit(
+                source=self.component_number,
+                dest=(self._scale(NUMBER_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
 
         surface.blit(source=self.surface, dest=position)
