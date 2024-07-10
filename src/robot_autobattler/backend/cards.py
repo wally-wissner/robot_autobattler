@@ -17,7 +17,7 @@ class Card(UpgradeComponent):
         return self.name
 
     def color(self) -> colors.ColorRGB:
-        return colors.BLUE
+        return colors.CARD
 
 
 @dataclass(frozen=True)
@@ -27,9 +27,6 @@ class AdvancedCard(Card):
     def description(self) -> str:
         # TODO
         return self.name
-
-    def color(self) -> colors.ColorRGB:
-        return colors.BLUE
 
 
 @dataclass
@@ -95,6 +92,3 @@ class SimpleCard(Card):
 
     def get_text(self) -> str:
         return "\n".join(ability.get_text() for ability in self.abilities)
-
-    def color(self) -> colors.ColorRGB:
-        return colors.BLUE

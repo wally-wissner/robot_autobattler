@@ -18,4 +18,4 @@ class Badge(UpgradeComponent):
         return self.description_text
 
     def color(self) -> colors.ColorRGB:
-        return colors.RED
+        return colors.BADGE

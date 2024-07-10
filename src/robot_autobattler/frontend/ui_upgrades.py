@@ -20,6 +20,8 @@ rarity_colors = {
 }
 
 
+OPACITY = 100
+
 # Upgrade proportion constants.
 TITLE_TEXT_SIZE = 0.05
 BODY_TEXT_SIZE = 0.04
@@ -122,7 +124,7 @@ class UIUpgradeComponent:
                 color=colors.LIGHT_GRAY,
                 **radius_kwargs,
             )
-            self.highlight_surface.set_alpha(150)
+            self.highlight_surface.set_alpha(OPACITY)
             self.surface.blit(source=self.highlight_surface, dest=(0, 0))
 
         if display_description:
