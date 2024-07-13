@@ -20,7 +20,7 @@ class InventoryPane:
         self.surface = pygame.Surface(size=self.rectangle.size())
 
         self.upgrade_scroller = UpgradeScroller(
-            upgrades=application.game.player_team().upgrades,
+            upgrades=application.game.player_team().inventory,
             size=self.rectangle.size(),
         )
 

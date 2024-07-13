@@ -18,7 +18,7 @@ class Team:
     def __init__(self, is_player: bool):
         self.is_player: bool = is_player
         self.units: list[Unit] = []
-        self.upgrades: list[Upgrade] = []
+        self.inventory: list[Upgrade] = []
 
         self.library: deque[Card] = deque()
         self.hand: deque[Card] = deque()

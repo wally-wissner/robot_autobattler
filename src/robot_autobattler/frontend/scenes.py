@@ -260,7 +260,7 @@ class BattleScene(Scene):
         application.display.blit(self.menu_bar_surface, (0, 0))
 
         for unit in application.game.units():
-            for upgrade in unit.upgrades:
+            for upgrade in unit.inventory:
                 uu = UIUpgrade(
                     upgrade=upgrade,
                     size=tuple(Vector2(x=200, y=200)),
@@ -307,8 +307,8 @@ class UpgradeScene(Scene):
 
         self.set_active_unit(application.game.player_team().units[0])
         self.set_active_upgrade(
-            application.game.player_team().upgrades[0]
-            if application.game.player_team().upgrades
+            application.game.player_team().inventory[0]
+            if application.game.player_team().inventory
             else application.game.player_team().units[0].upgrade[0]
         )
 

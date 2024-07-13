@@ -46,7 +46,7 @@ class Game:
             generate_team(is_player=False, total_level=10, n_units=5, quality=0.75),
         ]
         for _ in range(5):
-            teams[0].upgrades.append(generate_upgrade())
+            teams[0].inventory.append(generate_upgrade())
         return teams
 
     def player_team(self) -> Team:
