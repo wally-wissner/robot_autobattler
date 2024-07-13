@@ -1,46 +1,51 @@
 from collections import namedtuple
 
 
-ColorRGB = namedtuple("ColorRGB", "r g b")
-ColorRGBA = namedtuple("ColorRGBA", "r g b a")
+ColorRGB = namedtuple(typename="ColorRGB", field_names="r g b")
+ColorRGBA = namedtuple(typename="ColorRGBA", field_names="r g b a")
 
 
 def with_alpha(color: ColorRGB, alpha: int) -> ColorRGBA:
     return ColorRGBA(color.r, color.g, color.b, alpha)
 
 
+# Chromatic colors
+_BLACK = ColorRGB(0, 0, 0)
+_WHITE = ColorRGB(255, 255, 255)
+
+_DARK_GRAY = ColorRGB(3, 24, 15)
+_LIGHT_GRAY = ColorRGB(80, 80, 80)
+
+_RED = ColorRGB(255, 0, 0)
+_GREEN = ColorRGB(0, 255, 0)
+_BLUE = ColorRGB(0, 0, 255)
+
+_NEON_GREEN = ColorRGB(0, 243, 154)
+
+_LIGHT_BROWN = ColorRGB(160, 82, 45)
+_DARK_BROWN = ColorRGB(139, 69, 19)
+
+_LIGHT_RED = ColorRGB(248, 131, 121)
+_LIGHT_BLUE = ColorRGB(173, 216, 230)
+
+_RETRO_RED = ColorRGB(100, 25, 25)
+_RETRO_BLUE = ColorRGB(25, 25, 100)
+
+
 # Utility colors
 TRANSPARENT = ColorRGB(1, 1, 1)
 
-# Chromatic colors
-BLACK = ColorRGB(0, 0, 0)
-WHITE = ColorRGB(255, 255, 255)
-
-DARK_GRAY = ColorRGB(3, 24, 15)
-LIGHT_GRAY = ColorRGB(80, 80, 80)
-
-RED = ColorRGB(255, 0, 0)
-GREEN = ColorRGB(0, 255, 0)
-BLUE = ColorRGB(0, 0, 255)
-
-NEON_GREEN = ColorRGB(0, 243, 154)
-
-LIGHT_BROWN = ColorRGB(160, 82, 45)
-DARK_BROWN = ColorRGB(139, 69, 19)
-
-LIGHT_RED = ColorRGB(248, 131, 121)
-LIGHT_BLUE = ColorRGB(173, 216, 230)
-
-RETRO_RED = ColorRGB(100, 25, 25)
-RETRO_BLUE = ColorRGB(25, 25, 100)
 
 # Semantic colors
-BACKGROUND = LIGHT_GRAY
+BACKGROUND = _LIGHT_GRAY
+TITLE = _NEON_GREEN
 
 COMMON = ColorRGB(0, 0, 0)
 UNCOMMON = ColorRGB(165, 169, 180)
 RARE = ColorRGB(170, 146, 82)
 
-BADGE = LIGHT_RED
-CARD = LIGHT_BLUE
-UPGRADE_TEXT = BLACK
+BADGE = _LIGHT_RED
+CARD = _LIGHT_BLUE
+BORDER = _BLACK
+UPGRADE_TEXT = _BLACK
+OPACITY = _LIGHT_GRAY

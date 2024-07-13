@@ -121,7 +121,7 @@ class UIUpgradeComponent:
             pygame.draw.rect(
                 rect=((0, 0), self.size),
                 surface=self.highlight_surface,
-                color=colors.LIGHT_GRAY,
+                color=colors.OPACITY,
                 **radius_kwargs,
             )
             self.highlight_surface.set_alpha(OPACITY)
@@ -217,7 +217,7 @@ class UIUpgrade:
             rect=((0, 0), self.size),
             surface=self.surface,
             width=self._scale(BLACK_BORDER_WIDTH),
-            color=colors.BLACK,
+            color=colors.BORDER,
             border_radius=self._scale(BORDER_RADIUS),
         )
 

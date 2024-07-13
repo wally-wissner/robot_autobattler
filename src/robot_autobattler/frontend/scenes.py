@@ -121,14 +121,14 @@ class MainMenuScene(Scene):
         }
 
     def draw(self):
-        application.display.fill(color=colors.DARK_GRAY)
+        application.display.fill(color=colors.BACKGROUND)
 
         # Game title.
         title = fonts.get_font(fonts.title_font, 70).render(
             # Flicker "cursor" every second.
             text=application.title + ("|" if datetime.now().second % 2 else " "),
             antialias=True,
-            color=colors.NEON_GREEN,
+            color=colors.TITLE,
         )
         application.display.blit(
             title,
@@ -193,7 +193,7 @@ class SettingsScene(Scene):
         }
 
     def draw(self):
-        application.display.fill(color=colors.DARK_GRAY)
+        application.display.fill(color=colors.BACKGROUND)
 
 
 class BattleScene(Scene):
@@ -256,7 +256,7 @@ class BattleScene(Scene):
                 radius=game.stat_value(unit, EStat.SIZE),
             )
 
-        self.menu_bar_surface.fill(color=colors.DARK_GRAY)
+        self.menu_bar_surface.fill(color=colors.BACKGROUND)
         application.display.blit(self.menu_bar_surface, (0, 0))
 
         for unit in game.units():
@@ -321,7 +321,6 @@ class UpgradeScene(Scene):
 
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
         self.active_upgrade = upgrade
-
         self.active_unit_upgrades_pane.set_active_upgrade(upgrade)
 
     def draw(self):
