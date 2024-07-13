@@ -244,7 +244,7 @@ class BattleScene(Scene):
         }
 
     def draw(self):
-        application.display.fill(color=colors.LIGHT_GRAY)
+        application.display.fill(color=colors.BACKGROUND)
 
         application.game.update_physics(application.delta_time)
 
@@ -322,7 +322,7 @@ class UpgradeScene(Scene):
         self.active_unit_upgrades_pane.set_active_upgrade(upgrade)
 
     def draw(self):
-        application.display.fill(color=colors.LIGHT_GRAY)
+        application.display.fill(color=colors.BACKGROUND)
 
         self.inventory_pane.draw(surface=application.display)
         self.active_unit_upgrades_pane.draw(surface=application.display)

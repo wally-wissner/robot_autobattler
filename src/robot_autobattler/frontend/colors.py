@@ -35,6 +35,8 @@ RETRO_RED = ColorRGB(100, 25, 25)
 RETRO_BLUE = ColorRGB(25, 25, 100)
 
 # Semantic colors
+BACKGROUND = LIGHT_GRAY
+
 COMMON = ColorRGB(0, 0, 0)
 UNCOMMON = ColorRGB(165, 169, 180)
 RARE = ColorRGB(170, 146, 82)
