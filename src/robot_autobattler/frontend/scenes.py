@@ -15,7 +15,7 @@ from backend.upgrades import Upgrade
 from frontend import colors
 from frontend import fonts
 from frontend import ui_panes
-from frontend.application import application
+from frontend.application import application, game
 from frontend.ui_upgrades import UIUpgrade
 from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
@@ -246,21 +246,21 @@ class BattleScene(Scene):
     def draw(self):
         application.display.fill(color=colors.BACKGROUND)
 
-        application.game.update_physics(application.delta_time)
+        game.update_physics(application.delta_time)
 
-        for unit in application.game.units():
+        for unit in game.units():
             pygame.draw.circle(
                 surface=application.display,
                 color=unit.color(),
                 center=tuple(unit.position),
-                radius=application.game.stat_value(unit, EStat.SIZE),
+                radius=game.stat_value(unit, EStat.SIZE),
             )
 
         self.menu_bar_surface.fill(color=colors.DARK_GRAY)
         application.display.blit(self.menu_bar_surface, (0, 0))
 
-        for unit in application.game.units():
-            for upgrade in unit.inventory:
+        for unit in game.units():
+            for upgrade in unit.upgrades:
                 uu = UIUpgrade(
                     upgrade=upgrade,
                     size=tuple(Vector2(x=200, y=200)),
@@ -305,15 +305,15 @@ class UpgradeScene(Scene):
             ).at_resolution(application.resolution())
         )
 
-        self.set_active_unit(application.game.player_team().units[0])
+        self.set_active_unit(game.player_team().units[0])
         self.set_active_upgrade(
-            application.game.player_team().inventory[0]
-            if application.game.player_team().inventory
-            else application.game.player_team().units[0].upgrade[0]
+            game.player_team().inventory[0]
+            if game.player_team().inventory
+            else game.player_team().units[0].upgrade[0]
         )
 
-        self.set_active_unit(application.game.player_team().units[0])
-        self.set_active_upgrade(application.game.player_team().units[0].upgrades[0])
+        self.set_active_unit(game.player_team().units[0])
+        self.set_active_upgrade(game.player_team().units[0].upgrades[0])
 
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit

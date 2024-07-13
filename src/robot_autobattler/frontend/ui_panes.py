@@ -5,7 +5,7 @@
 import pygame
 
 from backend.unit import Unit, Upgrade
-from frontend.application import application
+from frontend.application import game
 from frontend import colors
 from frontend.ui_elements import UpgradeScroller
 from frontend.ui_upgrades import UIUpgrade
@@ -20,7 +20,7 @@ class InventoryPane:
         self.surface = pygame.Surface(size=self.rectangle.size())
 
         self.upgrade_scroller = UpgradeScroller(
-            upgrades=application.game.player_team().inventory,
+            upgrades=game.player_team().inventory,
             size=self.rectangle.size(),
         )
 
@@ -36,7 +36,7 @@ class ActiveUnitUpgradesPane:
         self.rectangle: Rectangle = rectangle
         self.surface = pygame.Surface(size=self.rectangle.size())
 
-        self.active_unit = application.game.player_team().units[0]
+        self.active_unit = game.player_team().units[0]
         self.active_upgrade: Upgrade | None = None
 
         self.upgrade_scroller = UpgradeScroller(

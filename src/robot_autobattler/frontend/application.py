@@ -128,3 +128,4 @@ class Application(Singleton):
 
 
 application = Application()
+game = application.game
