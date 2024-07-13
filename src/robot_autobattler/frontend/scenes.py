@@ -279,8 +279,9 @@ class BattleScene(Scene):
 class UpgradeScene(Scene):
     def __init__(self):
         super().__init__()
-        self.active_unit: Unit | None = None
-        self.active_upgrade: Upgrade | None = None
+
+        self.active_unit: Unit = None
+        self.active_upgrade: Upgrade = None
 
         # self.team_pane = TeamPane(Rectangle(x_min=0, x_max=0.25, y_min=0, y_max=1))
 
@@ -311,9 +312,11 @@ class UpgradeScene(Scene):
             else application.game.player_team().units[0].upgrade[0]
         )
 
+        self.set_active_unit(application.game.player_team().units[0])
+        self.set_active_upgrade(application.game.player_team().units[0].upgrades[0])
+
     def set_active_unit(self, unit: Unit) -> None:
         self.active_unit = unit
-
         self.active_unit_upgrades_pane.active_unit = unit
 
     def set_active_upgrade(self, upgrade: Upgrade) -> None:
