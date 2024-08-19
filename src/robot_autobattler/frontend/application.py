@@ -53,7 +53,7 @@ class Application(Singleton):
 
         # Scene setup.
         self._scene_map: dict = {}
-        self.start_scene_type = EScene.UPGRADE
+        self.start_scene_type = EScene.MAIN_MENU
         self._active_scene = None
         self._active_scene_stack: list[EScene] = []
 
