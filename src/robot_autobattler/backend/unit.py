@@ -30,7 +30,6 @@ class Unit(DiscBody, UUIDIdentifier):
         stats[EStat.SIZE] = Stat(base_value=10)
         # Consumable stats.
         stats[EStat.HP] = ConsumableStat(refill_on_encounter_start=True)
-        stats[EStat.AP] = ConsumableStat(refill_on_turn_start=True)
         stats[EStat.WINDUP] = ConsumableStat()
         return stats
 
