@@ -94,7 +94,7 @@ class Application(Singleton):
 
     def new_game(self, *args, **kwargs) -> None:
         self.game = Game(version=self.version, seed=0)
-        self.game.start_encounter()
+        self.game.start_battle()
         self.change_scene(scene=EScene.BATTLE)
 
     def continue_game(self, *args, **kwargs) -> None:

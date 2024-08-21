@@ -30,15 +30,10 @@ class Game:
     def __init__(self, version: str, seed: int) -> None:
         self.version = version
 
-        self.encounter: int = 1
-        self.round: int = 1
-        self.turn: int = 1
-
         self.teams = self.generate_teams()
         self.event_history = EventHistory()
 
         self.projectiles: list[PhysicsBody] = []
-        self.obstacles: list[PhysicsBody] = []
 
     def generate_teams(self) -> list[Team]:
         teams: list[Team] = [
@@ -53,29 +48,18 @@ class Game:
         return self.teams[0]
 
     def physics_bodies(self) -> list[PhysicsBody]:
-        return self.units() + self.obstacles + self.projectiles
+        return self.units() + self.projectiles
 
     def units(self) -> list[Unit]:
         return [unit for team in self.teams for unit in team.units]
 
-    def start_encounter(self) -> None:
-        self.encounter += 1
-        self.round = 1
-        self.turn = 1
-
+    def start_battle(self) -> None:
         self.place_units()
         for team in self.teams:
             for unit in team.units:
                 unit.status_effects.clear()
                 unit.size = self.stat_value(unit, enums.EStat.SIZE)
                 unit.mass = self.stat_value(unit, enums.EStat.MASS)
-
-    def start_round(self) -> None:
-        self.round += 1
-        self.turn = 1
-
-    def start_turn(self) -> None:
-        self.turn += 1
 
     def place_units(self) -> None:
         deviation = 50
@@ -122,7 +106,7 @@ class Game:
                 affected_unit.stats[enums.EStat.SHIELD_CHARGES] -= 1
             else:
                 damage = clamp(
-                    damage_output - affected_unit.stats[enums.EStat.ARMOR],
+                    value=damage_output - affected_unit.stats[enums.EStat.ARMOR],
                     min_value=affected_unit.stats[enums.EStat.MIN_DAMAGE_DEALT_TO],
                     max_value=affected_unit.stats[enums.EStat.MAX_DAMAGE_DEALT_TO],
                 )
@@ -146,7 +130,11 @@ class Game:
                 for stat_modifier in stat_modifiers[enums.EOperation.ASSIGN]
             )
         # Bound value between min value and max value.
-        return clamp(value, unit.stats[stat].min_value, unit.stats[stat].max_value)
+        return clamp(
+            value=value,
+            min_value=unit.stats[stat].min_value,
+            max_value=unit.stats[stat].max_value,
+        )
 
     def update_physics(self, dt) -> None:
         for physics_body in self.physics_bodies():
