@@ -31,7 +31,7 @@ BLACK_BORDER_WIDTH = 0.005
 TITLE_Y_OFFSET = 0.025
 BODY_Y_OFFSET = 0.100
 X_OFFSET = 0.05
-NUMBER_X_OFFSET = 0.90
+COST_X_OFFSET = 0.8
 
 
 class UIUpgradeComponent:
@@ -62,13 +62,13 @@ class UIUpgradeComponent:
             color=colors.UPGRADE_TEXT,
         )
 
-        self.component_number = fonts.get_font(
+        self.component_cost_text = fonts.get_font(
             font=fonts.card_font, size=self._scale(TITLE_TEXT_SIZE)
         ).render(
             text=str(
-                self.upgrade_component.windup
+                f"{self.upgrade_component.windup} WU"
                 if isinstance(self.upgrade_component, Card)
-                else self.upgrade_component.bp
+                else f"{self.upgrade_component.bp} BP"
             ),
             antialias=True,
             color=colors.UPGRADE_TEXT,
@@ -133,8 +133,8 @@ class UIUpgradeComponent:
                 dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
             self.surface.blit(
-                source=self.component_number,
-                dest=(self._scale(NUMBER_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
+                source=self.component_cost_text,
+                dest=(self._scale(COST_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
             self.surface.blit(
                 source=self.component_body,
@@ -147,8 +147,8 @@ class UIUpgradeComponent:
                 dest=(self._scale(X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
             self.surface.blit(
-                source=self.component_number,
-                dest=(self._scale(NUMBER_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
+                source=self.component_cost_text,
+                dest=(self._scale(COST_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
 
         surface.blit(source=self.surface, dest=position)
