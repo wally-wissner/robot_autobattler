@@ -47,7 +47,6 @@ class ECollectable(AutoNameEnum):
 class EStat(AutoNameEnum):
     # Consumable stats.
     HP = auto()
-    AP = auto()
     WINDUP = auto()
 
     # Non-zero default stats.
