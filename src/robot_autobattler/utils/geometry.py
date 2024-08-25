@@ -65,6 +65,15 @@ class Rectangle(BaseModel):
             y_max=max(point.y for point in points),
         )
 
+    @classmethod
+    def from_rect(cls, rect: Rect) -> Self:
+        return Rectangle(
+            x_min=rect.x,
+            x_max=rect.x + rect.width,
+            y_min=rect.y,
+            y_max=rect.y + rect.height,
+        )
+
     @property
     def bottom_left(self) -> Vector2:
         return Vector2(x=self.x_min, y=self.y_min)
