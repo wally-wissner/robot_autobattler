@@ -17,8 +17,10 @@ from frontend import fonts
 from frontend import ui_panes
 from frontend.application import application, game
 from frontend.ui_upgrades import UIUpgrade
+from frontend.ui_panes.ui_select_upgrade import UIPaneSelectUpgrade
 from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
+from utils.ui import anchored_blit
 
 
 class Scene(ABC):
@@ -239,6 +241,16 @@ class BattleScene(Scene):
             },
         )
 
+        self.select_upgrade_rect = Rectangle(
+            x_min=0.25 * application.settings_manager.width,
+            x_max=0.75 * application.settings_manager.width,
+            y_min=0.25 * application.settings_manager.height,
+            y_max=0.75 * application.settings_manager.height,
+        )
+        self.select_upgrade_pane = UIPaneSelectUpgrade(
+            rectangle=self.select_upgrade_rect
+        )
+
         self.buttons = {
             settings_button: (application.change_scene, {"scene": EScene.SETTINGS}),
         }
@@ -258,6 +270,8 @@ class BattleScene(Scene):
 
         self.menu_bar_surface.fill(color=colors.BACKGROUND)
         application.display.blit(self.menu_bar_surface, (0, 0))
+
+        self.select_upgrade_pane.draw(application.display)
 
         for unit in game.units():
             for upgrade in unit.upgrades:
