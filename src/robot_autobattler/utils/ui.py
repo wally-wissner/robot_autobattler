@@ -19,13 +19,13 @@ def anchored_blit(
 
     x_dest = {
         "left": 0,
-        "right": rect_source.x_max - rect_target.x_max,
+        "right": rect_source.x_min + (rect_source.x_min - rect_target.width()),
         "center": rect_source.x_min - rect_target.width() / 2,
     }[x_anchor] + offset[0]
 
     y_dest = {
         "top": 0,
-        "bottom": rect_source.y_max - rect_target.y_max,
+        "bottom": rect_source.y_min + (rect_source.y_min - rect_target.height()),
         "center": rect_source.y_min - rect_target.height() / 2,
     }[y_anchor] + offset[1]
 
