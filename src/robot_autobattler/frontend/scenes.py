@@ -34,8 +34,8 @@ class Scene(ABC):
             relative_rect=pygame.Rect(
                 0,
                 0,
-                application.settings_manager.width,
-                application.settings_manager.height,
+                application.width(),
+                application.height(),
             ),
             manager=self.ui_manager,
         )
@@ -134,7 +134,7 @@ class MainMenuScene(Scene):
         )
         application.display.blit(
             title,
-            (application.settings_manager.width // 2 - title.get_width() // 2, 100),
+            (application.width() // 2 - title.get_width() // 2, 100),
         )
 
 
@@ -217,8 +217,8 @@ class BattleScene(Scene):
         self.menu_bar_rect = pygame.Rect(
             0,
             0,
-            application.settings_manager.width,
-            0.075 * application.settings_manager.height,
+            application.width(),
+            0.075 * application.height(),
         )
 
         self.menu_bar_surface = pygame.Surface(self.menu_bar_rect.size)
@@ -242,13 +242,13 @@ class BattleScene(Scene):
         )
 
         self.select_upgrade_rect = Rectangle(
-            x_min=0.25 * application.settings_manager.width,
-            x_max=0.75 * application.settings_manager.width,
-            y_min=0.25 * application.settings_manager.height,
-            y_max=0.75 * application.settings_manager.height,
+            x_min=0.25 * application.width(),
+            x_max=0.75 * application.width(),
+            y_min=0.25 * application.height(),
+            y_max=0.75 * application.height(),
         )
         self.select_upgrade_pane = UIPaneSelectUpgrade(
-            rectangle=self.select_upgrade_rect
+            size=self.select_upgrade_rect.size()
         )
 
         self.buttons = {
@@ -269,9 +269,15 @@ class BattleScene(Scene):
             )
 
         self.menu_bar_surface.fill(color=colors.BACKGROUND)
-        application.display.blit(self.menu_bar_surface, (0, 0))
 
-        self.select_upgrade_pane.draw(application.display)
+        self.select_upgrade_pane.render()
+        print("select upgrade pane:")
+        anchored_blit(
+            target=application.display,
+            source=self.select_upgrade_pane.surface,
+            x_anchor="center",
+            y_anchor="center",
+        )
 
         for unit in game.units():
             for upgrade in unit.upgrades:
@@ -280,14 +286,16 @@ class BattleScene(Scene):
                     size=tuple(Vector2(x=200, y=200)),
                     display_body=True,
                 )
-                uu.draw(
-                    surface=application.display,
-                    position=tuple(Vector2(x=300, y=300)),
-                    display_description=True,
-                    highlighted=True,
+                uu.render(display_description=True, highlighted=True)
+                anchored_blit(
+                    target=application.display,
+                    source=uu.surface,
+                    x_anchor="left",
+                    y_anchor="center",
                 )
                 break
             break
+        application.display.blit(self.menu_bar_surface, (0, 0))
 
 
 class UpgradeScene(Scene):

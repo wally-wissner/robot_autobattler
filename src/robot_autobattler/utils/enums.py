@@ -19,10 +19,11 @@ class EScene(AutoNameEnum):
     REWARDS = auto()
 
 
-class EUILayer(Enum):
+class EUIDepth(Enum):
     BATTLE_BACKGROUND = 0
     BATTLE_UNIT = 1
     BATTLE_WEAPON = 2
+    SELECT_UPGRADE = 3
 
 
 class ERarity(IntEnum):

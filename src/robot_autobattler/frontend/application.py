@@ -126,6 +126,12 @@ class Application(Singleton):
     def resolution(self) -> tuple[int, int]:
         return self.settings_manager.resolution
 
+    def width(self) -> int:
+        return self.resolution()[0]
+
+    def height(self) -> int:
+        return self.resolution()[1]
+
 
 application = Application()
 game = application.game

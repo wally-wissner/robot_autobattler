@@ -1,3 +1,6 @@
+from abc import ABC, abstractmethod
+from typing import Self
+
 from pygame import Surface
 
 from utils.geometry import Rectangle
@@ -7,26 +10,45 @@ _x_anchors = {"left", "right", "center"}
 _y_anchors = {"top", "bottom", "center"}
 
 
+class UICompositeComponent(ABC):
+    def __init__(self, size: tuple, *args, **kwargs):
+        self.size = size
+        self.surface: Surface = Surface(size=size)
+        # self.children: list[Self] = []
+
+    # def update(self) -> None:
+    #     for child in self.children:
+    #         child.draw(self.surface)
+
+    @abstractmethod
+    def render(self, *args, **kwargs) -> None:
+        raise NotImplemented()
+
+    # def draw(self, surface: Surface, dest: tuple = (0, 0)) -> None:
+    #     surface.blit(source=self.surface, dest=dest)
+
+
 def anchored_blit(
     target: Surface,
     source: Surface,
-    offset: tuple,
     x_anchor: str,
     y_anchor: str,
+    offset: tuple = (0, 0),
 ):
     rect_target = Rectangle.from_rect(target.get_rect())
     rect_source = Rectangle.from_rect(source.get_rect())
 
     x_dest = {
         "left": 0,
-        "right": rect_source.x_min + (rect_source.x_min - rect_target.width()),
-        "center": rect_source.x_min - rect_target.width() / 2,
+        "right": rect_target.width() - rect_source.width(),
+        "center": (rect_target.width() - rect_source.width()) / 2,
     }[x_anchor] + offset[0]
 
     y_dest = {
         "top": 0,
-        "bottom": rect_source.y_min + (rect_source.y_min - rect_target.height()),
-        "center": rect_source.y_min - rect_target.height() / 2,
+        "bottom": rect_target.height() - rect_source.height(),
+        "center": (rect_target.height() - rect_source.height()) / 2,
     }[y_anchor] + offset[1]
 
+    print(target, source, (x_dest, y_dest))
     target.blit(source=source, dest=(x_dest, y_dest))

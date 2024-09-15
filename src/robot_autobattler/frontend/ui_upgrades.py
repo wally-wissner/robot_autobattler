@@ -11,6 +11,7 @@ from backend.upgrade_components import UpgradeComponent
 from frontend import colors
 from frontend import fonts
 from utils.enums import ERarity
+from utils.ui import anchored_blit, UICompositeComponent
 
 
 rarity_colors = {
@@ -34,7 +35,7 @@ X_OFFSET = 0.05
 COST_X_OFFSET = 0.8
 
 
-class UIUpgradeComponent:
+class UIUpgradeComponent(UICompositeComponent):
     def __init__(
         self,
         upgrade_component: UpgradeComponent,
@@ -43,13 +44,13 @@ class UIUpgradeComponent:
         round_top: bool,
         round_bottom: bool,
     ):
+        super().__init__(size=size)
+
         self.upgrade_component = upgrade_component
-        self.size = size
         self.display_body = display_body
         self.round_top = round_top
         self.round_bottom = round_bottom
 
-        self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
         self.highlight_surface = pygame.Surface(self.size)
@@ -85,13 +86,7 @@ class UIUpgradeComponent:
     def _scale(self, frac: float) -> int:
         return ceil(frac * self.size[0])
 
-    def draw(
-        self,
-        surface: pygame.Surface,
-        position: tuple,
-        display_description: bool,
-        highlighted: bool,
-    ):
+    def render(self, display_description: bool, highlighted: bool):
         self.surface.fill(color=colors.TRANSPARENT)
 
         radius_kwargs = {
@@ -151,16 +146,14 @@ class UIUpgradeComponent:
                 dest=(self._scale(COST_X_OFFSET), self._scale(TITLE_Y_OFFSET)),
             )
 
-        surface.blit(source=self.surface, dest=position)
 
-
-class UIUpgrade:
+class UIUpgrade(UICompositeComponent):
     def __init__(self, upgrade: Upgrade, size: tuple[float, float], display_body: bool):
+        super().__init__(size=size)
+
         self.upgrade = upgrade
-        self.size = size
         self.display_body = display_body
 
-        self.surface = pygame.Surface(self.size)
         self.surface.set_colorkey(colors.TRANSPARENT)
 
         self.badge_ui = UIUpgradeComponent(
@@ -181,26 +174,29 @@ class UIUpgrade:
     def _scale(self, frac: float) -> int:
         return ceil(frac * self.size[0])
 
-    def draw(
-        self,
-        surface: pygame.Surface,
-        position: tuple,
-        display_description: bool,
-        highlighted: bool,
-    ):
+    def render(self, display_description: bool, highlighted: bool):
         self.surface.fill(color=colors.TRANSPARENT)
 
-        self.badge_ui.draw(
-            surface=self.surface,
-            position=(0, 0),
-            display_description=display_description,
-            highlighted=highlighted,
+        self.badge_ui.render(
+            display_description=display_description, highlighted=highlighted
         )
-        self.card_ui.draw(
-            surface=self.surface,
-            position=(0, self.size[1] / 2),
-            display_description=display_description,
-            highlighted=highlighted,
+        print("badge ui:")
+        anchored_blit(
+            target=self.surface,
+            source=self.badge_ui.surface,
+            x_anchor="center",
+            y_anchor="top",
+        )
+
+        self.card_ui.render(
+            display_description=display_description, highlighted=highlighted
+        )
+        print("card ui:")
+        anchored_blit(
+            target=self.surface,
+            source=self.card_ui.surface,
+            x_anchor="center",
+            y_anchor="bottom",
         )
 
         # Rarity border
@@ -220,5 +216,3 @@ class UIUpgrade:
             color=colors.BORDER,
             border_radius=self._scale(BORDER_RADIUS),
         )
-
-        surface.blit(source=self.surface, dest=position)

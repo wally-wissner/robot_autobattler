@@ -7,28 +7,43 @@ from backend.unit import Upgrade
 from frontend import colors
 from frontend.application import application
 from frontend.ui_upgrades import UIUpgrade
-from utils.geometry import Rectangle
-from utils.ui import anchored_blit
+from utils.enums import EUIDepth
+from utils.geometry import Rectangle, Vector2
+from utils.ui import UICompositeComponent, anchored_blit
+from backend.factories import generate_upgrade
 
 
-class UIPaneSelectUpgrade:
+class UIPaneSelectUpgrade(UICompositeComponent):
     """UI pane that allows the player to select an upgrade to add to their inventory."""
 
-    def __init__(self, rectangle: Rectangle):
-        self.rectangle: Rectangle = rectangle
-        self.surface = pygame.Surface(size=self.rectangle.size())
+    def __init__(self, size: tuple[float, float]):
+        super().__init__(size=size)
 
         self.upgrades: List[Upgrade] = []
 
-    def draw(self, surface: pygame.Surface):
+    def generate_upgrades(self):
+        self.upgrades = []
+        for _ in range(3):
+            self.upgrades.append(generate_upgrade())
+
+    def render(self):
         self.surface.fill(color=colors.POP_UP_PANE)
 
-        surface.blit(source=self.surface, dest=self.rectangle.position())
-
-        anchored_blit(
-            target=application.display,
-            source=self.surface,
-            offset=(0, 0),
-            x_anchor="center",
-            y_anchor="center",
-        )
+        n = len(self.upgrades)
+        for i, upgrade in enumerate(self.upgrades):
+            ui_upgrade = UIUpgrade(
+                upgrade=upgrade,
+                size=(
+                    0.1 * application.width(),
+                    0.1 * application.height(),
+                ),
+                display_body=True,
+            )
+            ui_upgrade.render(display_description=True, highlighted=False)
+            anchored_blit(
+                target=self.surface,
+                source=ui_upgrade.surface,
+                x_anchor="center",
+                y_anchor="center",
+                # offset=(i/n * self.rectangle.width(), 0),  # TODO: correct spacing math
+            )
