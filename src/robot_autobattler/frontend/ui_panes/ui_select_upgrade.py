@@ -20,8 +20,6 @@ class UIPaneSelectUpgrade(UICompositeComponent):
         super().__init__(size=size)
 
         self.upgrades: List[Upgrade] = []
-
-    def generate_upgrades(self):
         self.upgrades = []
         for _ in range(3):
             self.upgrades.append(generate_upgrade())
