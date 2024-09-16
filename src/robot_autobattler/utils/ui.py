@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Self
+
+# from typing import Self
 
 from pygame import Surface
 
@@ -22,7 +23,7 @@ class UICompositeComponent(ABC):
 
     @abstractmethod
     def render(self, *args, **kwargs) -> None:
-        raise NotImplemented()
+        raise NotImplementedError()
 
     # def draw(self, surface: Surface, dest: tuple = (0, 0)) -> None:
     #     surface.blit(source=self.surface, dest=dest)
@@ -50,5 +51,4 @@ def anchored_blit(
         "center": (rect_target.height() - rect_source.height()) / 2,
     }[y_anchor] + offset[1]
 
-    print(target, source, (x_dest, y_dest))
     target.blit(source=source, dest=(x_dest, y_dest))

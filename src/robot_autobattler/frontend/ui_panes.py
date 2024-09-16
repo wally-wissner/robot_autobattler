@@ -10,6 +10,7 @@ from frontend import colors
 from frontend.ui_elements import UpgradeScroller
 from frontend.ui_upgrades import UIUpgrade
 from utils.geometry import Rectangle
+from utils.ui import anchored_blit
 
 
 class InventoryPane:
@@ -93,10 +94,12 @@ class UpgradePane:
         ui_upgrade = UIUpgrade(
             upgrade=self.upgrade, size=self.rectangle.size(), display_body=True
         )
-        ui_upgrade.draw(
-            surface=self.surface,
-            position=(0, 0),
-            display_description=True,
-            highlighted=True,
+        ui_upgrade.render(display_description=True, highlighted=True)
+        anchored_blit(
+            target=self.surface,
+            source=ui_upgrade.surface,
+            x_anchor="left",
+            y_anchor="top",
         )
+
         surface.blit(source=self.surface, dest=self.rectangle.position())

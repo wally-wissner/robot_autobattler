@@ -4,13 +4,13 @@ import pygame
 from pygame_gui.elements import UIButton
 
 from backend.unit import Upgrade
+from backend.factories import generate_upgrade
 from frontend import colors
 from frontend.application import application
 from frontend.ui_upgrades import UIUpgrade
 from utils.enums import EUIDepth
 from utils.geometry import Rectangle, Vector2
 from utils.ui import UICompositeComponent, anchored_blit
-from backend.factories import generate_upgrade
 
 
 class UIPaneSelectUpgrade(UICompositeComponent):

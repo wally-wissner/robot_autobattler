@@ -271,7 +271,6 @@ class BattleScene(Scene):
         self.menu_bar_surface.fill(color=colors.BACKGROUND)
 
         self.select_upgrade_pane.render()
-        print("select upgrade pane:")
         anchored_blit(
             target=application.display,
             source=self.select_upgrade_pane.surface,

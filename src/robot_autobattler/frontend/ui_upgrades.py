@@ -180,7 +180,6 @@ class UIUpgrade(UICompositeComponent):
         self.badge_ui.render(
             display_description=display_description, highlighted=highlighted
         )
-        print("badge ui:")
         anchored_blit(
             target=self.surface,
             source=self.badge_ui.surface,
@@ -191,7 +190,6 @@ class UIUpgrade(UICompositeComponent):
         self.card_ui.render(
             display_description=display_description, highlighted=highlighted
         )
-        print("card ui:")
         anchored_blit(
             target=self.surface,
             source=self.card_ui.surface,

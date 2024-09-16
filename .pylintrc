@@ -3,6 +3,7 @@ max-attributes = 12
 
 [MESSAGES CONTROL]
 disable =
+    arguments-differ,
     fixme,
     locally-disabled,
     missing-class-docstring,
@@ -11,6 +12,9 @@ disable =
     too-few-public-methods,
     too-many-ancestors,
     too-many-arguments,
+    unused-argument,
+    unused-import,
+    unused-variable,
 
 [MASTER]
 init-hook =
