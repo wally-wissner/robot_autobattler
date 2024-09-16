@@ -4,6 +4,7 @@ from backend.upgrades import Upgrade
 from frontend import colors
 from frontend.ui_upgrades import UIUpgrade
 from utils.data_structures import ShiftList
+from utils.ui import anchored_blit
 
 
 class UpgradeScroller:
@@ -41,10 +42,11 @@ class UpgradeScroller:
             ui_upgrade = UIUpgrade(
                 upgrade=upgrade, size=self.ui_upgrade_size, display_body=True
             )
-            ui_upgrade.draw(
-                surface=self.surface,
-                position=(0, i * self.ui_upgrade_size[1]),
-                display_description=True,
-                highlighted=self.active_index == i,
+            ui_upgrade.render(
+                display_description=True, highlighted=self.active_index == i
             )
+            self.surface.blit(
+                source=ui_upgrade.surface, dest=(0, i * self.ui_upgrade_size[1])
+            )
+
         surface.blit(source=self.surface, dest=(0, self.y_scroll), area=None)

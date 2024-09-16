@@ -16,8 +16,8 @@ from frontend import colors
 from frontend import fonts
 from frontend import ui_panes
 from frontend.application import application, game
+from frontend.ui_panes import UIPaneSelectUpgrade
 from frontend.ui_upgrades import UIUpgrade
-from frontend.ui_panes.ui_select_upgrade import UIPaneSelectUpgrade
 from utils.enums import EScene, EStat
 from utils.geometry import Rectangle, Vector2
 from utils.ui import anchored_blit
