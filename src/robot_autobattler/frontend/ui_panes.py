@@ -125,13 +125,11 @@ class UIPaneSelectUpgrade(UICompositeComponent):
         self.surface.fill(color=colors.POP_UP_PANE)
 
         n = len(self.upgrades)
+        size = 0.125 * application.width()
         for i, upgrade in enumerate(self.upgrades):
             ui_upgrade = UIUpgrade(
                 upgrade=upgrade,
-                size=(
-                    0.1 * application.width(),
-                    0.1 * application.height(),
-                ),
+                size=(size, size),
                 display_body=True,
             )
             ui_upgrade.render(display_description=True, highlighted=False)
