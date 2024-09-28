@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 from pygame import Surface
 
+from frontend import colors
 from utils.geometry import Rectangle
 
 
@@ -15,6 +16,7 @@ class UICompositeComponent(ABC):
     def __init__(self, size: tuple, *args, **kwargs):
         self.size = size
         self.surface: Surface = Surface(size=size)
+        self.surface.set_colorkey(colors.TRANSPARENT)
         # self.children: list[Self] = []
 
     # def update(self) -> None:

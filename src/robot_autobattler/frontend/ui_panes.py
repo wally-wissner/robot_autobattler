@@ -124,7 +124,14 @@ class UIPaneSelectUpgrade(UICompositeComponent):
             self.upgrades.append(generate_upgrade())
 
     def render(self):
-        self.surface.fill(color=colors.POP_UP_PANE)
+        self.surface.fill(color=colors.TRANSPARENT)
+
+        pygame.draw.rect(
+            surface=self.surface,
+            rect=self.surface.get_rect(),
+            color=colors.POP_UP_PANE,
+            border_radius=int(self.size[0]/20),
+        )
 
         size = 0.125 * application.width()
         positions = [-1, 0, 1]
@@ -134,7 +141,7 @@ class UIPaneSelectUpgrade(UICompositeComponent):
                 size=(size, size),
                 display_body=True,
             )
-            ui_upgrade.render(display_description=True, highlighted=False)
+            ui_upgrade.render(display_description=True, highlighted=True)
             anchored_blit(
                 target=self.surface,
                 source=ui_upgrade.surface,
