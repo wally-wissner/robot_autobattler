@@ -1,7 +1,6 @@
 import numpy as np
 
 from backend.cards import Card, SimpleCard, CardAbility
-from backend.event import EventHistory
 from backend.physics import PhysicsBody
 from backend.team import Team
 from backend.unit import Unit
@@ -31,7 +30,6 @@ class Game:
         self.version = version
 
         self.teams = self.generate_teams()
-        self.event_history = EventHistory()
 
         self.projectiles: list[PhysicsBody] = []
 

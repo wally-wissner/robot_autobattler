@@ -116,16 +116,18 @@ class UIPaneSelectUpgrade(UICompositeComponent):
     def __init__(self, size: tuple[float, float]):
         super().__init__(size=size)
 
+        self.n_upgrades = 3
+
         self.upgrades: List[Upgrade] = []
         self.upgrades = []
-        for _ in range(3):
+        for _ in range(self.n_upgrades):
             self.upgrades.append(generate_upgrade())
 
     def render(self):
         self.surface.fill(color=colors.POP_UP_PANE)
 
-        n = len(self.upgrades)
         size = 0.125 * application.width()
+        positions = [-1, 0, 1]
         for i, upgrade in enumerate(self.upgrades):
             ui_upgrade = UIUpgrade(
                 upgrade=upgrade,
@@ -138,5 +140,5 @@ class UIPaneSelectUpgrade(UICompositeComponent):
                 source=ui_upgrade.surface,
                 x_anchor="center",
                 y_anchor="center",
-                # offset=(i/n * self.rectangle.width(), 0),  # TODO: correct spacing math
+                offset=(positions[i] / self.n_upgrades * self.size[0], 0),
             )
