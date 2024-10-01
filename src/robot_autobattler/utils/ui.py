@@ -34,8 +34,8 @@ class UICompositeComponent(ABC):
 def anchored_blit(
     target: Surface,
     source: Surface,
-    x_anchor: str,
-    y_anchor: str,
+    x_anchor: str = "left",
+    y_anchor: str = "top",
     offset: tuple = (0, 0),
 ):
     rect_target = Rectangle.from_rect(target.get_rect())
