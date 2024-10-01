@@ -31,7 +31,13 @@ class InventoryPane:
         )
 
     def draw(self, surface: pygame.Surface):
-        self.upgrade_scroller.draw(self.surface)
+        self.upgrade_scroller.render()
+        anchored_blit(
+            target=self.surface,
+            source=self.upgrade_scroller.surface,
+            x_anchor="left",
+            y_anchor="top",
+        )
         surface.blit(source=self.surface, dest=self.rectangle.position())
 
 
@@ -58,7 +64,13 @@ class ActiveUnitUpgradesPane:
         self.upgrade_scroller.set_active_upgrade(upgrade)
 
     def draw(self, surface: pygame.Surface):
-        self.upgrade_scroller.draw(self.surface)
+        self.upgrade_scroller.render()
+        anchored_blit(
+            target=self.surface,
+            source=self.upgrade_scroller.surface,
+            x_anchor="left",
+            y_anchor="top",
+        )
         surface.blit(source=self.surface, dest=self.rectangle.position())
 
 
@@ -130,7 +142,7 @@ class UIPaneSelectUpgrade(UICompositeComponent):
             surface=self.surface,
             rect=self.surface.get_rect(),
             color=colors.POP_UP_PANE,
-            border_radius=int(self.size[0]/20),
+            border_radius=int(self.size[0] / 20),
         )
 
         size = 0.125 * application.width()

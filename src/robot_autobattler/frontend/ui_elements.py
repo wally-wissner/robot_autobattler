@@ -4,15 +4,17 @@ from backend.upgrades import Upgrade
 from frontend import colors
 from frontend.ui_upgrades import UIUpgrade
 from utils.data_structures import ShiftList
-from utils.ui import anchored_blit
+from utils.ui import UICompositeComponent, anchored_blit
 
 
-class UpgradeScroller:
+class UpgradeScroller(UICompositeComponent):
     def __init__(
         self,
         upgrades: ShiftList[Upgrade],
         size: tuple[int, int],
     ) -> None:
+        super().__init__(size=size)
+
         self.upgrades = upgrades
         self.size = size
         self.ui_upgrade_size = (self.size[0], int(0.75 * self.size[0]))
@@ -35,7 +37,7 @@ class UpgradeScroller:
     def item_visible(self, i: int) -> bool:
         pass
 
-    def draw(self, surface: pygame.Surface) -> None:
+    def render(self) -> None:
         self.surface.fill(color=colors.TRANSPARENT)
 
         for i, upgrade in enumerate(self.upgrades):
@@ -45,8 +47,10 @@ class UpgradeScroller:
             ui_upgrade.render(
                 display_description=True, highlighted=self.active_index == i
             )
-            self.surface.blit(
-                source=ui_upgrade.surface, dest=(0, i * self.ui_upgrade_size[1])
+            anchored_blit(
+                target=self.surface,
+                source=ui_upgrade.surface,
+                x_anchor="center",
+                y_anchor="top",
+                offset=(0, i * self.ui_upgrade_size[1]),
             )
-
-        surface.blit(source=self.surface, dest=(0, self.y_scroll), area=None)
