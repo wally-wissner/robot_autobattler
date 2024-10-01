@@ -54,3 +54,5 @@ class UpgradeScroller(UICompositeComponent):
                 y_anchor="top",
                 offset=(0, i * self.ui_upgrade_size[1]),
             )
+
+        self.surface.scroll(dy=int(self.y_scroll))
