@@ -1,4 +1,5 @@
 import math
+from uuid import uuid4
 
 from backend.physics import DiscBody
 from backend.unitstat import ConsumableStat, Stat, StatModifier
@@ -6,20 +7,18 @@ from backend.upgrades import Upgrade
 from frontend.colors import ColorRGB
 from utils.data_structures import Inventory, ShiftList
 from utils.enums import EStat
-from utils.identifiers import UUIDIdentifier
 
 
-class Unit(DiscBody, UUIDIdentifier):
+class Unit(DiscBody):
     def __init__(self, team, level: int):
+        self.id = uuid4().hex
         self.level = level
-
         self.alive = True
         self.upgrades: ShiftList[Upgrade] = ShiftList()
         self.status_effects = Inventory()
         self.stats = self._init_stats()
 
         DiscBody.__init__(self, team=team)
-        UUIDIdentifier.__init__(self)
 
     def _init_stats(self) -> dict[EStat, Stat | ConsumableStat]:
         stats = {}

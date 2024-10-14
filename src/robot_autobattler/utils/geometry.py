@@ -1,9 +1,9 @@
 import math
 from typing import Iterable, Self
 
+import pyglet
 from pydantic import BaseModel
 from pygame import Rect
-from pyglet.math import Vec2
 
 
 class Vector2(BaseModel):
@@ -47,7 +47,7 @@ class Vector2(BaseModel):
         return Vector2(x=self.x * resolution[0], y=self.y * resolution[1])
 
     def to_vec2(self):
-        return Vec2(self.x, self.y)
+        return pyglet.math.Vec2(self.x, self.y)
 
 
 class Rectangle(BaseModel):
@@ -73,6 +73,12 @@ class Rectangle(BaseModel):
             y_min=rect.y,
             y_max=rect.y + rect.height,
         )
+
+    @classmethod
+    def from_tuples(
+        cls, left_top: tuple[float, float], width_height: tuple[float, float]
+    ):
+        return cls.from_rect(Rect(left_top, width_height))
 
     @property
     def bottom_left(self) -> Vector2:
