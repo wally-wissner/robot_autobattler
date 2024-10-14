@@ -6,12 +6,13 @@ from pydantic import BaseModel
 from pygame import Rect
 
 
-class Vector2(BaseModel):
-    x: float = 0
-    y: float = 0
+class Vector2(tuple):
+    def __init__(self, x: float = 0, y: float = 0):
+        self.x = x
+        self.y = y
 
-    def magnitude(self) -> float:
-        return math.sqrt(self.x**2 + self.y**2)
+    def __new__(cls, x: float = 0, y: float = 0):
+        return tuple.__new__(Vector2, (x, y))
 
     def __iter__(self):
         return iter((self.x, self.y))
@@ -39,6 +40,9 @@ class Vector2(BaseModel):
 
     def __repr__(self):
         return f"Vector2({self.x}, {self.y})"
+
+    def magnitude(self) -> float:
+        return math.sqrt(self.x**2 + self.y**2)
 
     def snap(self) -> Self:
         return Vector2(x=int(self.x), y=int(self.y))
