@@ -85,18 +85,18 @@ class Rectangle(BaseModel):
         return cls.from_rect(Rect(left_top, width_height))
 
     @property
-    def bottom_left(self) -> Vector2:
+    def left_top(self) -> Vector2:
         return Vector2(x=self.x_min, y=self.y_min)
 
     @property
-    def top_right(self) -> Vector2:
+    def right_bottom(self) -> Vector2:
         return Vector2(x=self.x_max, y=self.y_max)
 
     def center(self) -> Vector2:
         return Vector2(x=(self.x_min + self.x_max) / 2, y=(self.y_min + self.y_max) / 2)
 
     def points(self) -> tuple[Vector2, Vector2]:
-        return self.bottom_left, self.top_right
+        return self.left_top, self.right_bottom
 
     def width(self) -> float:
         return self.x_max - self.x_min
