@@ -2,13 +2,17 @@ from abc import ABC, abstractmethod
 from typing import Self
 from uuid import uuid4
 
-from pygame import Surface
+import pygame
+from pygame import Surface, mouse
 
 from frontend import colors
+from frontend.application import application
 from utils.geometry import Rectangle, Vector2
 
 _x_anchors = {"left", "right", "center"}
 _y_anchors = {"top", "bottom", "center"}
+
+_adjacency_directions = {"left", "right", "up", "down"}
 
 
 def anchored_blit(
@@ -51,9 +55,24 @@ class UICompositeComponent(ABC):
 
         self.offset: Vector2 | None = None
 
+        self._is_clicked_down = False
+
+        self.adjacent_items = {
+            "left": None,
+            "right": None,
+            "up": None,
+            "down": None,
+        }
+
     @abstractmethod
     def render(self, *args, **kwargs) -> None:
         raise NotImplementedError()
+
+    def on_hovered(self, *args, **kwargs) -> None:
+        pass
+
+    def on_clicked(self, *args, **kwargs) -> None:
+        pass
 
     def __hash__(self):
         return self.id
@@ -89,3 +108,31 @@ class UICompositeComponent(ABC):
             composite_component = composite_component.parent
             offset += composite_component.offset
         return Rectangle.from_tuples(left_top=offset, width_height=self.size)
+
+    def is_hovered(self) -> bool:
+        # TODO: Only call this once per clock.
+        return self.absolute_rect().to_pygame().collidepoint(*mouse.get_pos())
+
+    def is_selected(self) -> bool:
+        # Button is hovered over by mouse or is active by direction keys.
+        # TODO
+        pass
+
+    def is_clicked(self) -> bool:
+        for event in application.current_events:
+            if event == pygame.MOUSEBUTTONDOWN:
+                if self.is_hovered():
+                    self._is_clicked_down = True
+            if event == pygame.MOUSEBUTTONUP:
+                if self._is_clicked_down:
+                    self.on_clicked()
+        # TODO: only if none are clicked up
+        self._is_clicked_down = False
+
+    def assign_adjacent(self, direction: str, item: Self) -> None:
+        assert direction in _adjacency_directions
+        self.adjacent_items[direction] = item
+
+    def adjacent_item(self, direction: str) -> Self:
+        assert direction in _adjacency_directions
+        return self.adjacent_items[direction]

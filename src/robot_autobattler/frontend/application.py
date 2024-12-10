@@ -53,9 +53,12 @@ class Application(Singleton):
 
         # Scene setup.
         self._scene_map: dict = {}
-        self.start_scene_type = EScene.UPGRADE
+        self.start_scene_type = EScene.MAIN_MENU
         self._active_scene = None
         self._active_scene_stack: list[EScene] = []
+
+        # Pygame events
+        self.current_events: list[pygame.Event] = []
 
     def load_assets(self) -> None:
         pygame.font.init()
@@ -68,8 +71,9 @@ class Application(Singleton):
 
             # Event handling.
             mouse_position = pygame.mouse.get_pos()
+            self.current_events = list(pygame.event.get())
 
-            for event in pygame.event.get():
+            for event in self.current_events:
                 if event.type == pygame.QUIT:
                     self.quit()
 
