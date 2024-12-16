@@ -3,7 +3,7 @@ from typing import Self
 from uuid import uuid4
 
 import pygame
-from pygame import Surface, mouse
+from pygame import Surface
 
 from frontend import colors
 from frontend.application import application
@@ -110,8 +110,7 @@ class UICompositeComponent(ABC):
         return Rectangle.from_tuples(left_top=offset, width_height=self.size)
 
     def is_hovered(self) -> bool:
-        # TODO: Only call this once per clock.
-        return self.absolute_rect().to_pygame().collidepoint(*mouse.get_pos())
+        return self.absolute_rect().to_pygame().collidepoint(application.mouse_position)
 
     def is_selected(self) -> bool:
         # Button is hovered over by mouse or is active by direction keys.

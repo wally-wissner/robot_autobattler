@@ -59,6 +59,7 @@ class Application(Singleton):
 
         # Pygame events
         self.current_events: list[pygame.Event] = []
+        self.mouse_position = None
 
     def load_assets(self) -> None:
         pygame.font.init()
@@ -70,8 +71,8 @@ class Application(Singleton):
             self.delta_time = self.clock.tick(60) / 1000.0
 
             # Event handling.
-            mouse_position = pygame.mouse.get_pos()
             self.current_events = list(pygame.event.get())
+            self.mouse_position = pygame.mouse.get_pos()
 
             for event in self.current_events:
                 if event.type == pygame.QUIT:
