@@ -55,7 +55,9 @@ class UICompositeComponent(ABC):
 
         self.offset: Vector2 | None = None
 
+        # States
         self._is_clicked_down = False
+        self._is_key_selected = False
 
         self.adjacent_items = {
             "left": None,
@@ -64,25 +66,31 @@ class UICompositeComponent(ABC):
             "down": None,
         }
 
-    @abstractmethod
-    def render(self, *args, **kwargs) -> None:
-        raise NotImplementedError()
-
-    def on_hovered(self, *args, **kwargs) -> None:
-        pass
-
-    def on_clicked(self, *args, **kwargs) -> None:
-        pass
-
     def __hash__(self):
         return self.id
 
     def __eq__(self, other):
         self.id = other.id
 
-    def update(self) -> None:
+    @abstractmethod
+    def render(self, *args, **kwargs) -> None:
+        raise NotImplementedError()
+
+    def on_selected(self, *args, **kwargs) -> None:
+        pass
+
+    def on_clicked(self, *args, **kwargs) -> None:
+        pass
+
+    def update(self, events) -> None:
+        if self.is_clicked():
+            self.on_clicked()
+        if self.is_selected():
+            self.on_selected()
+
         for child in self.children:
-            child.update()
+            child.update(events)
+
         self.render()
 
     def blit(
@@ -109,18 +117,22 @@ class UICompositeComponent(ABC):
             offset += composite_component.offset
         return Rectangle.from_tuples(left_top=offset, width_height=self.size)
 
-    def is_hovered(self) -> bool:
+    def is_moused(self) -> bool:
+        """
+        Whether the UI item is currently moused over.
+        """
         return self.absolute_rect().to_pygame().collidepoint(application.mouse_position)
 
     def is_selected(self) -> bool:
-        # Button is hovered over by mouse or is active by direction keys.
-        # TODO
-        pass
+        """
+        Whether the UI item is selected, either by mouse hover or key select.
+        """
+        return self.is_moused() or self._is_key_selected
 
     def is_clicked(self) -> bool:
         for event in application.current_events:
             if event == pygame.MOUSEBUTTONDOWN:
-                if self.is_hovered():
+                if self.is_moused():
                     self._is_clicked_down = True
             if event == pygame.MOUSEBUTTONUP:
                 if self._is_clicked_down:
